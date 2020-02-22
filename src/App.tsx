@@ -1,78 +1,60 @@
 import React, { useState } from "react";
 
-import {
-  ThemeProvider,
-  CSSReset,
-  Stack,
-  Box,
-  CheckboxGroup,
-  Checkbox,
-  FormControl,
-  FormLabel,
-  Grid,
-  Heading,
-  Text,
-  Divider
-} from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Box, Grid } from "@chakra-ui/core";
+import * as moment from "moment-timezone";
 
-import { formatJson, jsonUrl, Meeting } from "./helpers/google";
+import { Meeting } from "./types/Meeting";
+import { jsonUrl, parseData } from "./helpers/google";
+import { MeetingList } from "./components/MeetingList";
+import { Filter } from "./components/Filter";
+
+type State = {
+  loading: boolean;
+  meetings: Meeting[];
+  formats: string[];
+  timezone: string;
+  types: string[];
+};
 
 export default function App() {
-  const [meetings, setMeetings] = useState<Meeting[]>([]);
+  const [state, setState] = useState<State>({
+    formats: [],
+    loading: true,
+    meetings: [],
+    timezone: moment.tz.guess(),
+    types: []
+  });
 
-  const formats = {
-    email: "Email",
-    chat: "Chat",
-    video: "Video",
-    phone: "Phone",
-    forum: "Forum"
-  };
-  const formatsKeys = Object.keys(formats);
-
-  fetch(jsonUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
-    .then(result => {
-      return result.json();
-    })
-    .then(result => {
-      setMeetings(formatJson(result));
-    });
+  if (state.loading) {
+    fetch(jsonUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
+      .then(result => {
+        return result.json();
+      })
+      .then(result => {
+        const { meetings, formats, types } = parseData(result);
+        setState({
+          loading: false,
+          meetings: meetings,
+          formats: formats,
+          timezone: moment.tz.guess(),
+          types: types
+        });
+      });
+  }
 
   return (
     <ThemeProvider>
       <CSSReset />
-      <Grid templateColumns="70% 30%" gap={6} p={6}>
-        <Box w="100%" h="10">
-          <Stack spacing={8}>
-            {meetings.map(meeting => (
-              <Box p={5} shadow="md" borderWidth="1px" flex="1" rounded="md">
-                <Heading fontSize="xl">{meeting.name}</Heading>
-                <Box mt={4}>
-                  {meeting.notes.split("\n").map((paragraph, key) => (
-                    <Text key={key} mt={2}>
-                      {paragraph}
-                    </Text>
-                  ))}
-                </Box>
-              </Box>
-            ))}
-          </Stack>
-        </Box>
-        <Box w="100%" h="10">
-          <FormControl as="fieldset">
-            <FormLabel as="legend" fontSize="lg" fontWeight="bold">
-              Format
-            </FormLabel>
-            <Divider />
-            <CheckboxGroup variantColor="green" defaultValue={formatsKeys}>
-              {formatsKeys.map(format => (
-                <Checkbox value={format}>
-                  {formats[format as keyof typeof formats]}
-                </Checkbox>
-              ))}
-            </CheckboxGroup>
-          </FormControl>
-        </Box>
-      </Grid>
+      <Box p={6}>
+        <Grid templateColumns="auto 300px" gap={6}>
+          <MeetingList meetings={state.meetings} />
+          <Filter
+            timezone={state.timezone}
+            formats={state.formats}
+            types={state.types}
+          />
+        </Grid>
+      </Box>
     </ThemeProvider>
   );
 }
