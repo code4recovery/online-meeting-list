@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import {
   ThemeProvider,
@@ -15,9 +15,11 @@ import {
   Divider
 } from "@chakra-ui/core";
 
-import * as meetings from "./meetings.json";
+import { formatJson, jsonUrl, Meeting } from "./helpers/google";
 
-function App() {
+export default function App() {
+  const [meetings, setMeetings] = useState<Meeting[]>([]);
+
   const formats = {
     email: "Email",
     chat: "Chat",
@@ -27,7 +29,13 @@ function App() {
   };
   const formatsKeys = Object.keys(formats);
 
-  console.log(meetings);
+  fetch(jsonUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
+    .then(result => {
+      return result.json();
+    })
+    .then(result => {
+      setMeetings(formatJson(result));
+    });
 
   return (
     <ThemeProvider>
@@ -37,8 +45,14 @@ function App() {
           <Stack spacing={8}>
             {meetings.map(meeting => (
               <Box p={5} shadow="md" borderWidth="1px" flex="1" rounded="md">
-                <Heading fontSize="xl">Meeting name</Heading>
-                <Text mt={4}>Lorem ipsum</Text>
+                <Heading fontSize="xl">{meeting.name}</Heading>
+                <Box mt={4}>
+                  {meeting.notes.split("\n").map((paragraph, key) => (
+                    <Text key={key} mt={2}>
+                      {paragraph}
+                    </Text>
+                  ))}
+                </Box>
               </Box>
             ))}
           </Stack>
@@ -62,5 +76,3 @@ function App() {
     </ThemeProvider>
   );
 }
-
-export default App;
