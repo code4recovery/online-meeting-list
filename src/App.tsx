@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 
-import { ThemeProvider, CSSReset, Box, Grid } from "@chakra-ui/core";
+import { Box, CSSReset, Grid, Spinner, ThemeProvider } from "@chakra-ui/core";
 import * as moment from "moment-timezone";
 
-import { Meeting } from "./types/Meeting";
-import { jsonUrl, parseData } from "./helpers/google";
-import { MeetingList } from "./components/MeetingList";
-import { Filter } from "./components/Filter";
+import { Filter, MeetingList } from "./components";
+import { jsonUrl, parseData } from "./helpers";
+import { Meeting } from "./types";
 
 type State = {
   loading: boolean;
@@ -45,16 +44,22 @@ export default function App() {
   return (
     <ThemeProvider>
       <CSSReset />
-      <Box p={6}>
-        <Grid templateColumns="auto 300px" gap={6}>
-          <MeetingList meetings={state.meetings} />
-          <Filter
-            timezone={state.timezone}
-            formats={state.formats}
-            types={state.types}
-          />
-        </Grid>
-      </Box>
+      {state.loading ? (
+        <Box height="100%" d="flex" alignItems="center" justifyContent="center">
+          <Spinner size="xl" />
+        </Box>
+      ) : (
+        <Box p={6}>
+          <Grid templateColumns="auto 300px" gap={6}>
+            <MeetingList meetings={state.meetings} />
+            <Filter
+              timezone={state.timezone}
+              formats={state.formats}
+              types={state.types}
+            />
+          </Grid>
+        </Box>
+      )}
     </ThemeProvider>
   );
 }
