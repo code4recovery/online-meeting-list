@@ -22,6 +22,7 @@ export function parseData(
 
     //build formats array
     meeting.formats.forEach(format => {
+      format = format.trim();
       if (format.length && !formats.includes(format)) {
         formats.push(format);
       }
@@ -29,6 +30,7 @@ export function parseData(
 
     //build types array
     meeting.types.forEach(type => {
+      type = type.trim();
       if (type.length && !types.includes(type)) {
         types.push(type);
       }
@@ -38,8 +40,9 @@ export function parseData(
     meetings.push(meeting);
   }
 
-  //sort formats
+  //sort
   formats.sort();
+  types.sort();
 
   return { meetings, formats, types };
 }

@@ -2,13 +2,11 @@ import React from "react";
 
 import {
   Box,
-  CheckboxGroup,
-  Checkbox,
+  Button,
   FormControl,
   FormLabel,
-  Divider,
-  Select,
-  Input
+  Input,
+  Select
 } from "@chakra-ui/core";
 
 import * as moment from "moment-timezone";
@@ -21,7 +19,7 @@ type Filter = {
 
 export function Filter(props: Filter) {
   return (
-    <Box w="100%" h="10">
+    <Box w="100%">
       <FormControl as="fieldset" mb={6}>
         <FormLabel as="legend" fontSize="lg" fontWeight="bold">
           Your Timezone
@@ -42,23 +40,25 @@ export function Filter(props: Filter) {
         <FormLabel as="legend" fontSize="lg" fontWeight="bold">
           Formats
         </FormLabel>
-        <Divider />
-        <CheckboxGroup variantColor="green" defaultValue={[]} mb={6}>
+        <Box mb={6}>
           {props.formats.map(format => (
-            <Checkbox value={format}>{format}</Checkbox>
+            <Button mr={2} mt={2}>
+              {format}
+            </Button>
           ))}
-        </CheckboxGroup>
+        </Box>
       </FormControl>
       <FormControl as="fieldset">
         <FormLabel as="legend" fontSize="lg" fontWeight="bold">
           Types
         </FormLabel>
-        <Divider />
-        <CheckboxGroup variantColor="green" defaultValue={[]}>
+        <Box>
           {props.types.map(type => (
-            <Checkbox value={type}>{type}</Checkbox>
+            <Button mr={2} mt={2}>
+              {type}
+            </Button>
           ))}
-        </CheckboxGroup>
+        </Box>
       </FormControl>
     </Box>
   );

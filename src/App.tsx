@@ -45,12 +45,18 @@ export default function App() {
     <ThemeProvider>
       <CSSReset />
       {state.loading ? (
-        <Box height="100%" d="flex" alignItems="center" justifyContent="center">
+        <Box
+          backgroundColor="gray.50"
+          height="100%"
+          d="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
           <Spinner size="xl" />
         </Box>
       ) : (
-        <Box p={6}>
-          <Grid templateColumns="auto 300px" gap={6}>
+        <Box p={6} backgroundColor="gray.50">
+          <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
             <MeetingList meetings={state.meetings} />
             <Filter
               timezone={state.timezone}
