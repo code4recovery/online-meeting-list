@@ -1,4 +1,4 @@
-import { Meeting } from "../types";
+import { Meeting } from "../components";
 
 export function jsonUrl(sheet_id: string, page_id = 1): string {
   return `https://spreadsheets.google.com/feeds/list/${sheet_id}/${page_id}/public/values?alt=json`;

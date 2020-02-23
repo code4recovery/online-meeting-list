@@ -1,2 +1,2 @@
 export * from "./Filter";
-export * from "./MeetingList";
+export * from "./Meeting";

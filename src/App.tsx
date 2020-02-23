@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 
-import { Box, CSSReset, Grid, Spinner, ThemeProvider } from "@chakra-ui/core";
+import {
+  Box,
+  CSSReset,
+  Grid,
+  Spinner,
+  Stack,
+  ThemeProvider
+} from "@chakra-ui/core";
 import * as moment from "moment-timezone";
 
-import { Filter, MeetingList } from "./components";
+import { Filter, Meeting } from "./components";
 import { jsonUrl, parseData } from "./helpers";
-import { Meeting } from "./types";
 
 type State = {
   loading: boolean;
@@ -72,7 +78,11 @@ export default function App() {
       ) : (
         <Box p={6} backgroundColor="gray.50">
           <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
-            <MeetingList meetings={state.meetings} />
+            <Stack spacing={8} shouldWrapChildren={true}>
+              {state.meetings.map(meeting => (
+                <Meeting meeting={meeting} />
+              ))}
+            </Stack>
             <Filter timezone={state.timezone} filters={filters} />
           </Grid>
         </Box>
