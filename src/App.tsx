@@ -41,6 +41,21 @@ export default function App() {
       });
   }
 
+  const filters = {
+    Days: [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    Times: ["Morning", "Midday", "Evening", "Night"],
+    Formats: state.formats,
+    Types: state.types
+  };
+
   return (
     <ThemeProvider>
       <CSSReset />
@@ -58,11 +73,7 @@ export default function App() {
         <Box p={6} backgroundColor="gray.50">
           <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
             <MeetingList meetings={state.meetings} />
-            <Filter
-              timezone={state.timezone}
-              formats={state.formats}
-              types={state.types}
-            />
+            <Filter timezone={state.timezone} filters={filters} />
           </Grid>
         </Box>
       )}
