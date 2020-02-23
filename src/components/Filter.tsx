@@ -4,7 +4,10 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Icon,
   Input,
+  InputGroup,
+  InputLeftElement,
   Select,
   Stack
 } from "@chakra-ui/core";
@@ -20,16 +23,12 @@ export function Filter(props: Filter) {
   return (
     <Stack spacing={6}>
       <FormControl d="block" as="fieldset">
-        <FormLabel fontWeight="bold">Your Timezone</FormLabel>
-        <Select value={props.timezone}>
-          {moment.tz.names().map(name => (
-            <option key={name}>{name}</option>
-          ))}
-        </Select>
-      </FormControl>
-      <FormControl d="block" as="fieldset">
-        <FormLabel fontWeight="bold">Keyword Search</FormLabel>
-        <Input />
+        <InputGroup>
+          <InputLeftElement
+            children={<Icon name="search" color="gray.300" />}
+          />
+          <Input placeholder="Search" />
+        </InputGroup>
       </FormControl>
       {Object.keys(props.filters).map(filter => (
         <FormControl as="fieldset">
@@ -44,12 +43,23 @@ export function Filter(props: Filter) {
               border="1px"
               borderColor="gray.200"
               color="gray.600"
+              onClick={e => {
+                console.log(value);
+              }}
             >
               {value}
             </Button>
           ))}
         </FormControl>
       ))}
+      <FormControl d="block" as="fieldset">
+        <FormLabel fontWeight="bold">Your Timezone</FormLabel>
+        <Select value={props.timezone}>
+          {moment.tz.names().map(name => (
+            <option key={name}>{name}</option>
+          ))}
+        </Select>
+      </FormControl>
     </Stack>
   );
 }

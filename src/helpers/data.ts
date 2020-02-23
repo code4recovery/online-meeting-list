@@ -15,26 +15,52 @@ export function parseData(
     const meeting: Meeting = {
       name: data.feed.entry[i]["gsx$name"]["$t"],
       time: data.feed.entry[i]["gsx$time"]["$t"],
-      notes: data.feed.entry[i]["gsx$notes"]["$t"],
-      types: data.feed.entry[i]["gsx$types"]["$t"].split(","),
-      formats: data.feed.entry[i]["gsx$formats"]["$t"].split(",")
+      email: data.feed.entry[i]["gsx$email"]["$t"],
+      url: data.feed.entry[i]["gsx$url"]["$t"],
+      notes: data.feed.entry[i]["gsx$notes"]["$t"]
+        .split("\n")
+        .map((note: string) => note.trim()),
+      tags: []
     };
 
-    //build formats array
-    meeting.formats.forEach(format => {
-      format = format.trim();
-      if (format.length && !formats.includes(format)) {
-        formats.push(format);
-      }
-    });
+    //handle formats
+    const meeting_formats = data.feed.entry[i]["gsx$formats"]["$t"].trim();
+    if (meeting_formats.length) {
+      const meeting_formats_array = meeting_formats
+        .split(",")
+        .map((format: string) => format.trim());
 
-    //build types array
-    meeting.types.forEach(type => {
-      type = type.trim();
-      if (type.length && !types.includes(type)) {
-        types.push(type);
-      }
-    });
+      //append to formats array
+      meeting_formats_array.forEach((format: string) => {
+        if (!formats.includes(format)) {
+          formats.push(format);
+        }
+      });
+
+      //append to meeting tags
+      meeting.tags = meeting.tags.concat(meeting_formats_array);
+    }
+
+    //handle types
+    const meeting_types = data.feed.entry[i]["gsx$types"]["$t"].trim();
+    if (meeting_types.length) {
+      const meeting_types_array = meeting_types
+        .split(",")
+        .map((type: string) => type.trim());
+
+      //append to types array
+      meeting_types_array.forEach((type: string) => {
+        if (!types.includes(type)) {
+          types.push(type);
+        }
+      });
+
+      //append to meeting tags
+      meeting.tags = meeting.tags.concat(meeting_types_array);
+    }
+
+    //sort "tags"
+    meeting.tags.sort();
 
     //add to meetings
     meetings.push(meeting);

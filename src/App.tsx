@@ -14,20 +14,31 @@ import { Filter, Meeting } from "./components";
 import { jsonUrl, parseData } from "./helpers";
 
 type State = {
+  filters: { [key: string]: string[] };
   loading: boolean;
   meetings: Meeting[];
-  formats: string[];
   timezone: string;
-  types: string[];
 };
 
 export default function App() {
   const [state, setState] = useState<State>({
-    formats: [],
+    filters: {
+      Days: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday"
+      ],
+      Times: ["Morning", "Midday", "Evening", "Night"],
+      Formats: [],
+      Types: []
+    },
     loading: true,
     meetings: [],
-    timezone: moment.tz.guess(),
-    types: []
+    timezone: moment.tz.guess()
   });
 
   if (state.loading) {
@@ -38,29 +49,18 @@ export default function App() {
       .then(result => {
         const { meetings, formats, types } = parseData(result);
         setState({
+          filters: {
+            Days: state.filters.Days,
+            Times: state.filters.Times,
+            Formats: formats,
+            Types: types
+          },
           loading: false,
           meetings: meetings,
-          formats: formats,
-          timezone: moment.tz.guess(),
-          types: types
+          timezone: moment.tz.guess()
         });
       });
   }
-
-  const filters = {
-    Days: [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    Times: ["Morning", "Midday", "Evening", "Night"],
-    Formats: state.formats,
-    Types: state.types
-  };
 
   return (
     <ThemeProvider>
@@ -79,11 +79,11 @@ export default function App() {
         <Box p={6} backgroundColor="gray.50">
           <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
             <Stack spacing={8} shouldWrapChildren={true}>
-              {state.meetings.map(meeting => (
+              {state.meetings.map((meeting: Meeting) => (
                 <Meeting meeting={meeting} />
               ))}
             </Stack>
-            <Filter timezone={state.timezone} filters={filters} />
+            <Filter timezone={state.timezone} filters={state.filters} />
           </Grid>
         </Box>
       )}
