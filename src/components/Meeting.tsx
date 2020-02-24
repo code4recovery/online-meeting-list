@@ -37,7 +37,14 @@ export function Meeting({
         <Heading fontSize="xl">{meeting.name}</Heading>
         <Heading fontSize="lg" color="gray.400" fontWeight="normal" ml="2">
           {meeting.start
-            ? meeting.start.tz(timezone).format("dddd, h:mma")
+            ? meeting.start
+                .tz(timezone)
+                .format("dddd, h:mma")
+                .concat(
+                  meeting.end
+                    ? "–" + meeting.end.tz(timezone).format("h:mma")
+                    : ""
+                )
             : "Ongoing"}
         </Heading>
       </Box>

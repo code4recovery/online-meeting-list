@@ -69,9 +69,18 @@ export function parseData(
       times.forEach(time => {
         const [day, ...times] = time.split(" ");
         const [start, end] = times.join(" ").split("-");
-        if (end) console.log(end);
 
         meeting.start = moment.tz(start, "h:mm a", meeting.timezone).day(day);
+        if (end) {
+          meeting.end = moment.tz(end, "h:mm a", meeting.timezone).day(day);
+        }
+
+        if (meeting.start.isBefore()) {
+          meeting.start.add(1, "week");
+          if (meeting.end) {
+            meeting.end.add(1, "week");
+          }
+        }
 
         meetings.push({ ...meeting });
       });
