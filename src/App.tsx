@@ -80,7 +80,7 @@ export default function App() {
           <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
             <Stack spacing={8} shouldWrapChildren={true}>
               {state.meetings.map((meeting: Meeting) => (
-                <Meeting meeting={meeting} />
+                <Meeting meeting={meeting} timezone={state.timezone} />
               ))}
             </Stack>
             <Filter timezone={state.timezone} filters={state.filters} />

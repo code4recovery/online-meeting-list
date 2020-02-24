@@ -1,17 +1,29 @@
 import React from "react";
 
-import { Box, Heading, Text, Tag } from "@chakra-ui/core";
+import * as moment from "moment-timezone";
+
+import { Box, Button, Heading, Text, Tag } from "@chakra-ui/core";
 
 export type Meeting = {
   name: string;
-  time: string;
+  start?: moment.Moment;
+  end?: moment.Moment;
+  timezone: string;
   email: string;
   url: string;
+  phone: string;
+  accessCode: string;
   notes: string[];
   tags: string[];
 };
 
-export function Meeting({ meeting }: { meeting: Meeting }) {
+export function Meeting({
+  meeting,
+  timezone
+}: {
+  meeting: Meeting;
+  timezone: string;
+}) {
   return (
     <Box
       p={5}
@@ -21,7 +33,14 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
       borderColor="gray.100"
       backgroundColor="white"
     >
-      <Heading fontSize="xl">{meeting.name}</Heading>
+      <Box d="flex" alignItems="baseline">
+        <Heading fontSize="xl">{meeting.name}</Heading>
+        <Heading fontSize="lg" color="gray.400" fontWeight="normal" ml="2">
+          {meeting.start
+            ? meeting.start.tz(timezone).format("dddd, h:mma")
+            : "Ongoing"}
+        </Heading>
+      </Box>
       <Box mt={4}>
         {meeting.notes.length &&
           meeting.notes.map((paragraph: string, key: number) => (
@@ -29,6 +48,45 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
               {paragraph}
             </Text>
           ))}
+        {meeting.url && (
+          <Button
+            leftIcon="external-link"
+            mt={3}
+            mr={2}
+            size="sm"
+            backgroundColor="blue.300"
+            color="white"
+            onClick={() => window.open(meeting.url, "_blank")}
+          >
+            {new URL(meeting.url).hostname}
+          </Button>
+        )}
+        {meeting.phone && (
+          <Button
+            leftIcon="phone"
+            mt={3}
+            mr={2}
+            size="sm"
+            backgroundColor="blue.300"
+            color="white"
+            onClick={() => window.open("tel:" + meeting.phone, "_blank")}
+          >
+            Phone
+          </Button>
+        )}
+        {meeting.email && (
+          <Button
+            leftIcon="email"
+            mt={3}
+            mr={2}
+            size="sm"
+            backgroundColor="blue.300"
+            color="white"
+            onClick={() => window.open("mailto:" + meeting.email, "_blank")}
+          >
+            Email
+          </Button>
+        )}
         {meeting.tags.length && (
           <Box mt={2}>
             {meeting.tags.map((tag: string) => (
