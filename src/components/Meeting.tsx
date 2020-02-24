@@ -41,7 +41,7 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
           ))}
         {meeting.url && (
           <Button
-            leftIcon="external-link"
+            leftIcon="link"
             mt={3}
             mr={2}
             size="sm"
@@ -49,7 +49,7 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
             color="white"
             onClick={() => window.open(meeting.url, "_blank")}
           >
-            {new URL(meeting.url).hostname}
+            {new URL(meeting.url).hostname.replace("www.", "")}
           </Button>
         )}
         {meeting.phone && (
@@ -81,7 +81,7 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
         )}
         <Divider mt={4} />
         {meeting.tags.length && (
-          <Box mt={2}>
+          <Box mt={2} fontSize="sm">
             Tags:
             {meeting.tags.map((tag: string) => (
               <Tag
