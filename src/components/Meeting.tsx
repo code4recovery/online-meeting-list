@@ -1,29 +1,22 @@
 import React from "react";
 
-import * as moment from "moment-timezone";
-
-import { Box, Button, Heading, Text, Tag } from "@chakra-ui/core";
+import { Box, Button, Divider, Heading, Text, Tag } from "@chakra-ui/core";
 
 export type Meeting = {
   name: string;
-  start?: moment.Moment;
-  end?: moment.Moment;
+  start?: number;
+  end?: number;
+  time?: string;
   timezone: string;
   email: string;
   url: string;
   phone: string;
-  accessCode: string;
   notes: string[];
   tags: string[];
+  updated: string;
 };
 
-export function Meeting({
-  meeting,
-  timezone
-}: {
-  meeting: Meeting;
-  timezone: string;
-}) {
+export function Meeting({ meeting }: { meeting: Meeting }) {
   return (
     <Box
       p={5}
@@ -36,16 +29,7 @@ export function Meeting({
       <Box d="flex" alignItems="baseline">
         <Heading fontSize="xl">{meeting.name}</Heading>
         <Heading fontSize="lg" color="gray.400" fontWeight="normal" ml="2">
-          {meeting.start
-            ? meeting.start
-                .tz(timezone)
-                .format("dddd, h:mma")
-                .concat(
-                  meeting.end
-                    ? "–" + meeting.end.tz(timezone).format("h:mma")
-                    : ""
-                )
-            : "Ongoing"}
+          {meeting.time}
         </Heading>
       </Box>
       <Box mt={4}>
@@ -76,6 +60,7 @@ export function Meeting({
             size="sm"
             backgroundColor="blue.300"
             color="white"
+            title={meeting.phone}
             onClick={() => window.open("tel:" + meeting.phone, "_blank")}
           >
             Phone
@@ -94,12 +79,14 @@ export function Meeting({
             Email
           </Button>
         )}
+        <Divider mt={4} />
         {meeting.tags.length && (
           <Box mt={2}>
+            Tags:
             {meeting.tags.map((tag: string) => (
               <Tag
                 mt={2}
-                mr={2}
+                ml={2}
                 border="1px"
                 borderColor="gray.200"
                 color="gray.500"

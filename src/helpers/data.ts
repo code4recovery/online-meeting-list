@@ -1,6 +1,55 @@
 import { Meeting } from "../components";
 
-import * as moment from "moment-timezone";
+import moment from "moment-timezone";
+
+//set time zones, apply filters, and sort meetings by time
+//runs after init, and whenever a filter is changed
+export function filterData(meetings: Meeting[], timezone: string): Meeting[] {
+  //get current timestamp
+  const now: number = parseInt(moment().format("x"));
+
+  meetings.map(meeting => {
+    //format human-readable time
+    meeting.time = meeting.start
+      ? moment(meeting.start)
+          .tz(timezone)
+          .format("dddd, h:mma")
+          .concat(
+            meeting.end
+              ? "–" +
+                  moment(meeting.end)
+                    .tz(timezone)
+                    .format("h:mma")
+              : ""
+          )
+      : "Ongoing";
+
+    //if the meeting is in the past (earlier today), then add a week
+    if (meeting.start && meeting.start < now) {
+      meeting.start += 604800000;
+      if (meeting.end) {
+        meeting.end += 604800000;
+      }
+    }
+
+    return meeting;
+  });
+
+  //sort meetings (by time then name)
+  meetings.sort((a: Meeting, b: Meeting) => {
+    if (a.start && b.start && a.start !== b.start) {
+      return a.start - b.start;
+    } else if (a.start) {
+      return -1;
+    } else if (b.start) {
+      return 1;
+    }
+    return a.name.localeCompare(b.name);
+  });
+
+  //return
+  return meetings;
+}
 
 //get json endpoint for published google sheet
 export function jsonUrl(sheet_id: string, page_id = 1): string {
@@ -8,6 +57,7 @@ export function jsonUrl(sheet_id: string, page_id = 1): string {
 }
 
 //parse google spreadsheet data into arrays of meetings, formats, and types
+//runs only once on init
 export function parseData(
   data: any
 ): { meetings: Meeting[]; formats: string[]; types: string[] } {
@@ -19,15 +69,20 @@ export function parseData(
     //console.log(data.feed.entry[i]);
 
     const meeting: Meeting = {
-      name: data.feed.entry[i]["gsx$name"]["$t"],
-      timezone: data.feed.entry[i]["gsx$timezone"]["$t"],
-      email: data.feed.entry[i]["gsx$email"]["$t"],
-      phone: data.feed.entry[i]["gsx$phone"]["$t"],
-      accessCode: data.feed.entry[i]["gsx$accesscode"]["$t"],
-      url: data.feed.entry[i]["gsx$url"]["$t"],
+      name: data.feed.entry[i]["gsx$name"]["$t"].trim(),
+      timezone: data.feed.entry[i]["gsx$timezone"]["$t"].trim(),
+      email: data.feed.entry[i]["gsx$email"]["$t"].trim(),
+      phone: data.feed.entry[i]["gsx$phone"]["$t"].replace(/\D/g, "").trim(),
+      url: data.feed.entry[i]["gsx$url"]["$t"].trim(),
       notes: splitIntoTrimmedArray(data.feed.entry[i]["gsx$notes"]["$t"], "\n"),
+      updated: data.feed.entry[i]["updated"]["$t"],
       tags: []
     };
+
+    //handle phone
+    const accessCode = data.feed.entry[i]["gsx$accesscode"]["$t"].trim();
+    if (accessCode.length)
+      meeting.phone = meeting.phone.concat("," + accessCode);
 
     //handle formats
     const meeting_formats = splitIntoTrimmedArray(
@@ -75,17 +130,19 @@ export function parseData(
         const [start, end] = times.join(" ").split("-");
 
         //create moments
-        meeting.start = moment.tz(start, "h:mm a", meeting.timezone).day(day);
+        meeting.start = parseInt(
+          moment
+            .tz(start, "h:mm a", meeting.timezone)
+            .day(day)
+            .format("x")
+        );
         if (end) {
-          meeting.end = moment.tz(end, "h:mm a", meeting.timezone).day(day);
-        }
-
-        //if the meeting is in the past (earlier today), then add a week
-        if (meeting.start.isBefore()) {
-          meeting.start.add(1, "week");
-          if (meeting.end) {
-            meeting.end.add(1, "week");
-          }
+          meeting.end = parseInt(
+            moment
+              .tz(end, "h:mm a", meeting.timezone)
+              .day(day)
+              .format("x")
+          );
         }
 
         //push a clone of the meeting onto the array
@@ -100,17 +157,6 @@ export function parseData(
   //sort
   formats.sort();
   types.sort();
-  meetings.sort((a: Meeting, b: Meeting) => {
-    //sort by time then name
-    if (a.start && b.start && !a.start.isSame(b.start)) {
-      return b.start.isBefore(a.start) ? 1 : -1;
-    } else if (a.start) {
-      return -1;
-    } else if (b.start) {
-      return 1;
-    }
-    return a.name.localeCompare(b.name);
-  });
 
   return { meetings, formats, types };
 }

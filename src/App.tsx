@@ -11,7 +11,7 @@ import {
 import * as moment from "moment-timezone";
 
 import { Filter, Meeting } from "./components";
-import { jsonUrl, parseData } from "./helpers";
+import { filterData, jsonUrl, parseData } from "./helpers";
 
 type State = {
   filters: { [key: string]: string[] };
@@ -48,6 +48,7 @@ export default function App() {
       })
       .then(result => {
         const { meetings, formats, types } = parseData(result);
+        const timezone = moment.tz.guess();
         setState({
           filters: {
             Days: state.filters.Days,
@@ -56,8 +57,8 @@ export default function App() {
             Types: types
           },
           loading: false,
-          meetings: meetings,
-          timezone: moment.tz.guess()
+          meetings: filterData(meetings, timezone),
+          timezone: timezone
         });
       });
   }
@@ -80,7 +81,7 @@ export default function App() {
           <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
             <Stack spacing={8} shouldWrapChildren={true}>
               {state.meetings.map((meeting: Meeting) => (
-                <Meeting meeting={meeting} timezone={state.timezone} />
+                <Meeting meeting={meeting} />
               ))}
             </Stack>
             <Filter timezone={state.timezone} filters={state.filters} />
