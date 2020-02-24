@@ -2,10 +2,12 @@ import { Meeting } from "../components";
 
 import * as moment from "moment-timezone";
 
+//get json endpoint for published google sheet
 export function jsonUrl(sheet_id: string, page_id = 1): string {
   return `https://spreadsheets.google.com/feeds/list/${sheet_id}/${page_id}/public/values?alt=json`;
 }
 
+//parse google spreadsheet data into arrays of meetings, formats, and types
 export function parseData(
   data: any
 ): { meetings: Meeting[]; formats: string[]; types: string[] } {
@@ -65,16 +67,20 @@ export function parseData(
       data.feed.entry[i]["gsx$times"]["$t"],
       "\n"
     );
+
     if (times.length) {
+      //loop through create an entry for each time
       times.forEach(time => {
         const [day, ...times] = time.split(" ");
         const [start, end] = times.join(" ").split("-");
 
+        //create moments
         meeting.start = moment.tz(start, "h:mm a", meeting.timezone).day(day);
         if (end) {
           meeting.end = moment.tz(end, "h:mm a", meeting.timezone).day(day);
         }
 
+        //if the meeting is in the past (earlier today), then add a week
         if (meeting.start.isBefore()) {
           meeting.start.add(1, "week");
           if (meeting.end) {
@@ -82,10 +88,11 @@ export function parseData(
           }
         }
 
+        //push a clone of the meeting onto the array
         meetings.push({ ...meeting });
       });
     } else {
-      //add to meetings
+      //ongoing meeting; add to meetings
       meetings.push(meeting);
     }
   }
@@ -94,20 +101,21 @@ export function parseData(
   formats.sort();
   types.sort();
   meetings.sort((a: Meeting, b: Meeting) => {
+    //sort by time then name
     if (a.start && b.start && !a.start.isSame(b.start)) {
       return b.start.isBefore(a.start) ? 1 : -1;
     } else if (a.start) {
       return -1;
     } else if (b.start) {
       return 1;
-    } else {
-      return a.name.localeCompare(b.name);
     }
+    return a.name.localeCompare(b.name);
   });
 
   return { meetings, formats, types };
 }
 
+//split "foo, bar, baz" into ["foo", "bar", "baz"]
 function splitIntoTrimmedArray(input: string, separator = ","): string[] {
   return input
     .split(separator)
