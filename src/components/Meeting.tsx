@@ -19,16 +19,21 @@ export type Meeting = {
 export function Meeting({ meeting }: { meeting: Meeting }) {
   return (
     <Box
-      p={5}
-      shadow="md"
-      rounded="md"
       border="1px"
       borderColor="gray.100"
       backgroundColor="white"
+      p={5}
+      rounded="md"
+      shadow="md"
     >
-      <Box d="flex" alignItems="baseline">
+      <Box d={{ md: "flex" }} alignItems="baseline">
         <Heading fontSize="xl">{meeting.name}</Heading>
-        <Heading fontSize="lg" color="gray.400" fontWeight="normal" ml="2">
+        <Heading
+          color="gray.400"
+          ml={{ md: 2 }}
+          fontSize="lg"
+          fontWeight="normal"
+        >
           {meeting.time}
         </Heading>
       </Box>
@@ -41,40 +46,42 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
           ))}
         {meeting.url && (
           <Button
-            leftIcon="link"
-            mt={3}
-            mr={2}
-            size="sm"
             backgroundColor="blue.300"
             color="white"
+            leftIcon="link"
+            mr={2}
+            mt={3}
             onClick={() => window.open(meeting.url, "_blank")}
+            size="sm"
+            title={"Visit " + meeting.url}
           >
             {new URL(meeting.url).hostname.replace("www.", "")}
           </Button>
         )}
         {meeting.phone && (
           <Button
-            leftIcon="phone"
-            mt={3}
-            mr={2}
-            size="sm"
             backgroundColor="blue.300"
             color="white"
-            title={meeting.phone}
+            leftIcon="phone"
             onClick={() => window.open("tel:" + meeting.phone, "_blank")}
+            mr={2}
+            mt={3}
+            size="sm"
+            title={"Call " + meeting.phone}
           >
             Phone
           </Button>
         )}
         {meeting.email && (
           <Button
-            leftIcon="email"
-            mt={3}
-            mr={2}
-            size="sm"
             backgroundColor="blue.300"
             color="white"
+            leftIcon="email"
+            mr={2}
+            mt={3}
             onClick={() => window.open("mailto:" + meeting.email, "_blank")}
+            size="sm"
+            title={"Email " + meeting.email}
           >
             Email
           </Button>
@@ -82,15 +89,15 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
         <Divider mt={4} />
         {meeting.tags.length && (
           <Box mt={2} fontSize="sm">
-            Tags:
-            {meeting.tags.map((tag: string) => (
+            {meeting.tags.map((tag: string, index: number) => (
               <Tag
-                mt={2}
-                ml={2}
+                backgroundColor="white"
                 border="1px"
                 borderColor="gray.200"
                 color="gray.500"
-                backgroundColor="white"
+                key={index}
+                mr={2}
+                mt={2}
                 size="sm"
               >
                 {tag}

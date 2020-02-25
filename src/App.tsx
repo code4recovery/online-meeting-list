@@ -11,12 +11,13 @@ import {
 import * as moment from "moment-timezone";
 
 import { Filter, Meeting } from "./components";
-import { filterData, jsonUrl, parseData } from "./helpers";
+import { filterData, googleSheetUrl, importGoogleSheet } from "./helpers";
 
 type State = {
   filters: { [key: string]: string[] };
   loading: boolean;
   meetings: Meeting[];
+  search: string;
   timezone: string;
 };
 
@@ -38,27 +39,22 @@ export default function App() {
     },
     loading: true,
     meetings: [],
+    search: "",
     timezone: moment.tz.guess()
   });
 
   if (state.loading) {
-    fetch(jsonUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
+    fetch(googleSheetUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
       .then(result => {
         return result.json();
       })
       .then(result => {
-        const { meetings, formats, types } = parseData(result);
-        const timezone = moment.tz.guess();
+        const { meetings, formats, types } = importGoogleSheet(result);
         setState({
-          filters: {
-            Days: state.filters.Days,
-            Times: state.filters.Times,
-            Formats: formats,
-            Types: types
-          },
+          ...state,
+          filters: { ...state.filters, Formats: formats, Types: types },
           loading: false,
-          meetings: filterData(meetings, timezone),
-          timezone: timezone
+          meetings: filterData(meetings, state.timezone)
         });
       });
   }
@@ -68,23 +64,30 @@ export default function App() {
       <CSSReset />
       {state.loading ? (
         <Box
-          backgroundColor="gray.50"
-          height="100%"
-          d="flex"
           alignItems="center"
+          backgroundColor="gray.50"
+          d="flex"
+          height="100%"
           justifyContent="center"
         >
           <Spinner size="xl" />
         </Box>
       ) : (
-        <Box p={6} backgroundColor="gray.50">
-          <Grid templateColumns={{ md: "auto 300px" }} gap={6}>
-            <Stack spacing={8} shouldWrapChildren={true}>
-              {state.meetings.map((meeting: Meeting) => (
-                <Meeting meeting={meeting} />
+        <Box p={{ xs: 3, md: 6 }} backgroundColor="gray.50">
+          <Grid templateColumns={{ md: "auto 300px" }} gap={{ xs: 3, md: 6 }}>
+            <Stack spacing={{ xs: 3, md: 6 }} shouldWrapChildren={true}>
+              {state.meetings.map((meeting: Meeting, index: number) => (
+                <Meeting key={index} meeting={meeting} />
               ))}
             </Stack>
-            <Filter timezone={state.timezone} filters={state.filters} />
+            <Filter
+              filters={state.filters}
+              setSearch={(search: string) => {
+                setState({ ...state, search });
+              }}
+              setTags={() => {}}
+              timezone={state.timezone}
+            />
           </Grid>
         </Box>
       )}

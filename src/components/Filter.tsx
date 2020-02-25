@@ -1,62 +1,43 @@
 import React from "react";
+import moment from "moment-timezone";
+import { FormControl, FormLabel, Select, Stack } from "@chakra-ui/core";
 
-import {
-  Button,
-  FormControl,
-  FormLabel,
-  Icon,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  Select,
-  Stack
-} from "@chakra-ui/core";
-
-import * as moment from "moment-timezone";
+import { Search, TagButton } from "./";
 
 type Filter = {
-  timezone: string;
   filters: { [key: string]: string[] };
+  setSearch(search: string): void;
+  setTags(tags: string[]): void;
+  timezone: string;
 };
 
-export function Filter(props: Filter) {
+export function Filter({ filters, setSearch, setTags, timezone }: Filter) {
   return (
     <Stack spacing={6}>
-      <FormControl d="block" as="fieldset">
-        <InputGroup>
-          <InputLeftElement
-            children={<Icon name="search-2" color="gray.300" />}
-          />
-          <Input placeholder="Search" />
-        </InputGroup>
+      <FormControl as="fieldset" d="block">
+        <Search setSearch={setSearch} />
       </FormControl>
-      {Object.keys(props.filters).map(filter => (
-        <FormControl as="fieldset">
+      {Object.keys(filters).map((filter: string, index: number) => (
+        <FormControl as="fieldset" key={index}>
           <FormLabel d="block" fontWeight="bold" pb={0}>
             {filter}
           </FormLabel>
-          {props.filters[filter].map(value => (
-            <Button
-              mr={2}
-              mt={2}
-              size="sm"
-              border="1px"
-              borderColor="gray.200"
-              color="gray.600"
-              onClick={e => {
-                console.log(value);
+          {filters[filter].map((value: string, index: number) => (
+            <TagButton
+              value={value}
+              key={index}
+              toggleClicked={(clicked: boolean) => {
+                //console.log(value, clicked);
               }}
-            >
-              {value}
-            </Button>
+            />
           ))}
         </FormControl>
       ))}
       <FormControl d="block" as="fieldset">
         <FormLabel fontWeight="bold">Your Timezone</FormLabel>
-        <Select value={props.timezone}>
-          {moment.tz.names().map(name => (
-            <option key={name}>{name}</option>
+        <Select onChange={() => console.log(timezone)} value={timezone}>
+          {moment.tz.names().map((name: string, index: number) => (
+            <option key={index}>{name}</option>
           ))}
         </Select>
       </FormControl>
