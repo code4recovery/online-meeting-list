@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Box, Button, Divider, Heading, Text, Tag } from "@chakra-ui/core";
 
 export type Meeting = {

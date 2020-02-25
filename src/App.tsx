@@ -1,16 +1,8 @@
 import React, { useState } from "react";
+import { Box, CSSReset, Grid, Stack, ThemeProvider } from "@chakra-ui/core";
+import moment from "moment-timezone";
 
-import {
-  Box,
-  CSSReset,
-  Grid,
-  Spinner,
-  Stack,
-  ThemeProvider
-} from "@chakra-ui/core";
-import * as moment from "moment-timezone";
-
-import { Filter, Meeting } from "./components";
+import { Filter, Loading, Meeting } from "./components";
 import { filterData, googleSheetUrl, importGoogleSheet } from "./helpers";
 
 type State = {
@@ -63,15 +55,7 @@ export default function App() {
     <ThemeProvider>
       <CSSReset />
       {state.loading ? (
-        <Box
-          alignItems="center"
-          backgroundColor="gray.50"
-          d="flex"
-          height="100%"
-          justifyContent="center"
-        >
-          <Spinner size="xl" />
-        </Box>
+        <Loading />
       ) : (
         <Box p={{ xs: 3, md: 6 }} backgroundColor="gray.50">
           <Grid templateColumns={{ md: "auto 300px" }} gap={{ xs: 3, md: 6 }}>

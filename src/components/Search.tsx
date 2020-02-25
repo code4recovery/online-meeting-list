@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from "react";
-
 import { Icon, Input, InputGroup, InputLeftElement } from "@chakra-ui/core";
 
 type Search = {

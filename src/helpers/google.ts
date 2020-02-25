@@ -1,6 +1,6 @@
 import moment from "moment-timezone";
 
-import { stringToTrimmedArray } from "./data";
+import { stringToTrimmedArray } from "./";
 import { Meeting } from "../components/Meeting";
 
 //get json endpoint for published google sheet
