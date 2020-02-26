@@ -1,12 +1,22 @@
 import moment from "moment-timezone";
 
+import { State } from "../helpers";
 import { Meeting } from "../components";
 
-//set time zones, apply filters, and sort meetings by time
-//runs after init, and whenever a filter is changed
-export function filterData(meetings: Meeting[], timezone: string): Meeting[] {
+//set time zones, apply filters, and sort meetings, runs on state change
+export function filterData({ meetings, timezone }: State): Meeting[] {
   //get current timestamp
   const now: number = parseInt(moment().format("x"));
+
+  /*filter meetings based on selected tags
+  if (state.Tags.length) {
+    meetings = meetings.filter(meeting => {
+      for (let i = 0; i < tags.length; i++) {
+        if (meeting.tags.includes(tags[i])) return true;
+      }
+      return false;
+    });
+  }*/
 
   meetings.map(meeting => {
     //format human-readable time

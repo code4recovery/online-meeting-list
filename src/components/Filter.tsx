@@ -3,15 +3,16 @@ import moment from "moment-timezone";
 import { FormControl, FormLabel, Select, Stack } from "@chakra-ui/core";
 
 import { Search, TagButton } from "./";
+import { Tag } from "../helpers";
 
 type Filter = {
-  filters: { [key: string]: string[] };
+  filters: { [key: string]: Tag[] };
   setSearch(search: string): void;
-  setTags(tags: string[]): void;
+  toggleTag(filter: string, value: string, checked: boolean): void;
   timezone: string;
 };
 
-export function Filter({ filters, setSearch, setTags, timezone }: Filter) {
+export function Filter({ filters, setSearch, toggleTag, timezone }: Filter) {
   return (
     <Stack spacing={6}>
       <FormControl as="fieldset" d="block">
@@ -22,13 +23,12 @@ export function Filter({ filters, setSearch, setTags, timezone }: Filter) {
           <FormLabel d="block" fontWeight="bold" pb={0}>
             {filter}
           </FormLabel>
-          {filters[filter].map((value: string, index: number) => (
+          {filters[filter].map((value: Tag, index: number) => (
             <TagButton
-              value={value}
+              filter={filter}
+              value={value.tag}
               key={index}
-              toggleClicked={(clicked: boolean) => {
-                //console.log(value, clicked);
-              }}
+              toggleTag={toggleTag}
             />
           ))}
         </FormControl>
