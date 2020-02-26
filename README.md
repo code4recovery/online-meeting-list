@@ -1,6 +1,4 @@
-# Readme
-
-This is a meeting finder concept for the [Online Intergroup of AA](http://aa-intergroup.org/). Data is managed through a Google Sheet.
+This is a meeting finder concept for the [Online Intergroup of AA](http://aa-intergroup.org/). There is a demo at [https://oiaa.netlify.com](https://oiaa.netlify.com). Data is managed through a Google Sheet.
 
 ## Technical Overview
 
@@ -10,12 +8,14 @@ UI elements are provided by [Chakra][https://chakra-ui.com/].
 
 ## Install and Run
 
-In the project directory, first run `yarn` to install the dependencies, then run `yarn start` to run the app in development mode. The page will reload if you make edits. You will also see any lint errors in the console.
+In the project directory, first run `yarn` to install the dependencies, then `yarn start` to start the app in development mode. A browser window at [http://localhost:3000/](http://localhost:3000/) should open automatically, and will reload as you make changes. Any lint errors will be visible in the console.
 
 ## Contributing
 
-First create an issue that describes the problem you are solving, then create a branch with your code, and finally a pull request that references the issue. Please name `joshreisner` as a reviewer.
+1. Create an issue that describes the problem you are solving. Screenshots are helpful.
+1. Create a branch with your code.
+1. Create a pull request that references the issue. Please name `joshreisner` as a reviewer.
 
 ## Deployments
 
-The project is currently hosted on Netlify. Commits to the `master` branch are deployed automatically. Running `yarn build` is not necessary.
+The project is currently hosted on Netlify. Commits to the `master` branch deploy automatically. Running `yarn build` is not necessary.
