@@ -2,12 +2,12 @@ This is a meeting finder concept for the [Online Intergroup of AA](http://aa-int
 
 ## Next Steps
 
-[x] Search working
-[x] Tags working
-[ ] Timezone picker working
-[ ] Mobile view for filter
-[ ] Highlight search results
-[ ] Tags OR _inside_ categories, AND _between_ categories; eg Saturday OR Sunday AND Phone
+- [x] Search working
+- [x] Tags working
+- [ ] Timezone picker working
+- [ ] Mobile view for filter
+- [ ] Highlight search results
+- [ ] Tags OR _inside_ categories, AND _between_ categories; eg Saturday OR Sunday AND Phone
 
 ## Technical Overview
 
