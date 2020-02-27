@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import moment from "moment-timezone";
 import { FormControl, Select, Stack } from "@chakra-ui/core";
 
@@ -8,11 +8,18 @@ import { Tag } from "../helpers";
 type Filter = {
   filters: { [key: string]: Tag[] };
   setSearch(search: string): void;
+  setTimezone(timezone: string): void;
   toggleTag(filter: string, value: string, checked: boolean): void;
   timezone: string;
 };
 
-export function Filter({ filters, setSearch, toggleTag, timezone }: Filter) {
+export function Filter({
+  filters,
+  setSearch,
+  setTimezone,
+  toggleTag,
+  timezone
+}: Filter) {
   return (
     <Stack spacing={6}>
       <FormControl as="fieldset" d="block">
@@ -34,7 +41,9 @@ export function Filter({ filters, setSearch, toggleTag, timezone }: Filter) {
         <Select
           icon="time"
           iconSize={4}
-          onChange={() => console.log(timezone)}
+          onChange={(e: React.FormEvent<HTMLSelectElement>) =>
+            setTimezone(e.currentTarget.value)
+          }
           value={timezone}
         >
           {moment.tz.names().map((name: string, index: number) => (

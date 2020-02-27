@@ -47,6 +47,9 @@ export default function App() {
               setSearch={(search: string) => {
                 setState({ ...state, search });
               }}
+              setTimezone={(timezone: string) => {
+                setState({ ...state, timezone });
+              }}
               toggleTag={(filter: string, value: string, checked: boolean) => {
                 //make sure it's removed
                 state.filters[filter].forEach(tag => {
