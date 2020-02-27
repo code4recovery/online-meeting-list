@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Button } from "@chakra-ui/core";
 
-type TagButton = {
+type ButtonTag = {
   filter: string;
   value: string;
   toggleTag(filter: string, value: string, checked: boolean): void;
 };
 
-export function TagButton({ filter, value, toggleTag }: TagButton) {
+export function ButtonTag({ filter, value, toggleTag }: ButtonTag) {
   const [checked, setChecked] = useState(false);
   const colors = {
     bg: checked ? "gray.900" : "gray.100",

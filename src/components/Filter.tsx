@@ -1,8 +1,8 @@
-import React, { ChangeEvent } from "react";
+import React, { useState } from "react";
 import moment from "moment-timezone";
-import { FormControl, Select, Stack } from "@chakra-ui/core";
+import { Button, FormControl, Select, Stack } from "@chakra-ui/core";
 
-import { Search, TagButton } from "./";
+import { ButtonTag, Search } from "./";
 import { Tag } from "../helpers";
 
 type Filter = {
@@ -20,36 +20,55 @@ export function Filter({
   toggleTag,
   timezone
 }: Filter) {
+  const [open, setOpen] = useState(false);
   return (
-    <Stack spacing={6}>
-      <FormControl as="fieldset" d="block">
+    <Stack spacing={{ xs: 3, md: 6 }}>
+      <FormControl>
         <Search setSearch={setSearch} />
       </FormControl>
-      {Object.keys(filters).map((filter: string, index: number) => (
-        <FormControl as="fieldset" key={index}>
-          {filters[filter].map((value: Tag, index: number) => (
-            <TagButton
-              filter={filter}
-              value={value.tag}
-              key={index}
-              toggleTag={toggleTag}
-            />
-          ))}
+      <Stack
+        d={{ xs: open ? "block" : "none", md: "block" }}
+        spacing={{ xs: 3, md: 6 }}
+      >
+        {Object.keys(filters).map((filter: string, index: number) => (
+          <FormControl key={index}>
+            {filters[filter].map((value: Tag, index: number) => (
+              <ButtonTag
+                filter={filter}
+                key={index}
+                toggleTag={toggleTag}
+                value={value.tag}
+              />
+            ))}
+          </FormControl>
+        ))}
+        <FormControl d="block" as="fieldset">
+          <Select
+            icon="time"
+            iconSize={4}
+            onChange={(e: React.FormEvent<HTMLSelectElement>) =>
+              setTimezone(e.currentTarget.value)
+            }
+            value={timezone}
+          >
+            {moment.tz.names().map((name: string, index: number) => (
+              <option key={index}>{name}</option>
+            ))}
+          </Select>
         </FormControl>
-      ))}
-      <FormControl d="block" as="fieldset">
-        <Select
-          icon="time"
-          iconSize={4}
-          onChange={(e: React.FormEvent<HTMLSelectElement>) =>
-            setTimezone(e.currentTarget.value)
-          }
-          value={timezone}
+      </Stack>
+      <FormControl d={{ md: "none" }}>
+        <Button
+          bg="white"
+          onClick={() => {
+            setOpen(!open);
+          }}
+          rightIcon={open ? "chevron-up" : "chevron-down"}
+          variant="outline"
+          w="100%"
         >
-          {moment.tz.names().map((name: string, index: number) => (
-            <option key={index}>{name}</option>
-          ))}
-        </Select>
+          {open ? "Close" : "Filters"}
+        </Button>
       </FormControl>
     </Stack>
   );

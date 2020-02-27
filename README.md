@@ -5,8 +5,8 @@ This is a meeting finder concept for the [Online Intergroup of AA](http://aa-int
 - [x] Search working
 - [x] Tags working
 - [x] Timezone picker working
-- [ ] Mobile view for filter
-- [ ] Highlight search results
+- [x] Mobile view for filter
+- [ ] Highlight search results and active tags
 - [ ] Tags OR _inside_ categories, AND _between_ categories; eg Saturday OR Sunday AND Phone
 - [ ] Bookmarkable search / tag state
 
@@ -23,7 +23,7 @@ In the project directory, first run `yarn` to install the dependencies, then `ya
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
-1. Create a branch with your code. (Style note: please alphabetize your properties!)
+1. Create a branch with your code. (Style note: please help keep properties in order!)
 1. Create a pull request that references the issue. Please name `joshreisner` as a reviewer.
 
 ## Deployments
