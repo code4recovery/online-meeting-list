@@ -54,6 +54,8 @@ export default function App() {
                     tag.checked = checked;
                   }
                 });
+
+                //this will cause a re-render; the actual filtering is done in filterData
                 setState({ ...state });
               }}
               timezone={state.timezone}

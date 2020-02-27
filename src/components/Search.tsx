@@ -12,7 +12,7 @@ export function Search({ setSearch }: Search) {
       <Input
         placeholder="Search"
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          //setSearch(e.target.value);
+          setSearch(e.target.value);
         }}
       />
     </InputGroup>

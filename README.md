@@ -1,5 +1,14 @@
 This is a meeting finder concept for the [Online Intergroup of AA](http://aa-intergroup.org/). There is a demo at [https://oiaa.netlify.com](https://oiaa.netlify.com). Data is managed through a Google Sheet.
 
+## Next Steps
+
+[x] Search working
+[x] Tags working
+[ ] Timezone picker working
+[ ] Mobile view for filter
+[ ] Highlight search results
+[ ] Tags OR _inside_ categories, AND _between_ categories; eg Saturday OR Sunday AND Phone
+
 ## Technical Overview
 
 This project is written in [TypeScript](https://www.typescriptlang.org/) and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

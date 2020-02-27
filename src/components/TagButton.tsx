@@ -19,7 +19,7 @@ export function TagButton({ filter, value, toggleTag }: TagButton) {
       border="1px"
       borderColor="gray.200"
       mr={2}
-      mt={2}
+      my={1}
       onClick={e => {
         setChecked(!checked);
         toggleTag(filter, value, !checked);

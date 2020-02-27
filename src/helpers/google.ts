@@ -19,6 +19,16 @@ export function endpointUrl(sheet_id: string, page_id = 1): string {
   return `https://spreadsheets.google.com/feeds/list/${sheet_id}/${page_id}/public/values?alt=json`;
 }
 
+export const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
+];
+
 //parse google spreadsheet data into state object (runs once on init)
 export function loadStateFromResult(data: any): State {
   const meetings: Meeting[] = [];
@@ -117,18 +127,9 @@ export function loadStateFromResult(data: any): State {
 
   return {
     filters: {
-      Days: arrayToTagsArray([
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday"
-      ]),
-      Times: arrayToTagsArray(["Morning", "Midday", "Evening", "Night"]),
-      Formats: arrayToTagsArray(formats),
-      Types: arrayToTagsArray(types)
+      days: arrayToTagsArray(days),
+      formats: arrayToTagsArray(formats),
+      types: arrayToTagsArray(types)
     },
     loading: false,
     meetings: meetings,
