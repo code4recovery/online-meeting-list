@@ -35,7 +35,7 @@ export default function App() {
       {state.loading ? (
         <Loading />
       ) : (
-        <Box bg="gray.50" p={{ xs: 3, md: 6 }}>
+        <Box bg="gray.50" minHeight="100%" p={{ xs: 3, md: 6 }}>
           <Grid gap={{ xs: 3, md: 6 }} templateColumns={{ md: "auto 300px" }}>
             <Stack
               order={{ xs: 2, md: 1 }}

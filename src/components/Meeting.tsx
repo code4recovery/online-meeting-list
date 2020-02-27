@@ -83,7 +83,6 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
             {tag}
           </Tag>
         ))}
-      )}
     </Box>
   );
 }
