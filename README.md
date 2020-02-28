@@ -10,6 +10,7 @@ This is a meeting finder concept for the [Online Intergroup of AA](http://aa-int
 - [ ] Filter as "OR" _inside_ categories, but "AND" _between_ categories; eg Saturday OR Sunday AND Phone
 - [ ] Bookmarkable search / tag state
 - [ ] Clear search button
+- [ ] No results screen
 
 ## Managing Data
 
