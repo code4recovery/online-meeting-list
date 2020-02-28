@@ -15,7 +15,7 @@ export default function App() {
     },
     loading: true,
     meetings: [],
-    search: "",
+    search: [],
     timezone: moment.tz.guess()
   });
 
@@ -27,7 +27,16 @@ export default function App() {
       });
   }
 
-  const filteredMeetings = filterData(state);
+  //get currently-checked tags
+  const tags: string[] = Object.keys(state.filters)
+    .map(filter => {
+      return state.filters[filter]
+        .filter(value => value.checked)
+        .map(value => value.tag);
+    })
+    .flat();
+
+  const filteredMeetings = filterData(state, tags);
 
   return (
     <ThemeProvider>
@@ -43,13 +52,18 @@ export default function App() {
               spacing={{ xs: 3, md: 6 }}
             >
               {filteredMeetings.map((meeting: Meeting, index: number) => (
-                <Meeting key={index} meeting={meeting} />
+                <Meeting
+                  key={index}
+                  meeting={meeting}
+                  search={state.search}
+                  tags={tags}
+                />
               ))}
             </Stack>
             <Box order={{ xs: 1, md: 2 }}>
               <Filter
                 filters={state.filters}
-                setSearch={(search: string) => {
+                setSearch={(search: string[]) => {
                   setState({ ...state, search });
                 }}
                 setTimezone={(timezone: string) => {

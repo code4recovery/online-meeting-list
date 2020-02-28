@@ -17,7 +17,6 @@ export function ButtonPrimary({ icon, link, text, title }: ButtonPrimary) {
       mr={2}
       mt={3}
       onClick={() => window.open(link, "_blank")}
-      size="sm"
       title={title}
     >
       {text}

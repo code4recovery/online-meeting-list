@@ -4,21 +4,10 @@ import { State, days } from "../helpers";
 import { Meeting } from "../components";
 
 //set time zones, apply filters, and sort meetings, runs on state change
-export function filterData({
-  meetings,
-  filters,
-  search,
-  timezone
-}: State): Meeting[] {
-  //get currently-checked tags
-  const tags: string[] = Object.keys(filters)
-    .map(filter => {
-      return filters[filter]
-        .filter(value => value.checked)
-        .map(value => value.tag);
-    })
-    .flat();
-
+export function filterData(
+  { meetings, search, timezone }: State,
+  tags: string[]
+): Meeting[] {
   //get current timestamp
   const now: number = parseInt(moment().format("x"));
 
@@ -66,24 +55,14 @@ export function filterData({
   }
 
   //search?
-  const needle = search
-    .toLowerCase()
-    .split(" ")
-    .filter(e => e);
-  if (needle.length) {
+  if (search) {
     meetings = meetings.filter(meeting => {
-      const haystack = [meeting.name, meeting.notes]
-        .join(" ")
-        .toLowerCase()
-        .split(" ")
-        .filter(e => e)
-        .join(" ");
       return (
-        needle
+        search
           .map(word => {
-            return haystack.includes(word);
+            return meeting.search.includes(word);
           })
-          .filter(e => e).length === needle.length
+          .filter(e => e).length === search.length
       );
     });
   }

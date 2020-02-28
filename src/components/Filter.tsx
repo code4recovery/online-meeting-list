@@ -7,7 +7,7 @@ import { Tag } from "../helpers";
 
 type Filter = {
   filters: { [key: string]: Tag[] };
-  setSearch(search: string): void;
+  setSearch(search: string[]): void;
   setTimezone(timezone: string): void;
   toggleTag(filter: string, value: string, checked: boolean): void;
   timezone: string;

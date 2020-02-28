@@ -10,7 +10,7 @@ export type State = {
   filters: { [key: string]: Tag[] };
   loading: boolean;
   meetings: Meeting[];
-  search: string;
+  search: string[];
   timezone: string;
 };
 
@@ -44,6 +44,7 @@ export function loadStateFromResult(data: any): State {
       url: data.feed.entry[i]["gsx$url"]["$t"].trim(),
       notes: stringToTrimmedArray(data.feed.entry[i]["gsx$notes"]["$t"], "\n"),
       updated: data.feed.entry[i]["updated"]["$t"],
+      search: "",
       tags: []
     };
 
@@ -87,6 +88,14 @@ export function loadStateFromResult(data: any): State {
       data.feed.entry[i]["gsx$times"]["$t"],
       "\n"
     );
+
+    //search index
+    meeting.search = [meeting.name, meeting.notes]
+      .join(" ")
+      .toLowerCase()
+      .split(" ")
+      .filter(e => e)
+      .join(" ");
 
     if (times.length) {
       //loop through create an entry for each time
@@ -133,7 +142,7 @@ export function loadStateFromResult(data: any): State {
     },
     loading: false,
     meetings: meetings,
-    search: "",
+    search: [],
     timezone: moment.tz.guess()
   };
 }

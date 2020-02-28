@@ -1,5 +1,7 @@
 import React from "react";
 import { Box, Divider, Heading, Text, Tag } from "@chakra-ui/core";
+import Highlighter from "react-highlight-words";
+
 import { ButtonPrimary } from "./";
 
 export type Meeting = {
@@ -14,9 +16,18 @@ export type Meeting = {
   notes: string[];
   tags: string[];
   updated: string;
+  search: string;
 };
 
-export function Meeting({ meeting }: { meeting: Meeting }) {
+export function Meeting({
+  meeting,
+  search,
+  tags
+}: {
+  meeting: Meeting;
+  search: string[];
+  tags: string[];
+}) {
   return (
     <Box
       bg="white"
@@ -27,7 +38,9 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
       shadow="md"
     >
       <Box alignItems="baseline" d={{ md: "flex" }} mb={4}>
-        <Heading fontSize="xl">{meeting.name}</Heading>
+        <Heading fontSize="2xl">
+          <Highlighter searchWords={search} textToHighlight={meeting.name} />
+        </Heading>
         <Heading
           color="gray.400"
           fontSize="lg"
@@ -40,7 +53,7 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
       {meeting.notes.length &&
         meeting.notes.map((paragraph: string, key: number) => (
           <Text key={key} mt={2}>
-            {paragraph}
+            <Highlighter searchWords={search} textToHighlight={paragraph} />
           </Text>
         ))}
       {meeting.url && (
@@ -71,10 +84,8 @@ export function Meeting({ meeting }: { meeting: Meeting }) {
       {meeting.tags.length &&
         meeting.tags.map((tag: string, index: number) => (
           <Tag
-            bg="white"
-            border="1px"
-            borderColor="gray.200"
-            color="gray.500"
+            bg={tags.includes(tag) ? "gray.300" : "gray.100"}
+            color={tags.includes(tag) ? "gray.700" : "gray.500"}
             key={index}
             mr={2}
             mt={2}

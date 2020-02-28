@@ -6,17 +6,18 @@ This is a meeting finder concept for the [Online Intergroup of AA](http://aa-int
 - [x] Tags working
 - [x] Timezone picker working
 - [x] Mobile view for filter
-- [ ] Highlight search results and active tags
-- [ ] Tags OR _inside_ categories, AND _between_ categories; eg Saturday OR Sunday AND Phone
+- [x] Highlight search results and active tags
+- [ ] Filter as "OR" _inside_ categories, but "AND" _between_ categories; eg Saturday OR Sunday AND Phone
 - [ ] Bookmarkable search / tag state
+- [ ] Clear search button
 
 ## Managing Data
 
 The data for this project in managed in [this Google Sheet](https://docs.google.com/spreadsheets/d/1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4/edit#gid=0). Some notes:
 
-- Please use the `Format > Clear Formatting` command regularly
-- Best to remove the meeting times and phone numbers from the Notes column, this prevents the inevitable scenario where it gets updated in one place but not another
-- The timezone column is necessary because time zones don't stay in sync due to daylight savings. Best to keep them in their local time and allow the app to translate them on the fly.
+- It's helpful to use the `Format > Clear Formatting` command, since styling doesn't carry over to the app.
+- It's a good practice to remove the meeting times and phone numbers from the Notes column, this prevents the inevitable scenario where it gets updated in one place but not another
+- The Timezone column is necessary because time zones don't stay in sync due to daylight savings. Best to store them in their local time and allow the app to translate them for the user on the fly.
 - Use soft returns (control-return on a Mac) to separate times in the Times column and indicate paragraph breaks in the Notes column
 - In cases where the format or types vary between times of the same meeting, that can either be mentioned in the Notes column, or separate entries could be created. For example, if the Friday night ocurrence of a weekly meeting is Women-only, then it's probably best to create a new row for just that Friday meeting.
 

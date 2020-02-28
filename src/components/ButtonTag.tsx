@@ -9,15 +9,12 @@ type ButtonTag = {
 
 export function ButtonTag({ filter, value, toggleTag }: ButtonTag) {
   const [checked, setChecked] = useState(false);
-  const colors = {
-    bg: checked ? "gray.900" : "gray.100",
-    color: checked ? "gray.100" : "gray.600"
-  };
   return (
     <Button
-      {...colors}
+      bg={checked ? "gray.900" : "gray.100"}
       border="1px"
       borderColor="gray.200"
+      color={checked ? "gray.100" : "gray.600"}
       mr={2}
       my={1}
       onClick={e => {
@@ -25,7 +22,6 @@ export function ButtonTag({ filter, value, toggleTag }: ButtonTag) {
         toggleTag(filter, value, !checked);
       }}
       size="sm"
-      _active={colors}
       _hover={{
         bg: checked ? "gray.800" : "gray.200",
         color: checked ? "gray.100" : "gray.600"
