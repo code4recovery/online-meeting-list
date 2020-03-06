@@ -30,6 +30,7 @@ export function Meeting({
 }) {
   return (
     <Box
+      as="article"
       bg="white"
       border="1px"
       borderColor="gray.100"
@@ -42,7 +43,7 @@ export function Meeting({
           <Highlighter searchWords={search} textToHighlight={meeting.name} />
         </Heading>
         <Heading
-          color="gray.400"
+          color="gray.600"
           fontSize="lg"
           fontWeight="normal"
           ml={{ md: 2 }}
@@ -80,12 +81,12 @@ export function Meeting({
           title={"Email " + meeting.email}
         />
       )}
-      <Divider mt={4} />
+      <Divider mt={4} role="presentation" />
       {meeting.tags.length &&
         meeting.tags.map((tag: string, index: number) => (
           <Tag
             bg={tags.includes(tag) ? "gray.300" : "gray.100"}
-            color={tags.includes(tag) ? "gray.700" : "gray.500"}
+            color={tags.includes(tag) ? "gray.700" : "gray.600"}
             key={index}
             mr={2}
             mt={2}

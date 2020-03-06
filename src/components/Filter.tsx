@@ -44,6 +44,7 @@ export function Filter({
         ))}
         <FormControl d="block" as="fieldset">
           <Select
+            aria-label="Timezone"
             icon="time"
             iconSize={4}
             onChange={(e: React.FormEvent<HTMLSelectElement>) =>

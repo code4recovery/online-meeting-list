@@ -44,8 +44,12 @@ export default function App() {
       {state.loading ? (
         <Loading />
       ) : (
-        <Box bg="gray.50" minHeight="100%" p={{ xs: 3, md: 6 }}>
-          <Grid gap={{ xs: 3, md: 6 }} templateColumns={{ md: "auto 300px" }}>
+        <Box as="main" bg="gray.50" minHeight="100%" p={{ xs: 3, md: 6 }}>
+          <Grid
+            as="section"
+            gap={{ xs: 3, md: 6 }}
+            templateColumns={{ md: "auto 300px" }}
+          >
             <Stack
               order={{ xs: 2, md: 1 }}
               shouldWrapChildren={true}
@@ -60,7 +64,7 @@ export default function App() {
                 />
               ))}
             </Stack>
-            <Box order={{ xs: 1, md: 2 }}>
+            <Box as="aside" order={{ xs: 1, md: 2 }}>
               <Filter
                 filters={state.filters}
                 setSearch={(search: string[]) => {

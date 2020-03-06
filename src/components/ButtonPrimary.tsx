@@ -11,7 +11,7 @@ type ButtonPrimary = {
 export function ButtonPrimary({ icon, link, text, title }: ButtonPrimary) {
   return (
     <Button
-      bg="blue.300"
+      bg="blue.600"
       color="white"
       leftIcon={icon}
       mr={2}

@@ -19,6 +19,7 @@ export function Search({ setSearch }: Search) {
         <Icon color="gray.300" name="search-2" />
       </InputLeftElement>
       <Input
+        aria-label="Search"
         placeholder="Search"
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setSearch(
