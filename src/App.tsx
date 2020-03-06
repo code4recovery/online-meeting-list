@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Box, CSSReset, Grid, Stack, ThemeProvider } from "@chakra-ui/core";
+import {
+  Box,
+  CSSReset,
+  Grid,
+  Heading,
+  Stack,
+  ThemeProvider
+} from "@chakra-ui/core";
 import moment from "moment-timezone";
 
 import { Filter, Loading, Meeting } from "./components";
@@ -45,26 +52,15 @@ export default function App() {
         <Loading />
       ) : (
         <Box as="main" bg="gray.50" minHeight="100%" p={{ xs: 3, md: 6 }}>
+          <Heading as="h1" className="sr-only">
+            Online Meeting Directory
+          </Heading>
           <Grid
             as="section"
             gap={{ xs: 3, md: 6 }}
             templateColumns={{ md: "auto 300px" }}
           >
-            <Stack
-              order={{ xs: 2, md: 1 }}
-              shouldWrapChildren={true}
-              spacing={{ xs: 3, md: 6 }}
-            >
-              {filteredMeetings.map((meeting: Meeting, index: number) => (
-                <Meeting
-                  key={index}
-                  meeting={meeting}
-                  search={state.search}
-                  tags={tags}
-                />
-              ))}
-            </Stack>
-            <Box as="aside" order={{ xs: 1, md: 2 }}>
+            <Box as="section" order={{ xs: 1, md: 2 }}>
               <Filter
                 filters={state.filters}
                 setSearch={(search: string[]) => {
@@ -91,6 +87,20 @@ export default function App() {
                 timezone={state.timezone}
               />
             </Box>
+            <Stack
+              order={{ xs: 2, md: 1 }}
+              shouldWrapChildren={true}
+              spacing={{ xs: 3, md: 6 }}
+            >
+              {filteredMeetings.map((meeting: Meeting, index: number) => (
+                <Meeting
+                  key={index}
+                  meeting={meeting}
+                  search={state.search}
+                  tags={tags}
+                />
+              ))}
+            </Stack>
           </Grid>
         </Box>
       )}

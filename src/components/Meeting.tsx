@@ -81,7 +81,7 @@ export function Meeting({
           title={"Email " + meeting.email}
         />
       )}
-      <Divider mt={4} role="presentation" />
+      <Divider mt={4} role="separator" />
       {meeting.tags.length &&
         meeting.tags.map((tag: string, index: number) => (
           <Tag
