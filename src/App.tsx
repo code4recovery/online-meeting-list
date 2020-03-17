@@ -51,7 +51,7 @@ export default function App() {
       {state.loading ? (
         <Loading />
       ) : (
-        <Box as="main" bg="gray.50" minHeight="100%" p={{ xs: 3, md: 6 }}>
+        <Box as="main" minHeight="100%" p={{ xs: 3, md: 6 }}>
           <Heading as="h1" className="sr-only">
             Online Meeting Directory
           </Heading>
