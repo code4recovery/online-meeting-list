@@ -27,7 +27,7 @@ export default function App() {
   });
 
   if (state.loading) {
-    fetch(endpointUrl("1UwTJNdzpGHKL8Vuig37SBk_pYKlA9xJgjjfOGyAeD_4"))
+    fetch(endpointUrl("1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs"))
       .then(result => result.json())
       .then(result => {
         setState(loadStateFromResult(result));
