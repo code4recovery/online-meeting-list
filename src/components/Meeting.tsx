@@ -33,7 +33,7 @@ export function Meeting({
       as="article"
       bg="white"
       border="1px"
-      borderColor="gray.100"
+      borderColor="gray.200"
       p={5}
       rounded="md"
       shadow="md"
