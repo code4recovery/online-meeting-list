@@ -88,7 +88,9 @@ export default function App() {
               />
             </Box>
             <Stack
+              maxWidth="100%"
               order={{ xs: 2, md: 1 }}
+              overflow="hidden"
               shouldWrapChildren={true}
               spacing={{ xs: 3, md: 6 }}
             >
