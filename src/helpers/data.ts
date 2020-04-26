@@ -1,5 +1,3 @@
-import moment from 'moment-timezone';
-
 import { days, State } from '../helpers';
 import { Meeting } from '../components';
 
@@ -10,25 +8,11 @@ export function filterData(
 ): Meeting[] {
   //loop through meetings for time operations
   meetings.map(meeting => {
-    if (meeting.start) {
-      //momentize start time
-      const startTime = moment(meeting.start).tz(timezone);
-
+    if (meeting.time) {
       //add day to meeting tags
       meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
-      meeting.tags.push(startTime.format('dddd'));
+      meeting.tags.push(meeting.time.format('dddd'));
       meeting.tags.sort();
-
-      //format human-readable time
-      meeting.time = startTime
-        .format('dddd, h:mma')
-        .concat(
-          meeting.end
-            ? '–' + moment(meeting.end).tz(timezone).format('h:mma')
-            : ''
-        );
-    } else {
-      meeting.time = 'Ongoing';
     }
     return meeting;
   });
@@ -58,11 +42,11 @@ export function filterData(
 
   //sort meetings (by time then name)
   meetings.sort((a: Meeting, b: Meeting) => {
-    if (a.start && b.start && a.start !== b.start) {
-      return a.start - b.start;
-    } else if (a.start && !b.start) {
+    if (a.time && b.time && !a.time.isSame(b.time)) {
+      return a.time.isAfter(b.time) ? 1 : -1;
+    } else if (a.time && !b.time) {
       return -1;
-    } else if (b.start && !a.start) {
+    } else if (b.time && !a.time) {
       return 1;
     }
     return a.name.localeCompare(b.name);

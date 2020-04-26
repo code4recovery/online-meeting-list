@@ -39,15 +39,12 @@ export function loadStateFromResult(data: any): State {
   let types: string[] = [];
 
   //get current timestamp - 10 minutes
-  const now: number =
-    parseInt(moment(/*'Saturday 8:44 PM', 'dddd h:mm a'*/).format('x')) -
-    600000;
-  //console.log(moment(now).format('dddd h:mm a'));
+  const tenMinutesAgo = moment().subtract(10, 'minutes');
 
+  //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
     const meeting: Meeting = {
       name: data.feed.entry[i]['gsx$name']['$t'].trim(),
-      timezone: data.feed.entry[i]['gsx$timezone']['$t'].trim(),
       email: data.feed.entry[i]['gsx$email']['$t'].trim(),
       phone: data.feed.entry[i]['gsx$phone']['$t'].replace(/\D/g, '').trim(),
       url: data.feed.entry[i]['gsx$url']['$t'].trim(),
@@ -92,45 +89,31 @@ export function loadStateFromResult(data: any): State {
     //append to meeting tags
     meeting.tags = meeting.tags.concat(meeting_types);
 
+    //search index
+    meeting.search = meeting.name
+      .toLowerCase()
+      .split(' ')
+      .filter(e => e)
+      .join(' ');
+
+    //timezone
+    const timezone = data.feed.entry[i]['gsx$timezone']['$t'].trim();
+
     //handle times
     const times = stringToTrimmedArray(
       data.feed.entry[i]['gsx$times']['$t'],
       '\n'
     );
 
-    //search index
-    meeting.search = [meeting.name]
-      .join(' ')
-      .toLowerCase()
-      .split(' ')
-      .filter(e => e)
-      .join(' ');
-
     if (times.length) {
       //loop through create an entry for each time
       times.forEach(time => {
-        const [day, ...times] = time.split(' ');
-        const [start, end] = times.join(' ').split('-');
-
         //set start time as a udate
-        meeting.start = parseInt(
-          moment
-            .tz(day.concat(' ', start), 'dddd h:mm a', meeting.timezone)
-            .format('x')
-        );
+        meeting.time = moment(time, 'dddd h:mm a', timezone);
 
-        //if the meeting is in the past (earlier today), then add a week
-        if (meeting.start < now) {
-          meeting.start += 604800000;
-        }
-
-        //if there is one, also set end time as a udate
-        if (end) {
-          meeting.end = parseInt(
-            moment
-              .tz(day.concat(' ', end), 'dddd h:mm a', meeting.timezone)
-              .format('x')
-          );
+        //make all meetings upcoming
+        if (meeting.time.isBefore(tenMinutesAgo)) {
+          meeting.time.add(1, 'week');
         }
 
         //push a clone of the meeting onto the array

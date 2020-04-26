@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Divider, Heading, Text, Tag } from '@chakra-ui/core';
 import Highlighter from 'react-highlight-words';
-
+import { Moment } from 'moment-timezone';
 // @ts-ignore
 import Linkify from 'react-linkify';
 
@@ -9,10 +9,7 @@ import { ButtonPrimary } from './';
 
 export type Meeting = {
   name: string;
-  start?: number;
-  end?: number;
-  time?: string;
-  timezone: string;
+  time?: Moment;
   email: string;
   url: string;
   phone: string;
@@ -54,7 +51,7 @@ export function Meeting({
           fontWeight="normal"
           ml={{ lg: 2 }}
         >
-          {meeting.time}
+          {!meeting.time ? 'Ongoing' : meeting.time.format('dddd h:mm a')}
         </Heading>
       </Box>
       {!!meeting.tags.length &&
