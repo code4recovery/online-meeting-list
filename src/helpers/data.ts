@@ -1,7 +1,7 @@
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
-import { State, days } from "../helpers";
-import { Meeting } from "../components";
+import { days, State } from '../helpers';
+import { Meeting } from '../components';
 
 //set time zones, apply filters, and sort meetings, runs on state change
 export function filterData(
@@ -9,34 +9,34 @@ export function filterData(
   tags: string[]
 ): Meeting[] {
   //loop through meetings for time operations
-  meetings.map((meeting) => {
+  meetings.map(meeting => {
     if (meeting.start) {
       //momentize start time
       const startTime = moment(meeting.start).tz(timezone);
 
       //add day to meeting tags
-      meeting.tags = meeting.tags.filter((tag) => !days.includes(tag));
-      meeting.tags.push(startTime.format("dddd"));
+      meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
+      meeting.tags.push(startTime.format('dddd'));
       meeting.tags.sort();
 
       //format human-readable time
       meeting.time = startTime
-        .format("dddd, h:mma")
+        .format('dddd, h:mma')
         .concat(
           meeting.end
-            ? "–" + moment(meeting.end).tz(timezone).format("h:mma")
-            : ""
+            ? '–' + moment(meeting.end).tz(timezone).format('h:mma')
+            : ''
         );
 
       return meeting;
     } else {
-      meeting.time = "Ongoing";
+      meeting.time = 'Ongoing';
     }
   });
 
   //filter meetings based on selected tags
   if (tags.length) {
-    meetings = meetings.filter((meeting) => {
+    meetings = meetings.filter(meeting => {
       for (let i = 0; i < tags.length; i++) {
         if (!meeting.tags.includes(tags[i])) return false;
       }
@@ -46,13 +46,13 @@ export function filterData(
 
   //search?
   if (search) {
-    meetings = meetings.filter((meeting) => {
+    meetings = meetings.filter(meeting => {
       return (
         search
-          .map((word) => {
+          .map(word => {
             return meeting.search.includes(word);
           })
-          .filter((e) => e).length === search.length
+          .filter(e => e).length === search.length
       );
     });
   }
@@ -74,9 +74,9 @@ export function filterData(
 }
 
 //split "foo, bar, baz" into ["foo", "bar", "baz"]
-export function stringToTrimmedArray(str: string, sep = ","): string[] {
+export function stringToTrimmedArray(str: string, sep = ','): string[] {
   return str
     .split(sep)
-    .map((val) => val.trim())
-    .filter((val) => val);
+    .map(val => val.trim())
+    .filter(val => val);
 }

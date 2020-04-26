@@ -1,3 +1,3 @@
-export * from "./data";
-export * from "./google";
-export * from "./query";
+export * from './data';
+export * from './google';
+export * from './query';

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Box, CSSReset, Grid, Heading, ThemeProvider } from "@chakra-ui/core";
-import moment from "moment-timezone";
-import InfiniteScroll from "react-infinite-scroller";
+import React, { useState } from 'react';
+import { Box, CSSReset, Grid, ThemeProvider } from '@chakra-ui/core';
+import moment from 'moment-timezone';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import { Filter, Loading, Meeting } from "./components";
+import { Filter, Loading, Meeting } from './components';
 import {
   endpointUrl,
   filterData,
@@ -11,7 +11,7 @@ import {
   meetingsPerPage,
   State,
   setQuery
-} from "./helpers";
+} from './helpers';
 
 export default function App() {
   const [state, setState] = useState<State>({
@@ -30,7 +30,7 @@ export default function App() {
 
   if (state.loading) {
     //on first render, get data
-    fetch(endpointUrl("1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs"))
+    fetch(endpointUrl('1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs'))
       .then(result => result.json())
       .then(result => {
         setState(loadStateFromResult(result));
@@ -58,13 +58,10 @@ export default function App() {
         <Loading />
       ) : (
         <Box as="main" minHeight="100%" p={{ xs: 3, md: 6 }}>
-          <Heading as="h1" className="sr-only">
-            Online Meeting Directory
-          </Heading>
           <Grid
             as="section"
             gap={{ xs: 3, md: 6 }}
-            templateColumns={{ md: "auto 300px" }}
+            templateColumns={{ md: 'auto 300px' }}
           >
             <Box as="section" order={{ xs: 1, md: 2 }}>
               <Filter
@@ -84,7 +81,7 @@ export default function App() {
                   state.filters[filter].forEach(tag => {
                     if (tag.tag === value) {
                       tag.checked = checked;
-                    } else if (["days", "formats"].includes(filter)) {
+                    } else if (['days', 'formats'].includes(filter)) {
                       //if we're setting a tag or format, uncheck the others
                       tag.checked = false;
                     }

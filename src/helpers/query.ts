@@ -1,4 +1,4 @@
-import { State } from "./";
+import { State } from './';
 
 //set the window query string to match the internal state
 export function setQuery(state: State) {
@@ -9,8 +9,8 @@ export function setQuery(state: State) {
     if (checkedValues.length) {
       query.push(
         key.concat(
-          "=",
-          checkedValues.map(value => encodeURIComponent(value.tag)).join(",")
+          '=',
+          checkedValues.map(value => encodeURIComponent(value.tag)).join(',')
         )
       );
     }
@@ -18,8 +18,8 @@ export function setQuery(state: State) {
 
   //set query string
   window.history.pushState(
-    "",
-    "",
-    query.length ? "?".concat(query.join("&")) : window.location.pathname
+    '',
+    '',
+    query.length ? '?'.concat(query.join('&')) : window.location.pathname
   );
 }

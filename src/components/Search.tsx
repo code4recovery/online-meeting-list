@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent } from 'react';
 import {
   Icon,
   //IconButton,
@@ -6,7 +6,7 @@ import {
   InputGroup,
   InputLeftElement
   //InputRightElement
-} from "@chakra-ui/core";
+} from '@chakra-ui/core';
 
 type Search = {
   setSearch(search: string[]): void;
@@ -25,7 +25,7 @@ export function Search({ setSearch }: Search) {
           setSearch(
             e.target.value
               .toLowerCase()
-              .split(" ")
+              .split(' ')
               .filter(e => e)
           );
         }}

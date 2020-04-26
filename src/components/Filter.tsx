@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import moment from "moment-timezone";
-import { Button, FormControl, Select, Stack } from "@chakra-ui/core";
+import React, { useState } from 'react';
+import moment from 'moment-timezone';
+import { Button, FormControl, Select, Stack } from '@chakra-ui/core';
 
-import { ButtonTag, Search } from "./";
-import { Tag } from "../helpers";
+import { ButtonTag, Search } from './';
+import { Tag } from '../helpers';
 
 type Filter = {
   filters: { [key: string]: Tag[] };
@@ -27,7 +27,7 @@ export function Filter({
         <Search setSearch={setSearch} />
       </FormControl>
       <Stack
-        d={{ xs: open ? "block" : "none", md: "block" }}
+        d={{ xs: open ? 'block' : 'none', md: 'block' }}
         spacing={{ xs: 3, md: 6 }}
       >
         {Object.keys(filters).map((filter: string, index: number) => (
@@ -58,17 +58,17 @@ export function Filter({
           </Select>
         </FormControl>
       </Stack>
-      <FormControl d={{ md: "none" }}>
+      <FormControl d={{ md: 'none' }}>
         <Button
           bg="white"
           onClick={() => {
             setOpen(!open);
           }}
-          rightIcon={open ? "chevron-up" : "chevron-down"}
+          rightIcon={open ? 'chevron-up' : 'chevron-down'}
           variant="outline"
           w="100%"
         >
-          {open ? "Close" : "Filters"}
+          {open ? 'Close' : 'Filters'}
         </Button>
       </FormControl>
     </Stack>

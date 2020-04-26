@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Spinner } from "@chakra-ui/core";
+import React from 'react';
+import { Box, Spinner } from '@chakra-ui/core';
 
 export function Loading() {
   return (

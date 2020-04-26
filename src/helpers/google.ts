@@ -1,7 +1,7 @@
-import moment from "moment-timezone";
+import moment from 'moment-timezone';
 
-import { stringToTrimmedArray } from "./";
-import { Meeting } from "../components/Meeting";
+import { stringToTrimmedArray } from './';
+import { Meeting } from '../components/Meeting';
 
 //types
 export type Tag = { tag: string; checked: boolean };
@@ -21,13 +21,13 @@ export function endpointUrl(sheet_id: string, page_id = 1): string {
 }
 
 export const days = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
 ];
 
 export const meetingsPerPage = 10;
@@ -39,29 +39,29 @@ export function loadStateFromResult(data: any): State {
   let types: string[] = [];
 
   //get current timestamp - 10 minutes
-  const now: number = parseInt(moment().format("x")) - 600000;
+  const now: number = parseInt(moment().format('x')) - 600000;
 
   for (let i = 0; i < data.feed.entry.length; i++) {
     const meeting: Meeting = {
-      name: data.feed.entry[i]["gsx$name"]["$t"].trim(),
-      timezone: data.feed.entry[i]["gsx$timezone"]["$t"].trim(),
-      email: data.feed.entry[i]["gsx$email"]["$t"].trim(),
-      phone: data.feed.entry[i]["gsx$phone"]["$t"].replace(/\D/g, "").trim(),
-      url: data.feed.entry[i]["gsx$url"]["$t"].trim(),
-      notes: stringToTrimmedArray(data.feed.entry[i]["gsx$notes"]["$t"], "\n"),
-      updated: data.feed.entry[i]["updated"]["$t"],
-      search: "",
-      tags: [],
+      name: data.feed.entry[i]['gsx$name']['$t'].trim(),
+      timezone: data.feed.entry[i]['gsx$timezone']['$t'].trim(),
+      email: data.feed.entry[i]['gsx$email']['$t'].trim(),
+      phone: data.feed.entry[i]['gsx$phone']['$t'].replace(/\D/g, '').trim(),
+      url: data.feed.entry[i]['gsx$url']['$t'].trim(),
+      notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
+      updated: data.feed.entry[i]['updated']['$t'],
+      search: '',
+      tags: []
     };
 
     //handle phone
-    const accessCode = data.feed.entry[i]["gsx$accesscode"]["$t"].trim();
+    const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
     if (accessCode.length)
-      meeting.phone = meeting.phone.concat("," + accessCode);
+      meeting.phone = meeting.phone.concat(',' + accessCode);
 
     //handle formats
     const meeting_formats = stringToTrimmedArray(
-      data.feed.entry[i]["gsx$formats"]["$t"]
+      data.feed.entry[i]['gsx$formats']['$t']
     );
 
     //append to formats array
@@ -76,11 +76,11 @@ export function loadStateFromResult(data: any): State {
 
     //get types
     const meeting_types = stringToTrimmedArray(
-      data.feed.entry[i]["gsx$types"]["$t"]
+      data.feed.entry[i]['gsx$types']['$t']
     );
 
     //append to types array
-    meeting_types.forEach((type) => {
+    meeting_types.forEach(type => {
       if (!types.includes(type)) {
         types.push(type);
       }
@@ -91,27 +91,27 @@ export function loadStateFromResult(data: any): State {
 
     //handle times
     const times = stringToTrimmedArray(
-      data.feed.entry[i]["gsx$times"]["$t"],
-      "\n"
+      data.feed.entry[i]['gsx$times']['$t'],
+      '\n'
     );
 
     //search index
     meeting.search = [meeting.name]
-      .join(" ")
+      .join(' ')
       .toLowerCase()
-      .split(" ")
-      .filter((e) => e)
-      .join(" ");
+      .split(' ')
+      .filter(e => e)
+      .join(' ');
 
     if (times.length) {
       //loop through create an entry for each time
-      times.forEach((time) => {
-        const [day, ...times] = time.split(" ");
-        const [start, end] = times.join(" ").split("-");
+      times.forEach(time => {
+        const [day, ...times] = time.split(' ');
+        const [start, end] = times.join(' ').split('-');
 
         //set start time as a udate
         meeting.start = parseInt(
-          moment(start, "h:mm a").day(day).tz(meeting.timezone).format("x")
+          moment(start, 'h:mm a').day(day).tz(meeting.timezone).format('x')
         );
 
         //if the meeting is in the past (earlier today), then add a week
@@ -122,7 +122,7 @@ export function loadStateFromResult(data: any): State {
         //if there is one, also set end time as a udate
         if (end) {
           meeting.end = parseInt(
-            moment(end, "h:mm a").day(day).tz(meeting.timezone).format("x")
+            moment(end, 'h:mm a').day(day).tz(meeting.timezone).format('x')
           );
         }
 
@@ -144,10 +144,10 @@ export function loadStateFromResult(data: any): State {
   if (window.location.search.length > 1) {
     window.location.search
       .substr(1)
-      .split("&")
-      .forEach((pair) => {
-        const [key, value] = pair.split("=");
-        query[key] = value.split(",").map(decodeURIComponent);
+      .split('&')
+      .forEach(pair => {
+        const [key, value] = pair.split('=');
+        query[key] = value.split(',').map(decodeURIComponent);
       });
   }
 
@@ -155,18 +155,18 @@ export function loadStateFromResult(data: any): State {
     filters: {
       days: arrayToTagsArray(days, query.days || []),
       formats: arrayToTagsArray(formats, query.formats || []),
-      types: arrayToTagsArray(types, query.types || []),
+      types: arrayToTagsArray(types, query.types || [])
     },
     limit: meetingsPerPage,
     loading: false,
     meetings: meetings,
     search: [],
-    timezone: moment.tz.guess(),
+    timezone: moment.tz.guess()
   };
 }
 
 function arrayToTagsArray(array: string[], values: string[]): Tag[] {
-  return array.map((tag) => {
+  return array.map(tag => {
     return { tag: tag, checked: values.includes(tag) };
   });
 }

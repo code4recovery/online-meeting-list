@@ -1,11 +1,11 @@
-import React from "react";
-import { Box, Divider, Heading, Text, Tag } from "@chakra-ui/core";
-import Highlighter from "react-highlight-words";
+import React from 'react';
+import { Box, Divider, Heading, Text, Tag } from '@chakra-ui/core';
+import Highlighter from 'react-highlight-words';
 
 // @ts-ignore
-import Linkify from "react-linkify";
+import Linkify from 'react-linkify';
 
-import { ButtonPrimary } from "./";
+import { ButtonPrimary } from './';
 
 export type Meeting = {
   name: string;
@@ -42,15 +42,17 @@ export function Meeting({
       rounded="md"
       shadow="md"
     >
-      <Box alignItems="baseline" d={{ md: "flex" }} mb={2}>
-        <Heading fontSize="2xl">
+      <Box alignItems="baseline" mb={2}>
+        <Heading d={{ lg: 'inline' }} fontSize="2xl">
           <Highlighter searchWords={search} textToHighlight={meeting.name} />
         </Heading>
         <Heading
+          as="h3"
           color="gray.600"
+          d={{ lg: 'inline' }}
           fontSize="lg"
           fontWeight="normal"
-          ml={{ md: 2 }}
+          ml={{ lg: 2 }}
         >
           {meeting.time}
         </Heading>
@@ -58,8 +60,8 @@ export function Meeting({
       {!!meeting.tags.length &&
         meeting.tags.map((tag: string, index: number) => (
           <Tag
-            bg={tags.includes(tag) ? "gray.300" : "gray.100"}
-            color={tags.includes(tag) ? "gray.700" : "gray.600"}
+            bg={tags.includes(tag) ? 'gray.300' : 'gray.100'}
+            color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
             key={index}
             mr={2}
             mt={2}
@@ -74,24 +76,24 @@ export function Meeting({
         <ButtonPrimary
           icon="link"
           link={meeting.url}
-          text={new URL(meeting.url).hostname.replace("www.", "")}
-          title={"Visit " + meeting.url}
+          text={new URL(meeting.url).hostname.replace('www.', '')}
+          title={'Visit ' + meeting.url}
         />
       )}
       {!!meeting.phone && (
         <ButtonPrimary
           icon="phone"
-          link={"tel:" + meeting.phone}
+          link={'tel:' + meeting.phone}
           text="Phone"
-          title={"Call " + meeting.phone}
+          title={'Call ' + meeting.phone}
         />
       )}
       {!!meeting.email && (
         <ButtonPrimary
           icon="email"
-          link={"mailto:" + meeting.email}
+          link={'mailto:' + meeting.email}
           text="Email"
-          title={"Email " + meeting.email}
+          title={'Email ' + meeting.email}
         />
       )}
       <Divider mt={4} role="separator" />

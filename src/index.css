@@ -4,25 +4,11 @@ body,
   height: 100%;
 }
 
-.sr-only {
-  border: 0;
-  clip: rect(0, 0, 0, 0);
-  clip-path: inset(50%);
-  height: 1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  white-space: nowrap;
-  width: 1px;
-  -webkit-clip-path: inset(50%);
-}
-
 #root a {
-    border-bottom: 1px solid;
-    color: #1870bc;
-	
+  border-bottom: 1px solid;
+  color: #1870bc;
 }
 
 #root a:hover {
-    border-bottom: none;
+  border-bottom: none;
 }
