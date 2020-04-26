@@ -62,9 +62,9 @@ export function filterData(
   meetings.sort((a: Meeting, b: Meeting) => {
     if (a.start && b.start && a.start !== b.start) {
       return a.start - b.start;
-    } else if (a.start) {
+    } else if (a.start && !b.start) {
       return -1;
-    } else if (b.start) {
+    } else if (b.start && !a.start) {
       return 1;
     }
     return a.name.localeCompare(b.name);
