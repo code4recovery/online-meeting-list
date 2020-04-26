@@ -39,7 +39,10 @@ export function loadStateFromResult(data: any): State {
   let types: string[] = [];
 
   //get current timestamp - 10 minutes
-  const now: number = parseInt(moment().format('x')) - 600000;
+  const now: number =
+    parseInt(moment(/*'Saturday 8:44 PM', 'dddd h:mm a'*/).format('x')) -
+    600000;
+  //console.log(moment(now).format('dddd h:mm a'));
 
   for (let i = 0; i < data.feed.entry.length; i++) {
     const meeting: Meeting = {
@@ -111,7 +114,9 @@ export function loadStateFromResult(data: any): State {
 
         //set start time as a udate
         meeting.start = parseInt(
-          moment(start, 'h:mm a').day(day).tz(meeting.timezone).format('x')
+          moment
+            .tz(day.concat(' ', start), 'dddd h:mm a', meeting.timezone)
+            .format('x')
         );
 
         //if the meeting is in the past (earlier today), then add a week
@@ -122,7 +127,9 @@ export function loadStateFromResult(data: any): State {
         //if there is one, also set end time as a udate
         if (end) {
           meeting.end = parseInt(
-            moment(end, 'h:mm a').day(day).tz(meeting.timezone).format('x')
+            moment
+              .tz(day.concat(' ', end), 'dddd h:mm a', meeting.timezone)
+              .format('x')
           );
         }
 

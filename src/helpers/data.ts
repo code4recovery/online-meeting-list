@@ -27,11 +27,10 @@ export function filterData(
             ? '–' + moment(meeting.end).tz(timezone).format('h:mma')
             : ''
         );
-
-      return meeting;
     } else {
       meeting.time = 'Ongoing';
     }
+    return meeting;
   });
 
   //filter meetings based on selected tags
