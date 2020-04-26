@@ -30,7 +30,6 @@ export function filterData(
 
       return meeting;
     } else {
-      meeting.tags.push("Ongoing");
       meeting.time = "Ongoing";
     }
   });
