@@ -8,6 +8,7 @@ export type Tag = { tag: string; checked: boolean };
 
 export type State = {
   filters: { [key: string]: Tag[] };
+  limit: number;
   loading: boolean;
   meetings: Meeting[];
   search: string[];
@@ -28,6 +29,8 @@ export const days = [
   "Friday",
   "Saturday"
 ];
+
+export const meetingsPerPage = 10;
 
 //parse google spreadsheet data into state object (runs once on init)
 export function loadStateFromResult(data: any): State {
@@ -90,7 +93,7 @@ export function loadStateFromResult(data: any): State {
     );
 
     //search index
-    meeting.search = [meeting.name, meeting.notes]
+    meeting.search = [meeting.name]
       .join(" ")
       .toLowerCase()
       .split(" ")
@@ -105,19 +108,13 @@ export function loadStateFromResult(data: any): State {
 
         //set start time as a udate
         meeting.start = parseInt(
-          moment
-            .tz(start, "h:mm a", meeting.timezone)
-            .day(day)
-            .format("x")
+          moment.tz(start, "h:mm a", meeting.timezone).day(day).format("x")
         );
 
         //if there is one, also set end time as a udate
         if (end) {
           meeting.end = parseInt(
-            moment
-              .tz(end, "h:mm a", meeting.timezone)
-              .day(day)
-              .format("x")
+            moment.tz(end, "h:mm a", meeting.timezone).day(day).format("x")
           );
         }
 
@@ -134,12 +131,25 @@ export function loadStateFromResult(data: any): State {
   formats.sort();
   types.sort();
 
+  //read query string
+  const query: { [key: string]: string[] } = {};
+  if (window.location.search.length > 1) {
+    window.location.search
+      .substr(1)
+      .split("&")
+      .forEach(pair => {
+        const [key, value] = pair.split("=");
+        query[key] = value.split(",").map(decodeURIComponent);
+      });
+  }
+
   return {
     filters: {
-      days: arrayToTagsArray(days),
-      formats: arrayToTagsArray(formats),
-      types: arrayToTagsArray(types)
+      days: arrayToTagsArray(days, query.days || []),
+      formats: arrayToTagsArray(formats, query.formats || []),
+      types: arrayToTagsArray(types, query.types || [])
     },
+    limit: meetingsPerPage,
     loading: false,
     meetings: meetings,
     search: [],
@@ -147,8 +157,8 @@ export function loadStateFromResult(data: any): State {
   };
 }
 
-function arrayToTagsArray(array: string[]): Tag[] {
+function arrayToTagsArray(array: string[], values: string[]): Tag[] {
   return array.map(tag => {
-    return { tag: tag, checked: false };
+    return { tag: tag, checked: values.includes(tag) };
   });
 }

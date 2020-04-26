@@ -16,3 +16,13 @@ body,
   width: 1px;
   -webkit-clip-path: inset(50%);
 }
+
+#root a {
+    border-bottom: 1px solid;
+    color: #1870bc;
+	
+}
+
+#root a:hover {
+    border-bottom: none;
+}

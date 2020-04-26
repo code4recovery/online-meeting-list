@@ -2,6 +2,9 @@ import React from "react";
 import { Box, Divider, Heading, Text, Tag } from "@chakra-ui/core";
 import Highlighter from "react-highlight-words";
 
+// @ts-ignore
+import Linkify from "react-linkify";
+
 import { ButtonPrimary } from "./";
 
 export type Meeting = {
@@ -34,11 +37,12 @@ export function Meeting({
       bg="white"
       border="1px"
       borderColor="gray.200"
+      mb={{ xs: 3, md: 6 }}
       p={5}
       rounded="md"
       shadow="md"
     >
-      <Box alignItems="baseline" d={{ md: "flex" }} mb={4}>
+      <Box alignItems="baseline" d={{ md: "flex" }} mb={2}>
         <Heading fontSize="2xl">
           <Highlighter searchWords={search} textToHighlight={meeting.name} />
         </Heading>
@@ -51,13 +55,22 @@ export function Meeting({
           {meeting.time}
         </Heading>
       </Box>
-      {meeting.notes.length &&
-        meeting.notes.map((paragraph: string, key: number) => (
-          <Text key={key} mt={2}>
-            <Highlighter searchWords={search} textToHighlight={paragraph} />
-          </Text>
+      {!!meeting.tags.length &&
+        meeting.tags.map((tag: string, index: number) => (
+          <Tag
+            bg={tags.includes(tag) ? "gray.300" : "gray.100"}
+            color={tags.includes(tag) ? "gray.700" : "gray.600"}
+            key={index}
+            mr={2}
+            mt={2}
+            mb={2}
+            size="sm"
+          >
+            {tag}
+          </Tag>
         ))}
-      {meeting.url && (
+      <Divider mb={0} role="separator" />
+      {!!meeting.url && (
         <ButtonPrimary
           icon="link"
           link={meeting.url}
@@ -65,7 +78,7 @@ export function Meeting({
           title={"Visit " + meeting.url}
         />
       )}
-      {meeting.phone && (
+      {!!meeting.phone && (
         <ButtonPrimary
           icon="phone"
           link={"tel:" + meeting.phone}
@@ -73,7 +86,7 @@ export function Meeting({
           title={"Call " + meeting.phone}
         />
       )}
-      {meeting.email && (
+      {!!meeting.email && (
         <ButtonPrimary
           icon="email"
           link={"mailto:" + meeting.email}
@@ -82,18 +95,11 @@ export function Meeting({
         />
       )}
       <Divider mt={4} role="separator" />
-      {meeting.tags.length &&
-        meeting.tags.map((tag: string, index: number) => (
-          <Tag
-            bg={tags.includes(tag) ? "gray.300" : "gray.100"}
-            color={tags.includes(tag) ? "gray.700" : "gray.600"}
-            key={index}
-            mr={2}
-            mt={2}
-            size="sm"
-          >
-            {tag}
-          </Tag>
+      {!!meeting.notes.length &&
+        meeting.notes.map((paragraph: string, key: number) => (
+          <Text key={key} mt={2}>
+            <Linkify>{paragraph}</Linkify>
+          </Text>
         ))}
     </Box>
   );

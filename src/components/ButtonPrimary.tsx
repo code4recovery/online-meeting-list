@@ -18,6 +18,7 @@ export function ButtonPrimary({ icon, link, text, title }: ButtonPrimary) {
       mt={3}
       onClick={() => window.open(link, "_blank")}
       title={title}
+      _hover={{ bg: "blue.800" }}
     >
       {text}
     </Button>

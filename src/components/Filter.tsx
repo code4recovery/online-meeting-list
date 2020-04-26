@@ -32,12 +32,12 @@ export function Filter({
       >
         {Object.keys(filters).map((filter: string, index: number) => (
           <FormControl key={index}>
-            {filters[filter].map((value: Tag, index: number) => (
+            {filters[filter].map((tag: Tag, index: number) => (
               <ButtonTag
                 filter={filter}
                 key={index}
+                tag={tag}
                 toggleTag={toggleTag}
-                value={value.tag}
               />
             ))}
           </FormControl>

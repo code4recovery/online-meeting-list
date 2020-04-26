@@ -1,33 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@chakra-ui/core";
+
+import { Tag } from "../helpers";
 
 type ButtonTag = {
   filter: string;
-  value: string;
+  tag: Tag;
   toggleTag(filter: string, value: string, checked: boolean): void;
 };
 
-export function ButtonTag({ filter, value, toggleTag }: ButtonTag) {
-  const [checked, setChecked] = useState(false);
+export function ButtonTag({ filter, tag, toggleTag }: ButtonTag) {
   return (
     <Button
-      bg={checked ? "gray.900" : "gray.100"}
+      bg={tag.checked ? "gray.900" : "gray.100"}
       border="1px"
       borderColor="gray.200"
-      color={checked ? "gray.100" : "gray.600"}
+      color={tag.checked ? "gray.100" : "gray.600"}
       mr={2}
       my={1}
       onClick={e => {
-        setChecked(!checked);
-        toggleTag(filter, value, !checked);
+        toggleTag(filter, tag.tag, !tag.checked);
       }}
       size="sm"
       _hover={{
-        bg: checked ? "gray.800" : "gray.200",
-        color: checked ? "gray.100" : "gray.600"
+        bg: tag.checked ? "gray.800" : "gray.200",
+        color: tag.checked ? "gray.100" : "gray.600"
       }}
     >
-      {value}
+      {tag.tag}
     </Button>
   );
 }
