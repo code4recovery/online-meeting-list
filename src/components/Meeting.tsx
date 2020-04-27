@@ -61,8 +61,7 @@ export function Meeting({
             color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
             key={index}
             mr={2}
-            mt={2}
-            mb={2}
+            my={2}
             size="sm"
           >
             {tag}

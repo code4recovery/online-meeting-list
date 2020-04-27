@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, CSSReset, Grid, ThemeProvider } from '@chakra-ui/core';
-import moment from 'moment-timezone';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { Filter, Loading, Meeting } from './components';
@@ -25,7 +24,7 @@ export default function App() {
     loading: true,
     meetings: [],
     search: [],
-    timezone: moment.tz.guess()
+    timezone: ''
   });
 
   if (state.loading) {

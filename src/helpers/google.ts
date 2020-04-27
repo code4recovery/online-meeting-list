@@ -1,6 +1,5 @@
 import moment from 'moment-timezone';
 
-import { stringToTrimmedArray } from './';
 import { Meeting } from '../components/Meeting';
 
 //types
@@ -37,9 +36,6 @@ export function loadStateFromResult(data: any): State {
   const meetings: Meeting[] = [];
   let formats: string[] = [];
   let types: string[] = [];
-
-  //get current timestamp - 10 minutes
-  const tenMinutesAgo = moment().subtract(10, 'minutes');
 
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
@@ -107,17 +103,12 @@ export function loadStateFromResult(data: any): State {
 
     if (times.length) {
       //loop through create an entry for each time
-      times.forEach(time => {
+      times.forEach(timestring => {
         //set start time as a udate
-        meeting.time = moment.tz(time, 'dddd h:mm a', timezone);
-
-        //make all meetings upcoming
-        if (meeting.time.isBefore(tenMinutesAgo)) {
-          meeting.time.add(1, 'week');
-        }
+        const time = moment.tz(timestring, 'dddd h:mm a', timezone);
 
         //push a clone of the meeting onto the array
-        meetings.push({ ...meeting });
+        meetings.push({ ...meeting, time });
       });
     } else {
       //ongoing meeting; add to meetings
@@ -159,4 +150,12 @@ function arrayToTagsArray(array: string[], values: string[]): Tag[] {
   return array.map(tag => {
     return { tag: tag, checked: values.includes(tag) };
   });
+}
+
+//split "foo, bar, baz" into ["foo", "bar", "baz"]
+function stringToTrimmedArray(str: string, sep = ','): string[] {
+  return str
+    .split(sep)
+    .map(val => val.trim())
+    .filter(val => val);
 }
