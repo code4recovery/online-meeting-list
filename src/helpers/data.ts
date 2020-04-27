@@ -9,6 +9,9 @@ export function filterData(
   //loop through meetings for time operations
   meetings.map(meeting => {
     if (meeting.time) {
+      //convert timezone
+      meeting.time.tz(timezone);
+
       //add day to meeting tags
       meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
       meeting.tags.push(meeting.time.format('dddd'));

@@ -109,7 +109,7 @@ export function loadStateFromResult(data: any): State {
       //loop through create an entry for each time
       times.forEach(time => {
         //set start time as a udate
-        meeting.time = moment(time, 'dddd h:mm a', timezone);
+        meeting.time = moment.tz(time, 'dddd h:mm a', timezone);
 
         //make all meetings upcoming
         if (meeting.time.isBefore(tenMinutesAgo)) {
