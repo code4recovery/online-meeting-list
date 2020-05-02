@@ -1,4 +1,4 @@
-This is a new meeting finder for the [Online Intergroup of AA](http://aa-intergroup.org/). There is a demo at [https://oiaa.netlify.com](https://oiaa.netlify.com) and an embedded version at [http://beta.aa-intergroup.org/oiaa/meetings/](http://beta.aa-intergroup.org/oiaa/meetings/).
+This is a new meeting finder for the [Online Intergroup of AA](http://aa-intergroup.org/). There is a demo at [https://oiaa.netlify.com](https://oiaa.netlify.com) and an embedded version at [https://aa-intergroup.org/oiaa/meetings/](https://aa-intergroup.org/oiaa/meetings/).
 
 ## Next Steps
 
@@ -34,8 +34,8 @@ In the project directory, first run `yarn` once to install the dependencies, the
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
 1. Create a branch with your code. (Style note: please help keep properties in order!)
-1. Create a pull request that references the issue. Please name `joshreisner` as a reviewer.
+1. Create a pull request that references the issue. Please name [@joshreisner](https://github.com/joshreisner) as a reviewer.
 
 ## Deployments
 
-The project is hosted on Netlify. Commits to the `master` branch are automatically built and deployed.
+The demo is hosted on Netlify. Commits to the `master` branch are automatically built and deployed.
