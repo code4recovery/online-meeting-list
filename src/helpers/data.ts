@@ -1,81 +1,161 @@
 import moment from 'moment-timezone';
 
-import { days, State } from '../helpers';
-import { Meeting } from '../components';
+import { Meeting } from '../components/Meeting';
 
-//set time zones, apply filters, and sort meetings, runs on state change
-export function filterData(
-  { meetings, search, timezone }: State,
-  tags: string[]
-): Meeting[] {
-  //get current timestamp
-  const now = moment();
-  //const now = moment.tz('Saturday 8:12 PM', 'dddd h:mm a', timezone);
+//types
+export type Tag = { tag: string; checked: boolean };
 
-  //loop through meetings for time operations
-  meetings.map(meeting => {
-    if (meeting.time) {
-      //convert timezone
-      meeting.time.tz(timezone);
+export type State = {
+  filters: { [key: string]: Tag[] };
+  limit: number;
+  loading: boolean;
+  meetings: Meeting[];
+  search: string[];
+  timezone: string;
+};
 
-      //make all meetings upcoming (now is used for debugging)
-      let diff = meeting.time.diff(now, 'minutes');
+//get json endpoint for published google sheet
+export function endpoint(sheet_id: string, page_id = 1): string {
+  return `https://spreadsheets.google.com/feeds/list/${sheet_id}/${page_id}/public/values?alt=json`;
+}
 
-      //meeting could be more than one week back
-      if (diff < -10080) {
-        meeting.time.add(1, 'week');
-        diff = meeting.time.diff(now, 'minutes');
+export const days = [
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday'
+];
+
+export const meetingsPerPage = 10;
+
+//parse google spreadsheet data into state object (runs once on init)
+export function load(data: any): State {
+  const meetings: Meeting[] = [];
+  let formats: string[] = [];
+  let types: string[] = [];
+
+  //loop through json entries
+  for (let i = 0; i < data.feed.entry.length; i++) {
+    const meeting: Meeting = {
+      name: data.feed.entry[i]['gsx$name']['$t'].trim(),
+      email: data.feed.entry[i]['gsx$email']['$t'].trim(),
+      phone: data.feed.entry[i]['gsx$phone']['$t'].replace(/\D/g, '').trim(),
+      url: data.feed.entry[i]['gsx$url']['$t'].trim(),
+      notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
+      updated: data.feed.entry[i]['updated']['$t'],
+      search: '',
+      tags: []
+    };
+
+    //handle phone
+    const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
+    if (accessCode.length)
+      meeting.phone = meeting.phone.concat(',' + accessCode);
+
+    //handle formats
+    const meeting_formats = stringToTrimmedArray(
+      data.feed.entry[i]['gsx$formats']['$t']
+    );
+
+    //append to formats array
+    meeting_formats.forEach((format: string) => {
+      if (!formats.includes(format)) {
+        formats.push(format);
       }
-
-      //show meetings that started up to 10 minutes ago
-      if (diff < -10) {
-        meeting.time.add(1, 'week');
-      }
-
-      //add day to meeting tags
-      meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
-      meeting.tags.push(meeting.time.format('dddd'));
-      meeting.tags.sort();
-    }
-
-    return meeting;
-  });
-
-  //filter meetings based on selected tags
-  if (tags.length) {
-    meetings = meetings.filter(meeting => {
-      for (let i = 0; i < tags.length; i++) {
-        if (!meeting.tags.includes(tags[i])) return false;
-      }
-      return true;
     });
+
+    //append to meeting tags
+    meeting.tags = meeting.tags.concat(meeting_formats);
+
+    //get types
+    const meeting_types = stringToTrimmedArray(
+      data.feed.entry[i]['gsx$types']['$t']
+    );
+
+    //append to types array
+    meeting_types.forEach(type => {
+      if (!types.includes(type)) {
+        types.push(type);
+      }
+    });
+
+    //append to meeting tags
+    meeting.tags = meeting.tags.concat(meeting_types);
+
+    //search index
+    meeting.search = meeting.name
+      .toLowerCase()
+      .split(' ')
+      .filter(e => e)
+      .join(' ');
+
+    //timezone
+    const timezone = data.feed.entry[i]['gsx$timezone']['$t'].trim();
+
+    //handle times
+    const times = stringToTrimmedArray(
+      data.feed.entry[i]['gsx$times']['$t'],
+      '\n'
+    );
+
+    if (times.length) {
+      //loop through create an entry for each time
+      times.forEach(timestring => {
+        //set start time as a udate
+        const time = moment.tz(timestring, 'dddd h:mm a', timezone);
+
+        //push a clone of the meeting onto the array
+        meetings.push({ ...meeting, time });
+      });
+    } else {
+      //ongoing meeting; add to meetings
+      meetings.push(meeting);
+    }
   }
 
-  //search?
-  if (search) {
-    meetings = meetings.filter(meeting => {
-      return (
-        search
-          .map(word => {
-            return meeting.search.includes(word);
-          })
-          .filter(e => e).length === search.length
-      );
-    });
+  //sort
+  formats.sort();
+  types.sort();
+
+  //read query string
+  const query: { [key: string]: string[] } = {};
+  if (window.location.search.length > 1) {
+    window.location.search
+      .substr(1)
+      .split('&')
+      .forEach(pair => {
+        const [key, value] = pair.split('=');
+        query[key] = value.split(',').map(decodeURIComponent);
+      });
   }
 
-  //sort meetings (by time then name)
-  meetings.sort((a: Meeting, b: Meeting) => {
-    if (a.time && b.time && !a.time.isSame(b.time)) {
-      return a.time.isAfter(b.time) ? 1 : -1;
-    } else if (a.time && !b.time) {
-      return -1;
-    } else if (b.time && !a.time) {
-      return 1;
-    }
-    return a.name.localeCompare(b.name);
-  });
+  return {
+    filters: {
+      days: arrayToTagsArray(days, query.days || []),
+      formats: arrayToTagsArray(formats, query.formats || []),
+      types: arrayToTagsArray(types, query.types || [])
+    },
+    limit: meetingsPerPage,
+    loading: false,
+    meetings: meetings,
+    search: [],
+    timezone: moment.tz.guess()
+  };
+}
 
-  //return
-  return meetings;
+function arrayToTagsArray(array: string[], values: string[]): Tag[] {
+  return array.map(tag => {
+    return { tag: tag, checked: values.includes(tag) };
+  });
+}
+
+//split "foo, bar, baz" into ["foo", "bar", "baz"]
+function stringToTrimmedArray(str: string, sep = ','): string[] {
+  return str
+    .split(sep)
+    .map(val => val.trim())
+    .filter(val => val);
 }

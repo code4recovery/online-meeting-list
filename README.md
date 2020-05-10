@@ -8,9 +8,9 @@ This is a new meeting finder for the [Online Intergroup of AA](http://aa-intergr
 - [x] Mobile view for filter
 - [x] Highlight search results and active tags
 - [x] Bookmarkable search / tag state
-- [ ] No results screen
+- [x] No results screen
+- [x] Clear search button
 - [ ] ~Filter as "OR" _inside_ categories, but "AND" _between_ categories; eg Saturday OR Sunday AND Phone~
-- [ ] ~Clear search button~
 
 ## Managing Data
 

@@ -6,7 +6,7 @@ import { Tag } from '../helpers';
 type ButtonTag = {
   filter: string;
   tag: Tag;
-  toggleTag(filter: string, value: string, checked: boolean): void;
+  toggleTag: (filter: string, value: string, checked: boolean) => void;
 };
 
 export function ButtonTag({ filter, tag, toggleTag }: ButtonTag) {
