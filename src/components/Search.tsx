@@ -1,18 +1,22 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useRef } from 'react';
 import {
   Icon,
-  //IconButton,
+  IconButton,
   Input,
   InputGroup,
-  InputLeftElement
-  //InputRightElement
+  InputLeftElement,
+  InputRightElement
 } from '@chakra-ui/core';
 
+import { State } from '../helpers';
+
 type Search = {
-  setSearch(search: string[]): void;
+  setSearch: (search: string[]) => void;
+  search: string[];
 };
 
-export function Search({ setSearch }: Search) {
+export function Search({ search, setSearch }: Search) {
+  const searchField = useRef<HTMLInputElement>(null);
   return (
     <InputGroup>
       <InputLeftElement>
@@ -29,18 +33,27 @@ export function Search({ setSearch }: Search) {
               .filter(e => e)
           );
         }}
+        ref={searchField}
       />
-      {/*
-      <InputRightElement>
-        <IconButton
-          aria-label="Clear search"
-          bg="transparent"
-          color="gray.300"
-          icon="small-close"
-          onClick={() => {}}
-        ></IconButton>
-      </InputRightElement>
-      */}
+      {!!search.length && (
+        <InputRightElement>
+          <IconButton
+            aria-label="Clear search"
+            bg="transparent"
+            color="gray.300"
+            icon="small-close"
+            _active={{ bg: 'transparent', color: 'gray.500' }}
+            _hover={{ bg: 'transparent', color: 'gray.500' }}
+            onClick={() => {
+              setSearch([]);
+              if (searchField.current) {
+                searchField.current.value = '';
+                searchField.current.focus();
+              }
+            }}
+          ></IconButton>
+        </InputRightElement>
+      )}
     </InputGroup>
   );
 }

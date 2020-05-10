@@ -2,21 +2,19 @@ import React from 'react';
 import { Button } from '@chakra-ui/core';
 
 type ButtonPrimary = {
-  icon: 'link' | 'email' | 'phone';
-  link: string;
+  icon: 'link' | 'email' | 'phone' | 'small-close';
+  onClick: () => void;
   text: string;
-  title: string;
+  title?: string;
 };
 
-export function ButtonPrimary({ icon, link, text, title }: ButtonPrimary) {
+export function ButtonPrimary({ icon, text, title, onClick }: ButtonPrimary) {
   return (
     <Button
       bg="blue.600"
       color="white"
       leftIcon={icon}
-      mr={2}
-      mt={3}
-      onClick={() => window.open(link, '_blank')}
+      onClick={onClick}
       title={title}
       _hover={{ bg: 'blue.800' }}
     >
