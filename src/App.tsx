@@ -44,7 +44,7 @@ export default function App() {
 
   if (state.loading) {
     //on first render, get data
-    fetch(endpoint('1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs'))
+    fetch(endpoint('1Lw1BUTC6ZNixT1Q_EqVwk0cYcSgP4joBGsB9pM6Otqc'))
       .then(result => result.json())
       .then(result => {
         setState(load(result));
