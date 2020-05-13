@@ -20,13 +20,13 @@ export function endpoint(sheet_id: string, page_id = 1): string {
 }
 
 export const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
+  'Domenica',
+  'Lunedi',
+  'Martedi',
+  'Mercoledi',
+  'Giovedi',
+  'Venerdi',
+  'Sabato'
 ];
 
 export const meetingsPerPage = 10;
