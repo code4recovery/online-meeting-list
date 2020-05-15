@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { Button, FormControl, Select, Stack } from '@chakra-ui/core';
 
-import { ButtonTag, Search } from './';
+import { ButtonTag, Search, Textual } from './';
 import { State, Tag } from '../helpers';
 
 type Filter = {
@@ -64,6 +64,7 @@ export function Filter({ setSearch, setTimezone, state, toggleTag }: Filter) {
           {open ? 'Close' : 'Filters'}
         </Button>
       </FormControl>
+      <Textual></Textual>
     </Stack>
   );
 }
