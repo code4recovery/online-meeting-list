@@ -5,3 +5,4 @@ export * from './Loading';
 export * from './Meeting';
 export * from './NoResults';
 export * from './Search';
+export * from './Textual';
