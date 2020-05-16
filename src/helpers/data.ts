@@ -24,7 +24,7 @@ export const days = [
   'domenica',
   'lunedì',
   'martedì',
-  'miercoledì',
+  'mercoledì',
   'giovedì',
   'venerdì',
   'sabato'
@@ -34,9 +34,9 @@ export const meetingsPerPage = 10;
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(data: any): State {
-  
+
   moment.locale('it'); // Set locale to Italian
-  
+
   const meetings: Meeting[] = [];
   let formats: string[] = [];
   let types: string[] = [];
