@@ -8,8 +8,6 @@ import {
   InputRightElement
 } from '@chakra-ui/core';
 
-import { State } from '../helpers';
-
 type Search = {
   setSearch: (search: string[]) => void;
   search: string[];
