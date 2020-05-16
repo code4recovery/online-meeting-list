@@ -1,5 +1,6 @@
 import moment from 'moment-timezone';
 
+import { days, meetingsPerPage, videoServices } from './config';
 import { Meeting } from '../components/Meeting';
 
 //types
@@ -14,23 +15,6 @@ export type State = {
   timezone: string;
 };
 
-//get json endpoint for published google sheet
-export function endpoint(sheet_id: string, page_id = 1): string {
-  return `https://spreadsheets.google.com/feeds/list/${sheet_id}/${page_id}/public/values?alt=json`;
-}
-
-export const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
-export const meetingsPerPage = 10;
-
 //parse google spreadsheet data into state object (runs once on init)
 export function load(data: any): State {
   const meetings: Meeting[] = [];
@@ -41,20 +25,81 @@ export function load(data: any): State {
   for (let i = 0; i < data.feed.entry.length; i++) {
     const meeting: Meeting = {
       name: data.feed.entry[i]['gsx$name']['$t'].trim(),
-      email: data.feed.entry[i]['gsx$email']['$t'].trim(),
-      phone: data.feed.entry[i]['gsx$phone']['$t'].replace(/\D/g, '').trim(),
-      url: data.feed.entry[i]['gsx$url']['$t'].trim(),
+      buttons: [],
       notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
       updated: data.feed.entry[i]['updated']['$t'],
       search: '',
       tags: []
     };
 
+    //handle url
+    const originalUrl = data.feed.entry[i]['gsx$url']['$t'].trim();
+    if (originalUrl) {
+      let label;
+      let icon: 'link' | 'video' = 'link';
+      try {
+        const url = new URL(originalUrl);
+        const host = url.hostname;
+        const service = Object.keys(videoServices).filter(
+          service =>
+            videoServices[service].filter(domain => host.endsWith(domain))
+              .length
+        );
+        if (service.length) {
+          label = service[0];
+          icon = 'video';
+        } else {
+          label = url.hostname.replace('www.', '');
+        }
+        meeting.buttons.push({
+          icon: icon,
+          onClick: () => {
+            window.open(originalUrl, '_blank');
+          },
+          text: label,
+          title: 'Visit ' + originalUrl
+        });
+      } catch {
+        warn(originalUrl, 'URL', i);
+      }
+    }
+
     //handle phone
-    if (meeting.phone) {
-      const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
-      if (accessCode.length) {
-        meeting.phone = meeting.phone.concat(',' + accessCode);
+    const originalPhone = data.feed.entry[i]['gsx$phone']['$t'].trim();
+    if (originalPhone) {
+      let phone = originalPhone.replace(/\D/g, '');
+      if (phone.length > 8) {
+        const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
+        if (accessCode.length) {
+          phone += ',,' + accessCode;
+        }
+        meeting.buttons.push({
+          icon: 'phone',
+          onClick: () => {
+            window.open('tel:' + phone);
+          },
+          text: 'Phone',
+          title: 'Call ' + phone
+        });
+      } else {
+        warn(originalPhone, 'phone', i);
+      }
+    }
+
+    //handle email
+    const email = data.feed.entry[i]['gsx$email']['$t'].trim();
+    if (email) {
+      if (validateEmail(email)) {
+        meeting.buttons.push({
+          icon: 'email',
+          onClick: () => {
+            window.open('mailto:' + email);
+          },
+          text: 'Email',
+          title: 'Email ' + email
+        });
+      } else {
+        warn(email, 'email', i);
       }
     }
 
@@ -161,4 +206,14 @@ function stringToTrimmedArray(str: string, sep = ','): string[] {
     .split(sep)
     .map(val => val.trim())
     .filter(val => val);
+}
+
+function validateEmail(email: string) {
+  return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email
+  );
+}
+
+function warn(value: string, type: string, line: number) {
+  console.warn(`Row ${line + 2}: “${value}” is not a valid ${type}`);
 }

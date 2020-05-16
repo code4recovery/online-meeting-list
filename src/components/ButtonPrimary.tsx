@@ -1,14 +1,19 @@
 import React from 'react';
 import { Button, Icon } from '@chakra-ui/core';
 
-type ButtonPrimary = {
+export type ButtonPrimaryProps = {
   icon: 'link' | 'email' | 'phone' | 'small-close' | 'video';
   onClick: () => void;
   text: string;
   title?: string;
 };
 
-export function ButtonPrimary({ icon, text, title, onClick }: ButtonPrimary) {
+export function ButtonPrimary({
+  icon,
+  text,
+  title,
+  onClick
+}: ButtonPrimaryProps) {
   return (
     <Button
       bg="blue.600"

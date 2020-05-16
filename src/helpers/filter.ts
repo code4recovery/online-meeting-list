@@ -1,6 +1,7 @@
 import moment from 'moment-timezone';
 
-import { days, State } from '.';
+import { days } from './config';
+import { State } from './data';
 import { Meeting } from '../components';
 
 //set time zones, apply filters, and sort meetings, runs on state change

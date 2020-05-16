@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 
 import { Filter, Loading, Meeting, NoResults } from './components';
 import {
-  endpoint,
+  dataUrl,
   filter,
   load,
   meetingsPerPage,
@@ -44,7 +44,7 @@ export default function App() {
 
   if (state.loading) {
     //on first render, get data
-    fetch(endpoint('1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs'))
+    fetch(dataUrl)
       .then(result => result.json())
       .then(result => {
         setState(load(result));
