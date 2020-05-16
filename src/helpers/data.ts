@@ -55,9 +55,12 @@ export function load(data: any): State {
     };
 
     //handle phone
-    const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
-    if (accessCode.length)
-      meeting.phone = meeting.phone.concat(',' + accessCode);
+    if (meeting.phone) {
+      const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
+      if (accessCode.length) {
+        meeting.phone = meeting.phone.concat(',' + accessCode);
+      }
+    }
 
     //handle formats
     const meeting_formats = stringToTrimmedArray(

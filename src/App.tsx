@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, CSSReset, Grid, ThemeProvider } from '@chakra-ui/core';
+import { Box, CSSReset, Grid, ThemeProvider, theme } from '@chakra-ui/core';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { Filter, Loading, Meeting, NoResults } from './components';
@@ -65,8 +65,23 @@ export default function App() {
 
   const filteredMeetings = filter(state, tags);
 
+  const customTheme = {
+    ...theme,
+    icons: {
+      ...theme.icons,
+      video: {
+        path: (
+          <path
+            fill="currentColor"
+            d="M16 16c0 1.104-.896 2-2 2h-12c-1.104 0-2-.896-2-2v-8c0-1.104.896-2 2-2h12c1.104 0 2 .896 2 2v8zm8-10l-6 4.223v3.554l6 4.223v-12z"
+          />
+        )
+      }
+    }
+  };
+
   return (
-    <ThemeProvider>
+    <ThemeProvider theme={customTheme}>
       <CSSReset />
       {state.loading ? (
         <Loading />

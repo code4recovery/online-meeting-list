@@ -9,14 +9,61 @@ import { ButtonPrimary } from './';
 export type Meeting = {
   name: string;
   time?: Moment;
-  email: string;
-  url: string;
-  phone: string;
-  notes: string[];
+  email?: string;
+  url?: string;
+  phone?: string;
+  notes?: string[];
   tags: string[];
   updated: string;
   search: string;
 };
+
+const videoServices = [
+  {
+    domain: 'bluejeans.com',
+    name: 'BlueJeans'
+  },
+  {
+    domain: 'freeconference.com',
+    name: 'Free Conference'
+  },
+  {
+    domain: 'freeconferencecall.com',
+    name: 'FreeConferenceCall'
+  },
+  {
+    domain: 'meet.google.com',
+    name: 'Google Meet'
+  },
+  {
+    domain: 'gotomeet.me',
+    name: 'GoToMeeting'
+  },
+  {
+    domain: 'gotomeeting.com',
+    name: 'GoToMeeting'
+  },
+  {
+    domain: 'skype.com',
+    name: 'Skype'
+  },
+  {
+    domain: 'webex.com',
+    name: 'WebEx'
+  },
+  {
+    domain: 'zoho.com',
+    name: 'Zoho'
+  },
+  {
+    domain: 'zoom.com',
+    name: 'Zoom'
+  },
+  {
+    domain: 'zoom.us',
+    name: 'Zoom'
+  }
+];
 
 export function Meeting({
   meeting,
@@ -27,6 +74,27 @@ export function Meeting({
   search: string[];
   tags: string[];
 }) {
+  //test valid url, get service name and icon
+  let label;
+  let icon: 'link' | 'video' = 'link';
+  if (meeting.url) {
+    try {
+      const url = new URL(meeting.url);
+      const host = url.hostname;
+      const service = videoServices.filter(service =>
+        host.endsWith(service.domain)
+      );
+      if (service.length) {
+        label = service[0].name;
+        icon = 'video';
+      } else {
+        label = url.hostname.replace('www.', '');
+      }
+    } catch {
+      console.warn(meeting.url + ' is not a valid domain for ' + meeting.name);
+    }
+  }
+
   return (
     <Box
       as="article"
@@ -55,14 +123,14 @@ export function Meeting({
           </Heading>
         </Box>
         <Box>
-          {!!meeting.url && (
+          {!!label && (
             <Box float="left" mr={2} my={1}>
               <ButtonPrimary
-                icon="link"
+                icon={icon}
                 onClick={() => {
                   window.open(meeting.url, '_blank');
                 }}
-                text={new URL(meeting.url).hostname.replace('www.', '')}
+                text={label}
                 title={'Visit ' + meeting.url}
               />
             </Box>
@@ -92,7 +160,7 @@ export function Meeting({
             </Box>
           )}
         </Box>
-        {!!meeting.notes.length && (
+        {!!meeting.notes?.length && (
           <Stack spacing={2}>
             {meeting.notes.map((paragraph: string, key: number) => (
               <Text key={key}>
