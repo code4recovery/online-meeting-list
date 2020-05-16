@@ -62,6 +62,10 @@ const videoServices = [
   {
     domain: 'zoom.us',
     name: 'Zoom'
+  },
+  {
+    domain: 'jit.si',
+    name: 'Jitsi'
   }
 ];
 
