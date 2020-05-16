@@ -152,11 +152,15 @@ export function load(data: any): State {
     if (times.length) {
       //loop through create an entry for each time
       times.forEach(timestring => {
-        //set start time as a udate
+        //momentize start time
         const time = moment.tz(timestring, 'dddd h:mm a', timezone);
 
-        //push a clone of the meeting onto the array
-        meetings.push({ ...meeting, time });
+        if (time.isValid()) {
+          //push a clone of the meeting onto the array
+          meetings.push({ ...meeting, time });
+        } else {
+          warn(timestring, 'time', i);
+        }
       });
     } else {
       //ongoing meeting; add to meetings

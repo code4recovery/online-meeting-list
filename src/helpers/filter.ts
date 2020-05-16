@@ -19,10 +19,10 @@ export function filter(
       //convert timezone
       meeting.time.tz(timezone);
 
-      //make all meetings upcoming (now is used for debugging)
+      //make all meetings upcoming
       let diff = meeting.time.diff(now, 'minutes');
 
-      //meeting could be more than one week back
+      //with timezone weirdness, date could be more than a week ago
       if (diff < -10080) {
         meeting.time.add(1, 'week');
         diff = meeting.time.diff(now, 'minutes');
