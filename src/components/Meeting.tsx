@@ -51,7 +51,7 @@ export function Meeting({
             fontWeight="normal"
             ml={{ lg: 2 }}
           >
-            {!meeting.time ? 'Ongoing' : meeting.time.format('dddd h:mm a')}
+            {!meeting.time ? 'Ongoing' : meeting.time.format('dddd HH:mm')}
           </Heading>
         </Box>
         <Box>
