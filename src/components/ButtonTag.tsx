@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from '@chakra-ui/core';
 
-import { Tag } from '../helpers';
+import { Tag } from '../helpers/data';
 
 type ButtonTag = {
   filter: string;

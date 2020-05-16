@@ -30,7 +30,7 @@ export function Meeting({
       as="article"
       bg="white"
       border="1px"
-      borderColor="gray.200"
+      borderColor="gray.300"
       mb={{ xs: 3, md: 6 }}
       p={5}
       rounded="md"
@@ -38,7 +38,7 @@ export function Meeting({
     >
       <Stack spacing={3}>
         <Box alignItems="baseline">
-          <Heading d={{ lg: 'inline' }} fontSize="2xl">
+          <Heading as="h2" d={{ lg: 'inline' }} fontSize="2xl">
             <Highlighter searchWords={search} textToHighlight={meeting.name} />
           </Heading>
           <Heading
@@ -62,7 +62,7 @@ export function Meeting({
           </Box>
         )}
         {!!meeting.notes.length && (
-          <Stack spacing={2}>
+          <Stack spacing={3}>
             {meeting.notes.map((paragraph: string, key: number) => (
               <Text key={key}>
                 <Linkify>{paragraph}</Linkify>

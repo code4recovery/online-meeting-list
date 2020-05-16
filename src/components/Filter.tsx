@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import moment from 'moment-timezone';
 import { Button, FormControl, Select, Stack } from '@chakra-ui/core';
 
-import { ButtonTag, Search } from './';
-import { State, Tag } from '../helpers';
+import { ButtonTag } from './ButtonTag';
+import { Search } from './Search';
+import { State, Tag } from '../helpers/data';
 
 type Filter = {
   setSearch: (search: string[]) => void;
@@ -38,6 +39,7 @@ export function Filter({ setSearch, setTimezone, state, toggleTag }: Filter) {
         <FormControl d="block" as="fieldset">
           <Select
             aria-label="Timezone"
+            borderColor="gray.300"
             icon="time"
             iconSize={4}
             onChange={(e: React.FormEvent<HTMLSelectElement>) =>
@@ -53,7 +55,8 @@ export function Filter({ setSearch, setTimezone, state, toggleTag }: Filter) {
       </Stack>
       <FormControl d={{ md: 'none' }}>
         <Button
-          bg="white"
+          bg={open ? 'gray.100' : 'white'}
+          borderColor="gray.300"
           onClick={() => {
             setOpen(!open);
           }}

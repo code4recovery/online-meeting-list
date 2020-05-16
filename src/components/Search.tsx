@@ -16,7 +16,7 @@ type Search = {
 export function Search({ search, setSearch }: Search) {
   const searchField = useRef<HTMLInputElement>(null);
   return (
-    <InputGroup>
+    <InputGroup borderColor="gray.300">
       <InputLeftElement>
         <Icon color="gray.300" name="search-2" />
       </InputLeftElement>

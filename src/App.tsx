@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { Box, CSSReset, Grid, ThemeProvider, theme } from '@chakra-ui/core';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { Filter, Loading, Meeting, NoResults } from './components';
-import {
-  dataUrl,
-  filter,
-  load,
-  meetingsPerPage,
-  State,
-  setQuery
-} from './helpers';
+import { Filter } from './components/Filter';
+import { Loading } from './components/Loading';
+import { Meeting } from './components/Meeting';
+import { NoResults } from './components/NoResults';
+import { dataUrl, meetingsPerPage } from './helpers/config';
+import { load, State } from './helpers/data';
+import { filter } from './helpers/filter';
+import { setQuery } from './helpers/query';
 
 export default function App() {
   const [state, setState] = useState<State>({
@@ -86,7 +85,7 @@ export default function App() {
       {state.loading ? (
         <Loading />
       ) : (
-        <Box as="main" minHeight="100%" p={{ xs: 3, md: 6 }}>
+        <Box as="main" maxW={1240} minH="100%" mx="auto" p={{ xs: 3, md: 6 }}>
           <Grid
             as="section"
             gap={{ xs: 3, md: 6 }}

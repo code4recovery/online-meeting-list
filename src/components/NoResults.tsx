@@ -1,8 +1,8 @@
 import React from 'react';
 import { Alert, Box, Stack } from '@chakra-ui/core';
 
-import { ButtonPrimary } from '../components';
-import { State } from '../helpers';
+import { ButtonPrimary } from './ButtonPrimary';
+import { State } from '../helpers/data';
 
 type NoResults = {
   state: State;
