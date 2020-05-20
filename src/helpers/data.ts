@@ -82,7 +82,7 @@ export function load(data: any): State {
           title: 'Call ' + phone
         });
       } else {
-        warn(originalPhone, 'phone', i);
+        warn(originalPhone, 'phone number', i);
       }
     }
 
@@ -99,7 +99,7 @@ export function load(data: any): State {
           title: 'Email ' + email
         });
       } else {
-        warn(email, 'email', i);
+        warn(email, 'email address', i);
       }
     }
 
@@ -219,5 +219,5 @@ function validateEmail(email: string) {
 }
 
 function warn(value: string, type: string, line: number) {
-  console.warn(`Row ${line + 2}: “${value}” is not a valid ${type}`);
+  console.warn(`Row ${line + 2}: “${value}” is not a valid ${type}.`);
 }
