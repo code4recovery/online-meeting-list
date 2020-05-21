@@ -1,4 +1,5 @@
 import moment from 'moment-timezone';
+import 'moment/locale/it'; // Italian
 
 import { days, meetingsPerPage, videoServices } from './config';
 import { Meeting } from '../components/Meeting';
@@ -57,7 +58,7 @@ export function load(data: any): State {
             window.open(originalUrl, '_blank');
           },
           text: label,
-          title: 'Visit ' + originalUrl
+          title: 'Visita ' + originalUrl
         });
       } catch {
         warn(originalUrl, 'URL', i);
@@ -78,8 +79,8 @@ export function load(data: any): State {
           onClick: () => {
             window.open('tel:' + phone);
           },
-          text: 'Phone',
-          title: 'Call ' + phone
+          text: 'Telefono',
+          title: 'Chiama ' + phone
         });
       } else {
         warn(originalPhone, 'phone number', i);

@@ -1,18 +1,18 @@
 //demo data spreadsheet for error testing
 export const dataUrl =
   window.location.hostname === 'localhost'
-    ? 'https://spreadsheets.google.com/feeds/list/1DZkyb9f_yzuOqtA4A6QgB1QcHO3na6Ayo7GBQwgRc2g/1/public/values?alt=json'
-    : 'https://spreadsheets.google.com/feeds/list/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/1/public/values?alt=json';
+    ? 'https://spreadsheets.google.com/feeds/list/1Lw1BUTC6ZNixT1Q_EqVwk0cYcSgP4joBGsB9pM6Otqc/1/public/values?alt=json'
+    : 'https://spreadsheets.google.com/feeds/list/1Lw1BUTC6ZNixT1Q_EqVwk0cYcSgP4joBGsB9pM6Otqc/1/public/values?alt=json';
 
 //todo internationalize
 export const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
+  'domenica',
+  'lunedì',
+  'martedì',
+  'mercoledì',
+  'giovedì',
+  'venerdì',
+  'sabato'
 ];
 
 //this is the number of meetings it displays before scrolling

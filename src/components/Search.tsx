@@ -21,8 +21,8 @@ export function Search({ search, setSearch }: Search) {
         <Icon color="gray.300" name="search-2" />
       </InputLeftElement>
       <Input
-        aria-label="Search"
-        placeholder="Search"
+        aria-label="Cerca"
+        placeholder="Cerca"
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setSearch(
             e.target.value
@@ -36,7 +36,7 @@ export function Search({ search, setSearch }: Search) {
       {!!search.length && (
         <InputRightElement>
           <IconButton
-            aria-label="Clear search"
+            aria-label="Cancella cerca"
             bg="transparent"
             color="gray.300"
             icon="small-close"
