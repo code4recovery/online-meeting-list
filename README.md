@@ -1,4 +1,4 @@
-This is a new meeting finder for the [Online Intergroup of AA](http://aa-intergroup.org/). There is a demo at [https://oiaa.netlify.com](https://oiaa.netlify.com) and an embedded version at [https://aa-intergroup.org/oiaa/meetings/](https://aa-intergroup.org/oiaa/meetings/).
+This is a meeting finder for listing online meetings. You can see it in production at the [Online Intergroup of AA](https://aa-intergroup.org/oiaa/meetings/) and elsewhere on the web. There is a demo version at [https://online-meeting-list.netlify.com](https://online-meeting-list.netlify.com).
 
 ## Next Steps
 
@@ -10,11 +10,11 @@ This is a new meeting finder for the [Online Intergroup of AA](http://aa-intergr
 - [x] Bookmarkable search / tag state
 - [x] No results screen
 - [x] Clear search button
-- [ ] ~Filter as "OR" _inside_ categories, but "AND" _between_ categories; eg Saturday OR Sunday AND Phone~
+- [x] Fail gracefully when encountering bad data
 
 ## Managing Data
 
-The data for this project in managed in [this Google Sheet](https://docs.google.com/spreadsheets/d/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/edit#gid=0). Some notes:
+The data for the demo in managed in [this Google Sheet](https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0). Some notes:
 
 - It's helpful to use the `Format > Clear Formatting` command, since styling doesn't carry over to the app.
 - It's a good practice to remove the meeting times and phone numbers from the Notes column, this prevents the inevitable scenario where it gets updated in one place but not another
@@ -29,6 +29,20 @@ This project is written in [TypeScript](https://www.typescriptlang.org/) and was
 ## Install and Run
 
 In the project directory, first run `yarn` once to install the dependencies, then `yarn start` to start the app in development mode.
+
+## Add Your Data
+
+1. Make a copy of [this Google Sheet](https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0)
+1. Open the spreadsheet and publish it to the web (under the file menu)
+1. Copy the Sheet ID. You get this from the URL when you're editing the sheet. For example, if the URL is `https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0`, then your ID is `1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I`.
+1. Create a new file in the project directory called `.env`, and add your sheet ID here
+
+```
+REACT_APP_GOOGLE_SHEET_ID="1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I"
+REACT_APP_GOOGLE_SHEET_PAGE="1"
+```
+
+1. Re-run `yarn start` on the command line
 
 ## Contributing
 

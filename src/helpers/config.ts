@@ -1,8 +1,10 @@
 //demo data spreadsheet for error testing
-export const dataUrl =
-  window.location.hostname === 'localhost'
-    ? 'https://spreadsheets.google.com/feeds/list/1DZkyb9f_yzuOqtA4A6QgB1QcHO3na6Ayo7GBQwgRc2g/1/public/values?alt=json'
-    : 'https://spreadsheets.google.com/feeds/list/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/1/public/values?alt=json';
+export const dataUrl = `https://spreadsheets.google.com/feeds/list/${
+  process.env.REACT_APP_GOOGLE_SHEET_ID ||
+  '1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I'
+}/${process.env.REACT_APP_GOOGLE_SHEET_PAGE || '1'}/public/values?alt=json`;
+
+console.log(dataUrl);
 
 //todo internationalize
 export const days = [
