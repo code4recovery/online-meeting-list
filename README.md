@@ -1,4 +1,4 @@
-This is a meeting finder for listing online meetings. You can see it in production at the [Online Intergroup of AA](https://aa-intergroup.org/oiaa/meetings/) and elsewhere on the web. There is a demo version at [https://online-meeting-list.netlify.app](https://online-meeting-list.netlify.app).
+This is a meeting finder designed to list online recovery meetings across a variety of timezones. You can see it in production at the [Online Intergroup of AA](https://aa-intergroup.org/oiaa/meetings/) and elsewhere on the web. There is a demo version at [https://online-meeting-list.netlify.app](https://online-meeting-list.netlify.app).
 
 ## Next Steps
 
