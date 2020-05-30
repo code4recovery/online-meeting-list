@@ -26,28 +26,35 @@ The data for the demo in managed in [this Google Sheet](https://docs.google.com/
 
 This project is written in [TypeScript](https://www.typescriptlang.org/) and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). UI elements by [Chakra](https://chakra-ui.com/). Uses [Moment.js](https://momentjs.com) for time conversions and [React Infinite Scroller](https://cassetterocks.github.io/react-infinite-scroller) for rendering performance.
 
-## Install and Run
-
-In the project directory, first run `yarn` once to install the dependencies, then `yarn start` to start the app in development mode.
-
-## Add Your Data
+## Link Your Data
 
 1. Make a copy of [this Google Sheet](https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0)
-1. Open the spreadsheet and publish it to the web (under the file menu)
-1. Copy the Sheet ID. You get this from the URL when you're editing the sheet. For example, if the URL is `https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0`, then your ID is `1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I`.
-1. Create a new file in the project directory called `.env`, and add your sheet ID here
+1. Open your spreadsheet and publish it to the web (under the file menu)
+1. Create a new file in the project directory called `.env`, and add your spreadsheet's URL (when you're in edit mode, not the URL displayed when you publish it to the web):
 
 ```
-REACT_APP_GOOGLE_SHEET_ID="1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I"
-REACT_APP_GOOGLE_SHEET_PAGE="1"
+REACT_APP_GOOGLE_SHEET="https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0"
 ```
 
-1. Re-run `yarn start` on the command line
+## Install and Run Locally
+
+1. Clone this repository.
+1. In the project directory, run `yarn` once to install the dependencies.
+1. Run `yarn start` to start the app in development mode.
+
+## Deploy to your Website
+
+1. In the project directory, run `yarn build`.
+
+## Staying Up to Date
+
+1. In the project directory, run `git pull`.
+1. Re-run `yarn` in case dependencies were updated.
 
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
-1. Create a branch with your code. (Style note: please help keep properties in order!)
+1. Create a branch with your code. (Style note: please use [Prettier](https://prettier.io), and keep properties in alphabetical order)
 1. Create a pull request that references the issue. Please name [@joshreisner](https://github.com/joshreisner) as a reviewer.
 
 ## Deployments
