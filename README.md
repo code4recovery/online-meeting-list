@@ -59,4 +59,4 @@ REACT_APP_GOOGLE_SHEET="https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8
 
 ## Deployments
 
-The demo is hosted on Netlify. Commits to the `master` branch are automatically built and deployed.
+The demo is hosted on Netlify. Commits to the `main` branch are automatically built and deployed.
