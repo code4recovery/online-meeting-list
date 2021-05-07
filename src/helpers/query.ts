@@ -1,4 +1,4 @@
-import { State } from './data';
+import { State } from './types';
 
 //set the window query string to match the internal state
 export function setQuery(state: State) {

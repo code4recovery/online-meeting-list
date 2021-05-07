@@ -7,7 +7,9 @@ import { Loading } from './components/Loading';
 import { Meeting } from './components/Meeting';
 import { NoResults } from './components/NoResults';
 import { dataUrl, meetingsPerPage } from './helpers/config';
-import { load, State } from './helpers/data';
+import { load } from './helpers/data';
+import { Meeting as MeetingType, State } from './helpers/types';
+import { getLanguage, Language } from './helpers/i18n';
 import { filter } from './helpers/filter';
 import { setQuery } from './helpers/query';
 
@@ -23,7 +25,8 @@ export default function App() {
     loading: true,
     meetings: [],
     search: [],
-    timezone: ''
+    timezone: '',
+    language: getLanguage()
   });
 
   //function to remove a tag
@@ -85,7 +88,14 @@ export default function App() {
       {state.loading ? (
         <Loading />
       ) : (
-        <Box as="main" maxW={1240} minH="100%" mx="auto" p={{ xs: 3, md: 6 }}>
+        <Box
+          as="main"
+          maxW={1240}
+          minH="100%"
+          w="100%"
+          mx="auto"
+          p={{ xs: 3, md: 6 }}
+        >
           <Grid
             as="section"
             gap={{ xs: 3, md: 6 }}
@@ -98,6 +108,9 @@ export default function App() {
                 }}
                 setTimezone={(timezone: string) => {
                   setState({ ...state, timezone });
+                }}
+                setLanguage={(language: Language) => {
+                  setState({ ...state, language });
                 }}
                 state={state}
                 toggleTag={toggleTag}
@@ -117,12 +130,13 @@ export default function App() {
                 >
                   {filteredMeetings
                     .slice(0, state.limit)
-                    .map((meeting: Meeting, index: number) => (
+                    .map((meeting: MeetingType, index: number) => (
                       <Meeting
                         key={index}
                         meeting={meeting}
                         search={state.search}
                         tags={tags}
+                        language={state.language}
                       />
                     ))}
                 </InfiniteScroll>

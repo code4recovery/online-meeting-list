@@ -2,7 +2,7 @@ import React from 'react';
 import { Alert, Box, Stack } from '@chakra-ui/core';
 
 import { ButtonPrimary } from './ButtonPrimary';
-import { State } from '../helpers/data';
+import { State } from '../helpers/types';
 
 type NoResults = {
   state: State;
@@ -31,6 +31,7 @@ export function NoResults({ state, toggleTag }: NoResults) {
                 toggleTag(filter, tag, false);
               }}
               text={tag}
+              title={tag}
             />
           </Box>
         ))}

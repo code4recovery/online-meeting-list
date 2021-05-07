@@ -1,25 +1,17 @@
 import moment from 'moment-timezone';
 
 import { days, meetingsPerPage, videoServices } from './config';
-import { Meeting } from '../components/Meeting';
-
-//types
-export type Tag = { tag: string; checked: boolean };
-
-export type State = {
-  filters: { [key: string]: Tag[] };
-  limit: number;
-  loading: boolean;
-  meetings: Meeting[];
-  search: string[];
-  timezone: string;
-};
+import { Meeting, State, Tag } from './types';
+import { getLanguage, isLanguage } from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(data: any): State {
   const meetings: Meeting[] = [];
   let formats: string[] = [];
   let types: string[] = [];
+
+  //handle user language
+  const language = getLanguage();
 
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
@@ -56,8 +48,7 @@ export function load(data: any): State {
           onClick: () => {
             window.open(originalUrl, '_blank');
           },
-          text: label,
-          title: 'Visit ' + originalUrl
+          value: label
         });
       } catch {
         warn(originalUrl, 'URL', i);
@@ -76,10 +67,9 @@ export function load(data: any): State {
         meeting.buttons.push({
           icon: 'phone',
           onClick: () => {
-            window.open('tel:' + phone);
+            window.open(`tel:${phone}`);
           },
-          text: 'Phone',
-          title: 'Call ' + phone
+          value: phone
         });
       } else {
         warn(originalPhone, 'phone number', i);
@@ -95,8 +85,7 @@ export function load(data: any): State {
           onClick: () => {
             window.open('mailto:' + email);
           },
-          text: 'Email',
-          title: 'Email ' + email
+          value: email
         });
       } else {
         warn(email, 'email address', i);
@@ -123,9 +112,9 @@ export function load(data: any): State {
       data.feed.entry[i]['gsx$types']['$t']
     );
 
-    //append to types array
+    //append to types array *and handle language
     meeting_types.forEach(type => {
-      if (!types.includes(type)) {
+      if (!isLanguage(type) && !types.includes(type)) {
         types.push(type);
       }
     });
@@ -188,13 +177,15 @@ export function load(data: any): State {
     filters: {
       days: arrayToTagsArray(days, query.days || []),
       formats: arrayToTagsArray(formats, query.formats || []),
-      types: arrayToTagsArray(types, query.types || [])
+      types: arrayToTagsArray(types, query.types || []),
+      language: [{ tag: language, checked: true }]
     },
     limit: meetingsPerPage,
     loading: false,
     meetings: meetings,
     search: [],
-    timezone: moment.tz.guess()
+    timezone: moment.tz.guess(),
+    language: language
   };
 }
 

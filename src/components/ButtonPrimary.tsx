@@ -5,14 +5,14 @@ export type ButtonPrimaryProps = {
   icon: 'link' | 'email' | 'phone' | 'small-close' | 'video';
   onClick: () => void;
   text: string;
-  title?: string;
+  title: string;
 };
 
 export function ButtonPrimary({
   icon,
+  onClick,
   text,
-  title,
-  onClick
+  title
 }: ButtonPrimaryProps) {
   return (
     <Button
