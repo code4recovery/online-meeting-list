@@ -111,6 +111,34 @@ export const languages = {
       video_use: 'Γίνετε μέλος {{value}}'
     }
   },
+  es: {
+    english_name: 'Spanish',
+    name: 'Español',
+    rtl: false,
+    strings: {
+      clear_search: 'Borrar búsqueda',
+      close: 'Cerrar',
+      days: [
+        'Domingo',
+        'Lunes',
+        'Martes',
+        'Miércoles',
+        'Jueves',
+        'Viernes',
+        'Sábado'
+      ],
+      email: 'Correo electrónico',
+      email_use: 'Correo electrónico {{value}}',
+      filters: 'Filtros',
+      language: 'Idioma',
+      ongoing: 'En marcha',
+      phone: 'Teléfono',
+      phone_use: 'Llame a {{value}}',
+      search: 'Buscar',
+      timezone: 'Zona horaria',
+      video_use: 'Únete a {{value}}'
+    }
+  },
   fa: {
     english_name: 'Farsi',
     name: 'فارسی',
@@ -250,6 +278,174 @@ export const languages = {
       timezone: 'Fuso orario',
       video_use: 'Unisciti a {{value}}'
     }
+  },
+  ja: {
+    english_name: 'Japanese',
+    name: '日本語',
+    rtl: false,
+    strings: {
+      clear_search: '明確な検索',
+      close: 'シャット',
+      days: [
+        '日曜日',
+        '月曜',
+        '火曜日',
+        '水曜日',
+        '木曜日',
+        '金曜日',
+        '土曜日'
+      ],
+      email: 'Eメール',
+      email_use: 'メール{{value}}',
+      filters: 'フィルタ',
+      language: '言語',
+      ongoing: '進行中',
+      phone: '電話',
+      phone_use: '{{value}}を呼び出す',
+      search: '探す',
+      timezone: 'タイムゾーン',
+      video_use: '{{value}}に参加する'
+    }
+  },
+  pl: {
+    english_name: 'Polish',
+    name: 'Polskie',
+    rtl: false,
+    strings: {
+      clear_search: 'Wyczyść wyszukiwanie',
+      close: 'Zamknąć',
+      days: [
+        'niedziela',
+        'poniedziałek',
+        'wtorek',
+        'środa',
+        'czwartek',
+        'piątek',
+        'sobota'
+      ],
+      email: 'E-mail',
+      email_use: 'Email {{value}}',
+      filters: 'Filtry',
+      language: 'Język',
+      ongoing: 'Trwający',
+      phone: 'Telefon',
+      phone_use: 'Zadzwoń {{value}}',
+      search: 'Szukaj',
+      timezone: 'Strefa czasowa',
+      video_use: 'Dołącz do {{value}}'
+    }
+  },
+  pt: {
+    english_name: 'Portuguese',
+    name: 'Português',
+    rtl: false,
+    strings: {
+      clear_search: 'Limpar pesquisa',
+      close: 'Perto',
+      days: [
+        'Domigo',
+        'Segunda-feira',
+        'Terça',
+        'quarta-feira',
+        'quinta-feira',
+        'sexta-feira',
+        'sábado'
+      ],
+      email: 'E-mail',
+      email_use: 'E-mail {{value}}',
+      filters: 'Filtros',
+      language: 'Língua',
+      ongoing: 'Em andamento',
+      phone: 'Telefone',
+      phone_use: 'Ligue para {{value}}',
+      search: 'Procurar',
+      timezone: 'Fuso horário',
+      video_use: 'Junte-se a {{value}}'
+    }
+  },
+  ru: {
+    english_name: 'Russian',
+    name: 'русский',
+    rtl: false,
+    strings: {
+      clear_search: 'Очистить поиск',
+      close: 'Закрывать',
+      days: [
+        'Воскресенье',
+        'понедельник',
+        'вторник',
+        'среда',
+        'Четверг',
+        'Пятница',
+        'Суббота'
+      ],
+      email: 'Электронное письмо',
+      email_use: 'Электронная почта {{value}}',
+      filters: 'Фильтры',
+      language: 'Язык',
+      ongoing: 'Непрерывный',
+      phone: 'Телефон',
+      phone_use: 'Позвоните по телефону {{value}}',
+      search: 'Поиск',
+      timezone: 'Часовой пояс',
+      video_use: 'Присоединяйтесь к {{value}}'
+    }
+  },
+  sk: {
+    english_name: 'Slovak',
+    name: 'Slovák',
+    rtl: false,
+    strings: {
+      clear_search: 'Vymazať vyhľadávanie',
+      close: 'Zavrieť',
+      days: [
+        'Nedeľa',
+        'Pondelok',
+        'Utorok',
+        'Streda',
+        'Štvrtok',
+        'Piatok',
+        'Sobota'
+      ],
+      email: 'E-mail',
+      email_use: 'E-mail {{value}}',
+      filters: 'Filtre',
+      language: 'Jazyk',
+      ongoing: 'Prebieha',
+      phone: 'Telefón',
+      phone_use: 'Volať {{value}}',
+      search: 'Vyhľadávanie',
+      timezone: 'Časové pásmo',
+      video_use: 'Pripojte sa k {{value}}'
+    }
+  },
+  sv: {
+    english_name: 'Swedish',
+    name: 'Svenska',
+    rtl: false,
+    strings: {
+      clear_search: 'Rensa sökningen',
+      close: 'Stänga',
+      days: [
+        'Söndag',
+        'Måndag',
+        'Tisdag',
+        'Onsdag',
+        'Torsdag',
+        'Fredag',
+        'Lördag'
+      ],
+      email: 'E-post',
+      email_use: 'Skicka e-post till {{value}}',
+      filters: 'Filter',
+      language: 'Språk',
+      ongoing: 'Pågående',
+      phone: 'Telefon',
+      phone_use: 'Ring {{värde}}',
+      search: 'Sök',
+      timezone: 'Tidszon',
+      video_use: 'Gå med i {{value}}'
+    }
   }
 };
 
@@ -263,7 +459,11 @@ export function isLanguage(string: string) {
   return enLangs.includes(string);
 }
 
-export function getLanguage(): keyof typeof languages {
+export function isLanguageCode(string: string): string is Language {
+  return Object.keys(languages).includes(string);
+}
+
+export function getLanguage(): Language {
   const [lang] = navigator.language.toLowerCase().split('-');
   const useLanguage = lang in languages ? lang : 'en';
   return useLanguage as keyof typeof languages;

@@ -35,7 +35,7 @@ export default function App() {
     state.filters[filter].forEach(tag => {
       if (tag.tag === value) {
         tag.checked = checked;
-      } else if (['days', 'formats'].includes(filter)) {
+      } else if (['days', 'formats', 'language'].includes(filter)) {
         //if we're setting a tag or format, uncheck the others
         tag.checked = false;
       }

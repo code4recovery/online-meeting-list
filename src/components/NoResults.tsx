@@ -23,7 +23,7 @@ export function NoResults({ state, toggleTag }: NoResults) {
       <Stack spacing={5} align="center">
         <Box>No results match the selected filters:</Box>
         {filters.map(([filter, tag], index) => (
-          <Box>
+          <Box key={index}>
             <ButtonPrimary
               key={index}
               icon="small-close"

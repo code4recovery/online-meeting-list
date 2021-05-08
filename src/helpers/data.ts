@@ -2,7 +2,13 @@ import moment from 'moment-timezone';
 
 import { days, meetingsPerPage, videoServices } from './config';
 import { Meeting, State, Tag } from './types';
-import { getLanguage, isLanguage } from './i18n';
+import {
+  getLanguage,
+  isLanguage,
+  isLanguageCode,
+  Language,
+  languages
+} from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(data: any): State {
@@ -10,8 +16,22 @@ export function load(data: any): State {
   let formats: string[] = [];
   let types: string[] = [];
 
+  //read query string
+  const query: { [key: string]: string[] } = {};
+  if (window.location.search.length > 1) {
+    window.location.search
+      .substr(1)
+      .split('&')
+      .forEach(pair => {
+        const [key, value] = pair.split('=');
+        query[key] = value.split(',').map(decodeURIComponent);
+      });
+  }
+
   //handle user language
-  const language = getLanguage();
+  const language: Language = isLanguageCode(query.lang.join())
+    ? (query.lang.join() as Language)
+    : getLanguage();
 
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
@@ -21,6 +41,7 @@ export function load(data: any): State {
       notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
       updated: data.feed.entry[i]['updated']['$t'],
       search: '',
+      languages: [],
       tags: []
     };
 
@@ -107,29 +128,41 @@ export function load(data: any): State {
     //append to meeting tags
     meeting.tags = meeting.tags.concat(meeting_formats);
 
-    //get types
+    //handle types
     const meeting_types = stringToTrimmedArray(
       data.feed.entry[i]['gsx$types']['$t']
-    );
+    ).filter(type => !isLanguage(type));
 
-    //append to types array *and handle language
-    meeting_types.forEach(type => {
-      if (!isLanguage(type) && !types.includes(type)) {
+    //append to types array
+    meeting_types
+      .filter(type => !types.includes(type))
+      .forEach(type => {
         types.push(type);
-      }
-    });
+      });
 
     //append to meeting tags
     meeting.tags = meeting.tags.concat(meeting_types);
 
-    //search index
+    //handle types
+    meeting.languages = stringToTrimmedArray(
+      data.feed.entry[i]['gsx$language']['$t']
+    )
+      .filter(type => isLanguage(type))
+      .map(
+        type =>
+          Object.keys(languages).filter(
+            language => type === languages[language as Language].english_name
+          )[0] as Language
+      );
+
+    //add words to search index
     meeting.search = meeting.name
       .toLowerCase()
       .split(' ')
       .filter(e => e)
       .join(' ');
 
-    //timezone
+    //handle timezone
     const timezone = data.feed.entry[i]['gsx$timezone']['$t'].trim();
 
     //handle times
@@ -161,24 +194,11 @@ export function load(data: any): State {
   formats.sort();
   types.sort();
 
-  //read query string
-  const query: { [key: string]: string[] } = {};
-  if (window.location.search.length > 1) {
-    window.location.search
-      .substr(1)
-      .split('&')
-      .forEach(pair => {
-        const [key, value] = pair.split('=');
-        query[key] = value.split(',').map(decodeURIComponent);
-      });
-  }
-
   return {
     filters: {
       days: arrayToTagsArray(days, query.days || []),
       formats: arrayToTagsArray(formats, query.formats || []),
-      types: arrayToTagsArray(types, query.types || []),
-      language: [{ tag: language, checked: true }]
+      types: arrayToTagsArray(types, query.types || [])
     },
     limit: meetingsPerPage,
     loading: false,

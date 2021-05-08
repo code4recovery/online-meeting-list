@@ -10,6 +10,7 @@ export type Meeting = {
   tags: string[];
   updated: string;
   search: string;
+  languages: Language[];
 };
 
 export type MeetingLink = {
