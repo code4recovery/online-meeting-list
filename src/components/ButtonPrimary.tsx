@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Icon } from '@chakra-ui/core';
+import { Button, Icon } from '@chakra-ui/react';
 
 export type ButtonPrimaryProps = {
   icon: 'link' | 'email' | 'phone' | 'small-close' | 'video';
@@ -22,7 +22,7 @@ export function ButtonPrimary({
       title={title}
       _hover={{ bg: 'blue.800' }}
     >
-      <Icon name={icon} mr={2} />
+      <Icon name={icon} me={2} />
       {text}
     </Button>
   );

@@ -7,19 +7,18 @@ export const dataUrl = `https://spreadsheets.google.com/feeds/list/${
   sheetUrl.split('/')[5]
 }/1/public/values?alt=json`;
 
-//todo internationalize
-export const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
 //number of meetings displayed (scroll to load more)
 export const meetingsPerPage = 10;
+
+export const days = [
+  'sunday',
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday'
+];
 
 //any link is supported, but these conference URLs identified by service name
 export const videoServices: { [key: string]: string[] } = {

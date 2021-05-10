@@ -1,47 +1,45 @@
 import moment from 'moment-timezone';
 
-import { days, meetingsPerPage, videoServices } from './config';
+import { meetingsPerPage, videoServices } from './config';
 import { Meeting, State, Tag } from './types';
-import {
-  getLanguage,
-  isLanguage,
-  isLanguageCode,
-  Language,
-  languages
-} from './i18n';
+
+import { days } from './config';
+
+import { Language, languages } from './i18n';
+import { URLSearchParams } from 'node:url';
 
 //parse google spreadsheet data into state object (runs once on init)
-export function load(data: any): State {
+export function load(
+  data: any,
+  query: URLSearchParams,
+  language: Language,
+  t: (string: string, value?: string) => string
+): State {
   const meetings: Meeting[] = [];
-  let formats: string[] = [];
-  let types: string[] = [];
-
-  //read query string
-  const query: { [key: string]: string[] } = {};
-  if (window.location.search.length > 1) {
-    window.location.search
-      .substr(1)
-      .split('&')
-      .forEach(pair => {
-        const [key, value] = pair.split('=');
-        query[key] = value.split(',').map(decodeURIComponent);
-      });
-  }
-
-  //handle user language
-  const language: Language = isLanguageCode(query.lang.join())
-    ? (query.lang.join() as Language)
-    : getLanguage();
+  const formats: string[] = [];
+  const types: string[] = [];
 
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
+    //handle language
+    const meeting_languages = stringToTrimmedArray(
+      data.feed.entry[i]['gsx$languages']['$t']
+    ).map(
+      type =>
+        Object.keys(languages).filter(
+          language => type === languages[language as Language].english_name
+        )[0] as Language
+    );
+
+    if (!meeting_languages.includes(language)) continue;
+
     const meeting: Meeting = {
       name: data.feed.entry[i]['gsx$name']['$t'].trim(),
       buttons: [],
       notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
       updated: data.feed.entry[i]['updated']['$t'],
       search: '',
-      languages: [],
+      languages: meeting_languages,
       tags: []
     };
 
@@ -116,7 +114,7 @@ export function load(data: any): State {
     //handle formats
     const meeting_formats = stringToTrimmedArray(
       data.feed.entry[i]['gsx$formats']['$t']
-    );
+    ).map(format => t(format));
 
     //append to formats array
     meeting_formats.forEach((format: string) => {
@@ -131,7 +129,7 @@ export function load(data: any): State {
     //handle types
     const meeting_types = stringToTrimmedArray(
       data.feed.entry[i]['gsx$types']['$t']
-    ).filter(type => !isLanguage(type));
+    ).map(format => t(format));
 
     //append to types array
     meeting_types
@@ -142,18 +140,6 @@ export function load(data: any): State {
 
     //append to meeting tags
     meeting.tags = meeting.tags.concat(meeting_types);
-
-    //handle types
-    meeting.languages = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$language']['$t']
-    )
-      .filter(type => isLanguage(type))
-      .map(
-        type =>
-          Object.keys(languages).filter(
-            language => type === languages[language as Language].english_name
-          )[0] as Language
-      );
 
     //add words to search index
     meeting.search = meeting.name
@@ -175,7 +161,9 @@ export function load(data: any): State {
       //loop through create an entry for each time
       times.forEach(timestring => {
         //momentize start time
-        const time = moment.tz(timestring, 'dddd h:mm a', timezone);
+        const time = moment
+          .tz(timestring, 'dddd h:mm a', timezone)
+          .locale(language);
 
         if (time.isValid()) {
           //push a clone of the meeting onto the array
@@ -196,9 +184,15 @@ export function load(data: any): State {
 
   return {
     filters: {
-      days: arrayToTagsArray(days, query.days || []),
-      formats: arrayToTagsArray(formats, query.formats || []),
-      types: arrayToTagsArray(types, query.types || [])
+      days: arrayToTagsArray(
+        days.map(day => t(day)),
+        query.get('days')?.split(',') || []
+      ),
+      formats: arrayToTagsArray(
+        formats,
+        query.get('formats')?.split(',') || []
+      ),
+      types: arrayToTagsArray(types, query.get('types')?.split(',') || [])
     },
     limit: meetingsPerPage,
     loading: false,

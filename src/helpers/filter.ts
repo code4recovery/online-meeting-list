@@ -1,12 +1,14 @@
 import moment from 'moment-timezone';
 
 import { days } from './config';
+
 import { Meeting, State } from './types';
 
 //set time zones, apply filters, and sort meetings, runs on state change
 export function filter(
-  { meetings, search, timezone }: State,
-  tags: string[]
+  { language, meetings, search, timezone }: State,
+  tags: string[],
+  t: (string: string, value?: string) => string
 ): Meeting[] {
   //get current timestamp
   const now = moment();
@@ -33,7 +35,9 @@ export function filter(
       }
 
       //add day to meeting tags
-      meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
+      meeting.tags = meeting.tags.filter(
+        tag => !days.map(day => t(day, language)).includes(tag)
+      );
       meeting.tags.push(meeting.time.format('dddd'));
       meeting.tags.sort();
     }

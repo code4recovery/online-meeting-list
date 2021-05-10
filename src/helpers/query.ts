@@ -12,7 +12,7 @@ export function setQuery(state: State) {
       query.push(
         key.concat(
           '=',
-          checkedValues.map(value => encodeURIComponent(value.tag)).join(',')
+          checkedValues.map(value => value.tag.replaceAll(' ', '+')).join(',')
         )
       );
     }

@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import moment from 'moment-timezone';
-import { Button, FormControl, Select, Stack } from '@chakra-ui/core';
+import { Button, FormControl, Select, Stack } from '@chakra-ui/react';
+import { BsChat, BsChevronUp, BsClock, BsChevronDown } from 'react-icons/bs';
 
 import { ButtonTag } from './ButtonTag';
 import { Search } from './Search';
-import { State, Tag } from '../helpers/types';
-import { languages, getStrings } from '../helpers/i18n';
+import { languages, Language, State, Tag, i18n } from '../helpers';
 
 type FilterProps = {
   setSearch: (search: string[]) => void;
   setTimezone: (timezone: string) => void;
-  setLanguage: (language: keyof typeof languages) => void;
   state: State;
   toggleTag: (filter: string, value: string, checked: boolean) => void;
 };
@@ -18,12 +17,11 @@ type FilterProps = {
 export function Filter({
   setSearch,
   setTimezone,
-  setLanguage,
   state,
   toggleTag
 }: FilterProps) {
   const [open, setOpen] = useState(false);
-  const strings = getStrings(state.language);
+  const { language, t } = useContext(i18n);
   return (
     <Stack spacing={{ xs: 3, md: 6 }}>
       <FormControl>
@@ -35,42 +33,44 @@ export function Filter({
       >
         {Object.keys(state.filters)
           .filter(filter => filter !== 'language')
-          .map((filter: string, index: number) => (
-            <FormControl key={index}>
-              {state.filters[filter].map((tag: Tag, index: number) => (
-                <ButtonTag
-                  filter={filter}
-                  key={index}
-                  tag={tag}
-                  toggleTag={toggleTag}
-                />
-              ))}
-            </FormControl>
-          ))}
+          .map(
+            (filter: string, index: number) =>
+              !!state.filters[filter].length && (
+                <FormControl key={index}>
+                  {state.filters[filter].map((tag: Tag, index: number) => (
+                    <ButtonTag
+                      filter={filter}
+                      key={index}
+                      tag={tag}
+                      toggleTag={toggleTag}
+                    />
+                  ))}
+                </FormControl>
+              )
+          )}
         <FormControl d="block" as="fieldset">
           <Select
-            aria-label={strings.language}
+            aria-label={t('language')}
             borderColor="gray.300"
-            icon="chat"
-            iconSize={4}
+            icon={<BsChat />}
             onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-              setLanguage(e.currentTarget.value as keyof typeof languages);
+              //hard reload so types get refreshed
+              window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
             }}
-            value={state.language}
+            value={language}
           >
             {Object.keys(languages).map((language, index) => (
               <option key={index} value={language}>
-                {languages[language as keyof typeof languages].name}
+                {languages[language as Language].name}
               </option>
             ))}
           </Select>
         </FormControl>
         <FormControl d="block" as="fieldset">
           <Select
-            aria-label={strings.timezone}
+            aria-label={t('timezone')}
             borderColor="gray.300"
-            icon="time"
-            iconSize={4}
+            icon={<BsClock />}
             onChange={(e: React.FormEvent<HTMLSelectElement>) =>
               setTimezone(e.currentTarget.value)
             }
@@ -89,11 +89,11 @@ export function Filter({
           onClick={() => {
             setOpen(!open);
           }}
-          rightIcon={open ? 'chevron-up' : 'chevron-down'}
+          rightIcon={open ? <BsChevronUp /> : <BsChevronDown />}
           variant="outline"
           w="100%"
         >
-          {open ? strings.close : strings.filters}
+          {open ? t('close', language) : t('filters', language)}
         </Button>
       </FormControl>
     </Stack>
