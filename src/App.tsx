@@ -109,12 +109,12 @@ export default function App() {
           <Box as="main" maxW={1240} minH="100%" w="100%" mx="auto" p={6}>
             <Grid
               as="section"
-              gap={{ xs: 3, md: 6 }}
+              gap={{ base: 3, md: 6 }}
               templateColumns={{
                 md: 'auto 300px'
               }}
             >
-              <Box as="section" order={{ xs: 1, md: 2 }}>
+              <Box as="section" order={{ base: 1, md: 2 }}>
                 <Filter
                   setSearch={(search: string[]) => {
                     setState({ ...state, search });
@@ -126,7 +126,7 @@ export default function App() {
                   toggleTag={toggleTag}
                 />
               </Box>
-              <Box order={{ xs: 2, md: 1 }} overflow="hidden">
+              <Box order={{ base: 2, md: 1 }} overflow="hidden">
                 {!filteredMeetings.length && (
                   <NoResults state={state} toggleTag={toggleTag} />
                 )}

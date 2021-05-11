@@ -4,12 +4,12 @@ import { Alert, Box, Stack } from '@chakra-ui/react';
 import { ButtonPrimary } from './ButtonPrimary';
 import { i18n, State } from '../helpers';
 
-type NoResults = {
+export type NoResultsProps = {
   state: State;
   toggleTag: (filter: string, value: string, checked: boolean) => void;
 };
 
-export function NoResults({ state, toggleTag }: NoResults) {
+export function NoResults({ state, toggleTag }: NoResultsProps) {
   const { t } = useContext(i18n);
 
   //get currrently active filters

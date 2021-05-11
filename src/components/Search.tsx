@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useRef, useContext } from 'react';
 import {
-  Icon,
   IconButton,
   Input,
   InputGroup,
@@ -8,24 +7,23 @@ import {
   InputRightElement
 } from '@chakra-ui/react';
 
+import { Icon } from './Icon';
 import { i18n, State } from '../helpers';
-import { BsSearch } from 'react-icons/bs';
 
-type Search = {
+export type SearchProps = {
   setSearch: (search: string[]) => void;
   search: string[];
   state: State;
 };
 
-export function Search({ search, setSearch, state }: Search) {
+export function Search({ search, setSearch }: SearchProps) {
   const searchField = useRef<HTMLInputElement>(null);
   const { rtl, t } = useContext(i18n);
   const clearButton = (
     <IconButton
       aria-label={t('clear_search')}
       bg="transparent"
-      color="gray.300"
-      icon={<BsSearch />}
+      icon={<Icon name="small-close" />}
       _active={{ bg: 'transparent', color: 'gray.500' }}
       _hover={{ bg: 'transparent', color: 'gray.500' }}
       onClick={() => {
@@ -38,17 +36,16 @@ export function Search({ search, setSearch, state }: Search) {
     ></IconButton>
   );
   return (
-    <InputGroup borderColor="gray.300">
+    <InputGroup borderColor="gray.300" color="gray.500">
       {(!rtl || (rtl && !!search.length)) && (
         <InputLeftElement>
-          {rtl && !!search.length && (
-            <InputRightElement>{clearButton}</InputRightElement>
-          )}
-          {!rtl && <Icon color="gray.300" name="search-2" />}
+          {rtl && !!search.length && clearButton}
+          {!rtl && <Icon name="search" />}
         </InputLeftElement>
       )}
       <Input
         aria-label={t('search')}
+        bgColor="white"
         placeholder={t('search')}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setSearch(
@@ -65,10 +62,8 @@ export function Search({ search, setSearch, state }: Search) {
       />
       {(rtl || (!rtl && !!search.length)) && (
         <InputRightElement>
-          {!rtl && !!search.length && (
-            <InputRightElement>{clearButton}</InputRightElement>
-          )}
-          {rtl && <Icon color="gray.300" name="search-2" />}
+          {!rtl && !!search.length && clearButton}
+          {rtl && <Icon name="search" />}
         </InputRightElement>
       )}
     </InputGroup>

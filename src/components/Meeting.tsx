@@ -6,15 +6,13 @@ import Linkify from 'react-linkify';
 import { ButtonPrimary } from './ButtonPrimary';
 import { Meeting as MeetingType, i18n } from '../helpers';
 
-export function Meeting({
-  meeting,
-  search,
-  tags
-}: {
+export type MeetingProps = {
   meeting: MeetingType;
   search: string[];
   tags: string[];
-}) {
+};
+
+export function Meeting({ meeting, search, tags }: MeetingProps) {
   const { language, rtl, t } = useContext(i18n);
   return (
     <Box
@@ -22,7 +20,7 @@ export function Meeting({
       bg="white"
       border="1px"
       borderColor="gray.300"
-      mb={{ xs: 3, md: 6 }}
+      mb={{ base: 3, md: 6 }}
       p={5}
       rounded="md"
       shadow="md"
@@ -79,8 +77,8 @@ export function Meeting({
         )}
         {!!meeting.notes.length && (
           <Stack spacing={3}>
-            {meeting.notes.map((paragraph: string, key: number) => (
-              <Text key={key}>
+            {meeting.notes.map((paragraph: string, index: number) => (
+              <Text key={index}>
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}
@@ -91,11 +89,16 @@ export function Meeting({
             {meeting.tags.map((tag: string, index: number) => (
               <Tag
                 bg={tags.includes(tag) ? 'gray.300' : 'gray.100'}
+                border="1px"
+                borderColor={tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                borderRadius="base"
                 color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
                 key={index}
-                mr={rtl ? 0 : 2}
                 ml={rtl ? 2 : 0}
+                mr={rtl ? 0 : 2}
                 my={1}
+                px={3}
+                py={1}
                 size="sm"
               >
                 {tag}

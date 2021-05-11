@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import moment from 'moment-timezone';
 import { Button, FormControl, Select, Stack } from '@chakra-ui/react';
-import { BsChat, BsChevronUp, BsClock, BsChevronDown } from 'react-icons/bs';
 
 import { ButtonTag } from './ButtonTag';
 import { Search } from './Search';
+import { Icon } from './Icon';
 import { languages, Language, State, Tag, i18n } from '../helpers';
 
-type FilterProps = {
+export type FilterProps = {
   setSearch: (search: string[]) => void;
   setTimezone: (timezone: string) => void;
   state: State;
@@ -23,13 +23,13 @@ export function Filter({
   const [open, setOpen] = useState(false);
   const { language, t } = useContext(i18n);
   return (
-    <Stack spacing={{ xs: 3, md: 6 }}>
+    <Stack spacing={{ base: 3, md: 6 }}>
       <FormControl>
         <Search search={state.search} setSearch={setSearch} state={state} />
       </FormControl>
       <Stack
-        d={{ xs: open ? 'block' : 'none', md: 'block' }}
-        spacing={{ xs: 3, md: 6 }}
+        d={{ base: open ? 'block' : 'none', md: 'block' }}
+        spacing={{ base: 3, md: 6 }}
       >
         {Object.keys(state.filters)
           .filter(filter => filter !== 'language')
@@ -51,8 +51,11 @@ export function Filter({
         <FormControl d="block" as="fieldset">
           <Select
             aria-label={t('language')}
+            bgColor="white"
             borderColor="gray.300"
-            icon={<BsChat />}
+            color="gray.500"
+            iconColor="gray.500"
+            icon={<Icon name="language" />}
             onChange={(e: React.FormEvent<HTMLSelectElement>) => {
               //hard reload so types get refreshed
               window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
@@ -69,8 +72,10 @@ export function Filter({
         <FormControl d="block" as="fieldset">
           <Select
             aria-label={t('timezone')}
+            bgColor="white"
             borderColor="gray.300"
-            icon={<BsClock />}
+            color="gray.500"
+            icon={<Icon name="time" />}
             onChange={(e: React.FormEvent<HTMLSelectElement>) =>
               setTimezone(e.currentTarget.value)
             }
@@ -84,12 +89,11 @@ export function Filter({
       </Stack>
       <FormControl d={{ md: 'none' }}>
         <Button
-          bg={open ? 'gray.100' : 'white'}
+          bg={open ? 'transparent' : 'white'}
           borderColor="gray.300"
-          onClick={() => {
-            setOpen(!open);
-          }}
-          rightIcon={open ? <BsChevronUp /> : <BsChevronDown />}
+          color="gray.500"
+          onClick={() => setOpen(!open)}
+          rightIcon={<Icon name={open ? 'chevron-up' : 'chevron-down'} />}
           variant="outline"
           w="100%"
         >
