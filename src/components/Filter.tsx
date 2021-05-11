@@ -12,16 +12,24 @@ export type FilterProps = {
   setTimezone: (timezone: string) => void;
   state: State;
   toggleTag: (filter: string, value: string, checked: boolean) => void;
+  currentDays: string[];
 };
 
 export function Filter({
   setSearch,
   setTimezone,
   state,
-  toggleTag
+  toggleTag,
+  currentDays
 }: FilterProps) {
   const [open, setOpen] = useState(false);
   const { language, t } = useContext(i18n);
+
+  //filter out unused days
+  state.filters.days = state.filters.days.filter(day =>
+    currentDays.includes(day.tag)
+  );
+
   return (
     <Stack spacing={{ base: 3, md: 6 }}>
       <FormControl>
@@ -31,23 +39,21 @@ export function Filter({
         d={{ base: open ? 'block' : 'none', md: 'block' }}
         spacing={{ base: 3, md: 6 }}
       >
-        {Object.keys(state.filters)
-          .filter(filter => filter !== 'language')
-          .map(
-            (filter: string, index: number) =>
-              !!state.filters[filter].length && (
-                <FormControl key={index}>
-                  {state.filters[filter].map((tag: Tag, index: number) => (
-                    <ButtonTag
-                      filter={filter}
-                      key={index}
-                      tag={tag}
-                      toggleTag={toggleTag}
-                    />
-                  ))}
-                </FormControl>
-              )
-          )}
+        {Object.keys(state.filters).map(
+          (filter: string, index: number) =>
+            !!state.filters[filter].length && (
+              <FormControl key={index}>
+                {state.filters[filter].map((tag: Tag, index: number) => (
+                  <ButtonTag
+                    filter={filter}
+                    key={index}
+                    tag={tag}
+                    toggleTag={toggleTag}
+                  />
+                ))}
+              </FormControl>
+            )
+        )}
         <FormControl d="block" as="fieldset">
           <Select
             aria-label={t('language')}

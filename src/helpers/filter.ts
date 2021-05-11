@@ -6,13 +6,19 @@ import { Meeting, State } from './types';
 
 //set time zones, apply filters, and sort meetings, runs on state change
 export function filter(
-  { language, meetings, search, timezone }: State,
+  { meetings, search, timezone }: State,
   tags: string[],
   t: (string: string, value?: string) => string
-): Meeting[] {
+): [Meeting[], string[]] {
   //get current timestamp
   const now = moment();
   //const now = moment.tz('Saturday 8:12 PM', 'dddd h:mm a', timezone);
+
+  //track current days
+  const currentDays: string[] = [];
+
+  //array of all days in language
+  const allDays = days.map(day => t(day));
 
   //loop through meetings for time operations
   meetings.map(meeting => {
@@ -34,11 +40,15 @@ export function filter(
         meeting.time.add(1, 'week');
       }
 
-      //add day to meeting tags
-      meeting.tags = meeting.tags.filter(
-        tag => !days.map(day => t(day, language)).includes(tag)
-      );
-      meeting.tags.push(meeting.time.format('dddd'));
+      //remove all days from meeting
+      meeting.tags = meeting.tags.filter(tag => !allDays.includes(tag));
+
+      //add meeting day to tags
+      const meetingDay = t(days[parseInt(meeting.time.format('d'))]);
+      meeting.tags.push(meetingDay);
+      if (!currentDays.includes(meetingDay)) currentDays.push(meetingDay);
+
+      //sort tags
       meeting.tags.sort();
     }
 
@@ -81,5 +91,5 @@ export function filter(
   });
 
   //return
-  return meetings;
+  return [meetings, currentDays];
 }

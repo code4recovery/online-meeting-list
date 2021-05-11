@@ -91,7 +91,7 @@ export default function App() {
     return value ? translation.replaceAll('{{value}}', value) : translation;
   };
 
-  const filteredMeetings = filter(state, tags, t);
+  const [filteredMeetings, currentDays] = filter(state, tags, t);
 
   return (
     <i18n.Provider
@@ -123,6 +123,7 @@ export default function App() {
                     setState({ ...state, timezone });
                   }}
                   state={state}
+                  currentDays={currentDays}
                   toggleTag={toggleTag}
                 />
               </Box>

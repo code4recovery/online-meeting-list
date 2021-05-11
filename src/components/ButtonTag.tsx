@@ -17,7 +17,7 @@ export function ButtonTag({ filter, tag, toggleTag }: ButtonTagProps) {
       borderRadius="base"
       borderColor="gray.200"
       color={tag.checked ? 'gray.100' : 'gray.600'}
-      mr={2}
+      me={2}
       my={1}
       onClick={e => {
         toggleTag(filter, tag.tag, !tag.checked);
