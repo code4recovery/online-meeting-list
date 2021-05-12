@@ -882,6 +882,14 @@ export function getLanguage(): Language {
   return useLanguage as Language;
 }
 
+const englishLanguageNames = Object.keys(languages).map(
+  language => languages[language as Language].english_name
+);
+
+export function isLanguage(string: string): boolean {
+  return englishLanguageNames.includes(string);
+}
+
 export function isLanguageCode(string: string | null): string is Language {
   return !!string && Object.keys(languages).includes(string);
 }

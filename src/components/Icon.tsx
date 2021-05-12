@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  ChatAlt2Icon,
   ChevronDownIcon,
   ChevronUpIcon,
   ClockIcon,
@@ -8,6 +7,7 @@ import {
   MailIcon,
   PhoneIcon,
   SearchIcon,
+  TranslateIcon,
   VideoCameraIcon,
   XCircleIcon
 } from '@heroicons/react/outline';
@@ -31,7 +31,7 @@ export function Icon({ name }: IconProps) {
     return <ChevronDownIcon width={18} height={18} />;
   if (name === 'chevron-up') return <ChevronUpIcon width={18} height={18} />;
   if (name === 'email') return <MailIcon width={18} height={18} />;
-  if (name === 'language') return <ChatAlt2Icon width={18} height={18} />;
+  if (name === 'language') return <TranslateIcon width={18} height={18} />;
   if (name === 'link') return <LinkIcon width={18} height={18} />;
   if (name === 'phone') return <PhoneIcon width={18} height={18} />;
   if (name === 'search') return <SearchIcon width={18} height={18} />;

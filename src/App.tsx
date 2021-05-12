@@ -81,7 +81,8 @@ export default function App() {
     })
     .flat();
 
-  const t = (string: string, value?: string): string => {
+  const t = (string?: string, value?: string): string => {
+    if (!string) return '';
     const key = string.replaceAll(' ', '_').toLowerCase();
     const translations = languages[state.language].strings;
     const translation =

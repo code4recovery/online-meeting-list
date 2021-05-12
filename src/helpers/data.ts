@@ -5,7 +5,7 @@ import { Meeting, State, Tag } from './types';
 
 import { days } from './config';
 
-import { Language, languages } from './i18n';
+import { Language, languages, isLanguage } from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(
@@ -24,16 +24,22 @@ export function load(
     //handle language
     const meeting_languages = stringToTrimmedArray(
       data.feed.entry[i]['gsx$languages']['$t']
-    ).map(
-      type =>
-        Object.keys(languages).filter(
-          language => type === languages[language as Language].english_name
-        )[0] as Language
-    );
+    )
+      .filter(string => {
+        const isDefinedLanguage = isLanguage(string);
+        if (!isDefinedLanguage) warn(string, 'language', i);
+        return isDefinedLanguage;
+      })
+      .map(
+        string =>
+          Object.keys(languages).filter(
+            language => string === languages[language as Language].english_name
+          )[0] as Language
+      );
 
     //make sure available languages is populated
     meeting_languages.forEach(language => {
-      if (!availableLanguages.includes(language)) {
+      if (language && !availableLanguages.includes(language)) {
         availableLanguages.push(language);
       }
     });

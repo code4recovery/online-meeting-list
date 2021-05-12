@@ -23,7 +23,7 @@ export function Filter({
   currentDays
 }: FilterProps) {
   const [open, setOpen] = useState(false);
-  const { language, t } = useContext(i18n);
+  const { language, rtl, t } = useContext(i18n);
 
   //filter out unused days
   state.filters.days = state.filters.days.filter(day =>
@@ -62,20 +62,18 @@ export function Filter({
               borderColor="gray.300"
               color="gray.500"
               iconColor="gray.500"
-              icon={<Icon name="language" />}
+              icon={rtl ? <div /> : <Icon name="language" />}
               onChange={(e: React.FormEvent<HTMLSelectElement>) => {
                 //hard reload so types get refreshed
                 window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
               }}
               value={language}
             >
-              {state.languages
-                .filter(e => e)
-                .map((language, index) => (
-                  <option key={index} value={language}>
-                    {languages[language as Language].name}
-                  </option>
-                ))}
+              {state.languages.map((language, index) => (
+                <option key={index} value={language}>
+                  {languages[language as Language].name}
+                </option>
+              ))}
             </Select>
           </FormControl>
         )}
@@ -85,7 +83,7 @@ export function Filter({
             bgColor="white"
             borderColor="gray.300"
             color="gray.500"
-            icon={<Icon name="time" />}
+            icon={rtl ? <div /> : <Icon name="time" />}
             onChange={(e: React.FormEvent<HTMLSelectElement>) =>
               setTimezone(e.currentTarget.value)
             }

@@ -44,7 +44,7 @@ export function filter(
       meeting.tags = meeting.tags.filter(tag => !allDays.includes(tag));
 
       //add meeting day to tags
-      const meetingDay = t(days[parseInt(meeting.time.format('d'))]);
+      const meetingDay = t(days[meeting.time.day()]);
       meeting.tags.push(meetingDay);
       if (!currentDays.includes(meetingDay)) currentDays.push(meetingDay);
 
