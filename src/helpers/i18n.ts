@@ -644,6 +644,58 @@ export const languages = {
       young_people: '若者'
     }
   },
+  pa: {
+    english_name: 'Punjabi',
+    name: 'ਪੰਜਾਬੀ',
+    rtl: false,
+    strings: {
+      asl: 'ASL',
+      asl_interpreter: 'ASL ਦੁਭਾਸ਼ੀਏ',
+      audio: 'ਆਡੀਓ',
+      big_book: 'ਵੱਡੀ ਕਿਤਾਬ',
+      blind__visually_impaired: 'ਅੰਨ੍ਹੇ / ਦ੍ਰਿਸ਼ਟੀਹੀਣ',
+      chat: 'ਗੱਲਬਾਤ',
+      clear_search: 'ਖੋਜ ਸਾਫ ਕਰੋ',
+      close: 'ਬੰਦ ਕਰੋ',
+      closed: 'ਬੰਦ',
+      deaf__hard_of_hearing: 'ਬੋਲ਼ੇ / ਸੁਣਵਾਈ ਦੇ ਸਖ਼ਤ',
+      discussion: 'ਵਿਚਾਰ ਵਟਾਂਦਰੇ',
+      email: 'ਈ - ਮੇਲ',
+      email_use: 'ਈਮੇਲ {{value}}',
+      filters: 'ਫਿਲਟਰ',
+      forum: 'ਫੋਰਮ',
+      friday: 'ਸ਼ੁੱਕਰਵਾਰ',
+      game: 'ਖੇਡ',
+      language: 'ਭਾਸ਼ਾ',
+      lgbt: 'ਐਲਜੀਬੀਟੀ',
+      loners__isolationists: 'ਇਕੱਲਾ / ਇਕੱਲਤਾਵਾਦੀ',
+      meditation: 'ਮੈਡੀਟੇਸ਼ਨ',
+      men: 'ਆਦਮੀ',
+      monday: 'ਸੋਮਵਾਰ',
+      newcomer: 'ਨਵੇਂ ਆਏ',
+      no_results: 'ਚੁਣੇ ਗਏ ਫਿਲਟਰਾਂ ਨਾਲ ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਮਿਲਦਾ:',
+      ongoing: 'ਚਲ ਰਿਹਾ ਹੈ',
+      open: 'ਖੁੱਲਾ',
+      professionals: 'ਪੇਸ਼ੇਵਰ',
+      saturday: 'ਸ਼ਨੀਵਾਰ',
+      search: 'ਖੋਜ',
+      secular: 'ਸੈਕੂਲਰ',
+      seniors: 'ਬਜ਼ੁਰਗ',
+      speaker: 'ਸਪੀਕਰ',
+      steps__traditions: 'ਕਦਮ / ਪਰੰਪਰਾ',
+      sunday: 'ਐਤਵਾਰ',
+      telephone: 'ਫੋਨ',
+      telephone_use: 'ਕਾਲ ਕਰੋ {{value}}',
+      thursday: 'ਵੀਰਵਾਰ ਨੂੰ',
+      timezone: 'ਸਮਾਂ ਖੇਤਰ',
+      tuesday: 'ਮੰਗਲਵਾਰ',
+      video: 'ਵੀਡੀਓ',
+      video_use: '{{value}} ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ',
+      wednesday: 'ਬੁੱਧਵਾਰ',
+      women: 'ਰਤਾਂ',
+      young_people: 'ਨੌਜਵਾਨ ਲੋਕ'
+    }
+  },
   pl: {
     english_name: 'Polish',
     name: 'Polskie',
@@ -934,14 +986,21 @@ export function getLanguage(): Language {
   return useLanguage as Language;
 }
 
-const englishLanguageNames = Object.keys(languages).map(
+const languageKeys = Object.keys(languages);
+
+const englishLanguageNames = languageKeys.map(
   language => languages[language as Language].english_name
 );
+
+export const languageLookup: { [id: string]: Language } = {};
+languageKeys.forEach(key => {
+  languageLookup[languages[key as Language].english_name] = key as Language;
+});
 
 export function isLanguage(string: string): boolean {
   return englishLanguageNames.includes(string);
 }
 
 export function isLanguageCode(string: string | null): string is Language {
-  return !!string && Object.keys(languages).includes(string);
+  return !!string && languageKeys.includes(string);
 }

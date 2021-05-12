@@ -5,7 +5,7 @@ import { Meeting, State, Tag } from './types';
 
 import { days } from './config';
 
-import { Language, languages, isLanguage } from './i18n';
+import { Language, isLanguage, languageLookup } from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(
@@ -22,38 +22,33 @@ export function load(
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
     //handle language
-    const meeting_languages = stringToTrimmedArray(
+    const meetingLanguages = stringToTrimmedArray(
       data.feed.entry[i]['gsx$languages']['$t']
     )
       .filter(string => {
-        const isDefinedLanguage = isLanguage(string);
-        if (!isDefinedLanguage) warn(string, 'language', i);
-        return isDefinedLanguage;
+        const isLanguageDefined = isLanguage(string);
+        if (!isLanguageDefined) warn(string, 'language', i);
+        return isLanguageDefined;
       })
-      .map(
-        string =>
-          Object.keys(languages).filter(
-            language => string === languages[language as Language].english_name
-          )[0] as Language
-      );
+      .map(string => languageLookup[string]);
 
     //make sure available languages is populated
-    meeting_languages.forEach(language => {
+    meetingLanguages.forEach(language => {
       if (language && !availableLanguages.includes(language)) {
         availableLanguages.push(language);
       }
     });
 
-    //only want meetings for current language
-    if (!meeting_languages.includes(language)) continue;
+    //only want meetings for current language, but need to keep going to see all data issues
+    const addMeeting = meetingLanguages.includes(language);
 
+    //start creating meeting
     const meeting: Meeting = {
       name: data.feed.entry[i]['gsx$name']['$t'].trim(),
       buttons: [],
       notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
       updated: data.feed.entry[i]['updated']['$t'],
       search: '',
-      languages: meeting_languages,
       tags: []
     };
 
@@ -126,34 +121,34 @@ export function load(
     }
 
     //handle formats
-    const meeting_formats = stringToTrimmedArray(
+    const meetingFormats = stringToTrimmedArray(
       data.feed.entry[i]['gsx$formats']['$t']
     ).map(format => t(format));
 
-    //append to formats array
-    meeting_formats.forEach((format: string) => {
-      if (!formats.includes(format)) {
-        formats.push(format);
-      }
-    });
-
     //append to meeting tags
-    meeting.tags = meeting.tags.concat(meeting_formats);
+    meeting.tags = meeting.tags.concat(meetingFormats);
 
     //handle types
-    const meeting_types = stringToTrimmedArray(
+    const meetingTypes = stringToTrimmedArray(
       data.feed.entry[i]['gsx$types']['$t']
     ).map(format => t(format));
 
-    //append to types array
-    meeting_types
-      .filter(type => !types.includes(type))
-      .forEach(type => {
-        types.push(type);
+    //append to formats & types arrays
+    if (addMeeting) {
+      meetingFormats.forEach((format: string) => {
+        if (!formats.includes(format)) {
+          formats.push(format);
+        }
       });
+      meetingTypes
+        .filter(type => !types.includes(type))
+        .forEach(type => {
+          types.push(type);
+        });
+    }
 
     //append to meeting tags
-    meeting.tags = meeting.tags.concat(meeting_types);
+    meeting.tags = meeting.tags.concat(meetingTypes);
 
     //add words to search index
     meeting.search = meeting.name
@@ -179,14 +174,14 @@ export function load(
           .tz(timestring, 'dddd h:mm a', timezone)
           .locale(language);
 
-        if (time.isValid()) {
+        if (!time.isValid()) {
+          warn(timestring, 'time', i);
+        } else if (addMeeting) {
           //push a clone of the meeting onto the array
           meetings.push({ ...meeting, time });
-        } else {
-          warn(timestring, 'time', i);
         }
       });
-    } else {
+    } else if (addMeeting) {
       //ongoing meeting; add to meetings
       meetings.push(meeting);
     }
