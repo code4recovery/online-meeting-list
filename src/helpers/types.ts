@@ -27,6 +27,7 @@ export type State = {
   search: string[];
   timezone: string;
   language: Language;
+  languages: Language[];
 };
 
 export type Tag = { tag: string; checked: boolean };

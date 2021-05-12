@@ -54,27 +54,29 @@ export function Filter({
               </FormControl>
             )
         )}
-        <FormControl d="block" as="fieldset">
-          <Select
-            aria-label={t('language')}
-            bgColor="white"
-            borderColor="gray.300"
-            color="gray.500"
-            iconColor="gray.500"
-            icon={<Icon name="language" />}
-            onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-              //hard reload so types get refreshed
-              window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
-            }}
-            value={language}
-          >
-            {Object.keys(languages).map((language, index) => (
-              <option key={index} value={language}>
-                {languages[language as Language].name}
-              </option>
-            ))}
-          </Select>
-        </FormControl>
+        {state.languages.length > 1 && (
+          <FormControl d="block" as="fieldset">
+            <Select
+              aria-label={t('language')}
+              bgColor="white"
+              borderColor="gray.300"
+              color="gray.500"
+              iconColor="gray.500"
+              icon={<Icon name="language" />}
+              onChange={(e: React.FormEvent<HTMLSelectElement>) => {
+                //hard reload so types get refreshed
+                window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
+              }}
+              value={language}
+            >
+              {state.languages.map((language, index) => (
+                <option key={index} value={language}>
+                  {languages[language as Language].name}
+                </option>
+              ))}
+            </Select>
+          </FormControl>
+        )}
         <FormControl d="block" as="fieldset">
           <Select
             aria-label={t('timezone')}

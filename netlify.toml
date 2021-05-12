@@ -1,8 +1,0 @@
-[context.deploy-preview]
-  REACT_APP_GOOGLE_SHEET="https://spreadsheets.google.com/feeds/list/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/1/public/values?alt=json"
-
-[context.branch-deploy]
-  REACT_APP_GOOGLE_SHEET="https://spreadsheets.google.com/feeds/list/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/1/public/values?alt=json"
-
-[context.i18n]
-  REACT_APP_GOOGLE_SHEET="https://spreadsheets.google.com/feeds/list/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/1/public/values?alt=json"

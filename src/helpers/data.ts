@@ -6,7 +6,6 @@ import { Meeting, State, Tag } from './types';
 import { days } from './config';
 
 import { Language, languages } from './i18n';
-import { URLSearchParams } from 'node:url';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(
@@ -18,6 +17,7 @@ export function load(
   const meetings: Meeting[] = [];
   const formats: string[] = [];
   const types: string[] = [];
+  const availableLanguages: Language[] = [];
 
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
@@ -31,6 +31,14 @@ export function load(
         )[0] as Language
     );
 
+    //make sure available languages is populated
+    meeting_languages.forEach(language => {
+      if (!availableLanguages.includes(language)) {
+        availableLanguages.push(language);
+      }
+    });
+
+    //only want meetings for current language
     if (!meeting_languages.includes(language)) continue;
 
     const meeting: Meeting = {
@@ -199,7 +207,8 @@ export function load(
     meetings: meetings,
     search: [],
     timezone: moment.tz.guess(),
-    language: language
+    language: language,
+    languages: availableLanguages
   };
 }
 
