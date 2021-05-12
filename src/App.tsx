@@ -39,7 +39,8 @@ export default function App() {
     meetings: [],
     search: [],
     timezone: '',
-    language: language
+    language: language,
+    languages: []
   });
 
   //set html attributes

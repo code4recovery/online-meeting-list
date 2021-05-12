@@ -189,6 +189,7 @@ export function load(
   //sort
   formats.sort();
   types.sort();
+  availableLanguages.sort();
 
   return {
     filters: {

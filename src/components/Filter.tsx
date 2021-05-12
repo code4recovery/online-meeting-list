@@ -69,11 +69,13 @@ export function Filter({
               }}
               value={language}
             >
-              {state.languages.map((language, index) => (
-                <option key={index} value={language}>
-                  {languages[language as Language].name}
-                </option>
-              ))}
+              {state.languages
+                .filter(e => e)
+                .map((language, index) => (
+                  <option key={index} value={language}>
+                    {languages[language as Language].name}
+                  </option>
+                ))}
             </Select>
           </FormControl>
         )}
