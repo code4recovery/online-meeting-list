@@ -21,7 +21,8 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
       border="1px"
       borderColor="gray.300"
       mb={{ base: 3, md: 6 }}
-      p={5}
+      p={{ base: 3, md: 5 }}
+      overflow="hidden"
       rounded="md"
       shadow="md"
       textAlign={rtl ? 'right' : 'left'}

@@ -108,7 +108,14 @@ export default function App() {
         {state.loading ? (
           <Loading />
         ) : (
-          <Box as="main" maxW={1240} minH="100%" w="100%" mx="auto" p={6}>
+          <Box
+            as="main"
+            maxW={1240}
+            minH="100%"
+            w="100%"
+            mx="auto"
+            p={{ base: 3, md: 6 }}
+          >
             <Grid
               as="section"
               gap={{ base: 3, md: 6 }}
