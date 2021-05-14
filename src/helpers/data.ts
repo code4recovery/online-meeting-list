@@ -59,6 +59,9 @@ export function load(
       let icon: 'link' | 'video' = 'link';
       try {
         const url = new URL(originalUrl);
+        if (!['http:', 'https:'].includes(url.protocol)) {
+          throw new Error();
+        }
         const host = url.hostname;
         const service = Object.keys(videoServices).filter(
           service =>
