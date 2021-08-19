@@ -22,18 +22,18 @@ export function load(data: any): State {
   let types: string[] = [];
 
   //loop through json entries
-  for (let i = 0; i < data.feed.entry.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     const meeting: Meeting = {
-      name: data.feed.entry[i]['gsx$name']['$t'].trim(),
+      name: data[i]['name'].trim(),
       buttons: [],
-      notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
-      updated: data.feed.entry[i]['updated']['$t'],
+      notes: stringToTrimmedArray(data[i]['notes'], '\n'),
+      updated: data[i]['updated'],
       search: '',
       tags: []
     };
 
     //handle url
-    const originalUrl = data.feed.entry[i]['gsx$url']['$t'].trim();
+    const originalUrl = data[i]['url'].trim();
     if (originalUrl) {
       let label;
       let icon: 'link' | 'video' = 'link';
@@ -65,11 +65,11 @@ export function load(data: any): State {
     }
 
     //handle phone
-    const originalPhone = data.feed.entry[i]['gsx$phone']['$t'].trim();
+    const originalPhone = data[i]['phone'].trim();
     if (originalPhone) {
       let phone = originalPhone.replace(/\D/g, '');
       if (phone.length > 8) {
-        const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
+        const accessCode = data[i]['access_code'].trim();
         if (accessCode.length) {
           phone += ',,' + accessCode;
         }
@@ -87,7 +87,7 @@ export function load(data: any): State {
     }
 
     //handle email
-    const email = data.feed.entry[i]['gsx$email']['$t'].trim();
+    const email = data[i]['email'].trim();
     if (email) {
       if (validateEmail(email)) {
         meeting.buttons.push({
@@ -105,7 +105,7 @@ export function load(data: any): State {
 
     //handle formats
     const meeting_formats = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$formats']['$t']
+      data[i]['formats']
     );
 
     //append to formats array
@@ -120,7 +120,7 @@ export function load(data: any): State {
 
     //get types
     const meeting_types = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$types']['$t']
+      data[i]['types']
     );
 
     //append to types array
@@ -141,13 +141,10 @@ export function load(data: any): State {
       .join(' ');
 
     //timezone
-    const timezone = data.feed.entry[i]['gsx$timezone']['$t'].trim();
+    const timezone = data[i]['timezone'].trim();
 
     //handle times
-    const times = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$times']['$t'],
-      '\n'
-    );
+    const times = stringToTrimmedArray(data[i]['times'], '\n');
 
     if (times.length) {
       //loop through create an entry for each time
