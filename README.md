@@ -30,15 +30,19 @@ This project is written in [TypeScript](https://www.typescriptlang.org/) and was
 
 1. Get an API Key from the [Google Developers Console](https://console.cloud.google.com) with the Sheets API enabled
 1. Make a copy of [this Google Sheet](https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0)
-1. Open your spreadsheet and publish it to the web (under the file menu)
-1. Create a new file in the project directory called `.env`, and add your spreadsheet's URL (when you're in edit mode, not the URL displayed when you publish it to the web):
+1. Open your spreadsheet and set the visibility to "anyone with the link can view"
+1. Add environment variables. One option is to create a file called `.env` in your root folder, and add your spreadsheet's URL (when you're in edit mode, not the URL displayed when you publish it to the web):
 
 ```
 REACT_APP_GOOGLE_SHEET="https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0"
 REACT_APP_GOOGLE_API_KEY="9sfjoKsfJukwDZhWs48fhs4fioRsRerEhf8ghs9"
 ```
 
-Or, if you would prefer to use a custom JSON feed, you can use the parameter:
+Or, if you are using a service like [Netlify](https://www.netlify.com), you can skip that step and add these variables directly to your build settings.
+
+## JSON Feed Alternative
+
+If you would prefer to use a custom JSON feed rather than a Google Sheet, you can use the parameter:
 
 ```
 REACT_APP_JSON_URL="https://your-website.org/meetings.json"
