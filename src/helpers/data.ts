@@ -213,6 +213,7 @@ function stringToTrimmedArray(str: string, sep = ','): string[] {
 //translate response from Google Sheet v4
 function translateGoogleSheet(data: any) {
   const { values } = data;
+  if (!values || !values.length) return [];
   const headers = values
     .shift()
     .map((header: string) => header.toLowerCase().replace(' ', '_'));
