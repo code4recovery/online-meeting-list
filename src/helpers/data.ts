@@ -21,6 +21,11 @@ export function load(data: any): State {
   let formats: string[] = [];
   let types: string[] = [];
 
+  //translate google sheet format
+  if (!process.env.REACT_APP_JSON_URL) {
+    data = translateGoogleSheet(data);
+  }
+
   //loop through json entries
   for (let i = 0; i < data.length; i++) {
     const meeting: Meeting = {
@@ -104,9 +109,7 @@ export function load(data: any): State {
     }
 
     //handle formats
-    const meeting_formats = stringToTrimmedArray(
-      data[i]['formats']
-    );
+    const meeting_formats = stringToTrimmedArray(data[i]['formats']);
 
     //append to formats array
     meeting_formats.forEach((format: string) => {
@@ -119,9 +122,7 @@ export function load(data: any): State {
     meeting.tags = meeting.tags.concat(meeting_formats);
 
     //get types
-    const meeting_types = stringToTrimmedArray(
-      data[i]['types']
-    );
+    const meeting_types = stringToTrimmedArray(data[i]['types']);
 
     //append to types array
     meeting_types.forEach(type => {
@@ -207,6 +208,21 @@ function stringToTrimmedArray(str: string, sep = ','): string[] {
     .split(sep)
     .map(val => val.trim())
     .filter(val => val);
+}
+
+//translate response from Google Sheet v4
+function translateGoogleSheet(data: any) {
+  const { values } = data;
+  const headers = values
+    .shift()
+    .map((header: string) => header.toLowerCase().replace(' ', '_'));
+  return values.map((row: string[]) => {
+    const thisRow: any = {};
+    headers.forEach((header: string, index: number) => {
+      thisRow[header] = row[index];
+    });
+    return thisRow;
+  });
 }
 
 function validateEmail(email: string) {

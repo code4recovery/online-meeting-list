@@ -6,7 +6,7 @@ import { Filter } from './components/Filter';
 import { Loading } from './components/Loading';
 import { Meeting } from './components/Meeting';
 import { NoResults } from './components/NoResults';
-import { meetingsPerPage } from './helpers/config';
+import { dataUrl, meetingsPerPage } from './helpers/config';
 import { load, State } from './helpers/data';
 import { filter } from './helpers/filter';
 import { setQuery } from './helpers/query';
@@ -43,7 +43,7 @@ export default function App() {
 
   if (state.loading) {
     //on first render, get data
-    fetch(process.env.REACT_APP_JSON_URL || 'http://sheets.code4recovery.org/sample.json')
+    fetch(dataUrl)
       .then(result => result.json())
       .then(result => {
         setState(load(result));
