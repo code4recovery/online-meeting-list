@@ -3,10 +3,6 @@ const sheetUrl = process.env.REACT_APP_GOOGLE_SHEET
   ? process.env.REACT_APP_GOOGLE_SHEET
   : 'https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0';
 
-if (!process.env.REACT_APP_JSON_URL && process.env.REACT_APP_GOOGLE_API_KEY) {
-  console.warn('you need an API key, see readme');
-}
-
 export const dataUrl =
   process.env.REACT_APP_JSON_URL ||
   `https://sheets.googleapis.com/v4/spreadsheets/${
