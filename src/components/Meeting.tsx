@@ -64,7 +64,7 @@ export function Meeting({
         {!!meeting.notes.length && (
           <Stack spacing={3}>
             {meeting.notes.map((paragraph: string, key: number) => (
-              <Text key={key}>
+              <Text key={key} wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}

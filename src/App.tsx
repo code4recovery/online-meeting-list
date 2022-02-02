@@ -103,7 +103,7 @@ export default function App() {
                 toggleTag={toggleTag}
               />
             </Box>
-            <Box order={{ xs: 2, md: 1 }} overflow="hidden">
+            <Box order={{ xs: 2, md: 1 }}>
               {!filteredMeetings.length && (
                 <NoResults state={state} toggleTag={toggleTag} />
               )}
