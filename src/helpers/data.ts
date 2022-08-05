@@ -25,11 +25,9 @@ export function load(
   }
 
   //loop through json entries
-  for (let i = 0; i < data.feed.entry.length; i++) {
+  for (let i = 0; i < data.length; i++) {
     //handle language
-    const meetingLanguages = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$languages']['$t']
-    )
+    const meetingLanguages = stringToTrimmedArray(data[i]['languages'])
       .filter(string => {
         const isLanguageDefined = isLanguage(string);
         if (!isLanguageDefined) warn(string, 'language', i);
