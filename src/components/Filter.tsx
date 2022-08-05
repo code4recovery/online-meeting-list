@@ -1,11 +1,11 @@
-import React, { useContext, useState } from 'react';
-import moment from 'moment-timezone';
-import { Button, FormControl, Select, Stack } from '@chakra-ui/react';
+import React, { useContext, useState } from "react";
+import moment from "moment-timezone";
+import { Button, FormControl, Select, Stack } from "@chakra-ui/react";
 
-import { ButtonTag } from './ButtonTag';
-import { Search } from './Search';
-import { Icon } from './Icon';
-import { languages, Language, State, Tag, i18n } from '../helpers';
+import { ButtonTag } from "./ButtonTag";
+import { Search } from "./Search";
+import { Icon } from "./Icon";
+import { languages, Language, State, Tag, i18n } from "../helpers";
 
 export type FilterProps = {
   setSearch: (search: string[]) => void;
@@ -20,13 +20,13 @@ export function Filter({
   setTimezone,
   state,
   toggleTag,
-  currentDays
+  currentDays,
 }: FilterProps) {
   const [open, setOpen] = useState(false);
   const { language, rtl, t } = useContext(i18n);
 
   //filter out unused days
-  state.filters.days = state.filters.days.filter(day =>
+  state.filters.days = state.filters.days.filter((day) =>
     currentDays.includes(day.tag)
   );
 
@@ -36,7 +36,7 @@ export function Filter({
         <Search search={state.search} setSearch={setSearch} state={state} />
       </FormControl>
       <Stack
-        d={{ base: open ? 'block' : 'none', md: 'block' }}
+        display={{ base: open ? "block" : "none", md: "block" }}
         spacing={{ base: 3, md: 6 }}
       >
         {Object.keys(state.filters).map(
@@ -55,9 +55,9 @@ export function Filter({
             )
         )}
         {state.languages.length > 1 && (
-          <FormControl d="block" as="fieldset">
+          <FormControl display="block" as="fieldset">
             <Select
-              aria-label={t('language')}
+              aria-label={t("language")}
               bgColor="white"
               borderColor="gray.300"
               color="gray.500"
@@ -77,9 +77,9 @@ export function Filter({
             </Select>
           </FormControl>
         )}
-        <FormControl d="block" as="fieldset">
+        <FormControl display="block" as="fieldset">
           <Select
-            aria-label={t('timezone')}
+            aria-label={t("timezone")}
             bgColor="white"
             borderColor="gray.300"
             color="gray.500"
@@ -95,17 +95,17 @@ export function Filter({
           </Select>
         </FormControl>
       </Stack>
-      <FormControl d={{ md: 'none' }}>
+      <FormControl display={{ md: "none" }}>
         <Button
-          bg={open ? 'transparent' : 'white'}
+          bg={open ? "transparent" : "white"}
           borderColor="gray.300"
           color="gray.500"
           onClick={() => setOpen(!open)}
-          rightIcon={<Icon name={open ? 'chevron-up' : 'chevron-down'} />}
+          rightIcon={<Icon name={open ? "chevron-up" : "chevron-down"} />}
           variant="outline"
           w="100%"
         >
-          {open ? t('close', language) : t('filters', language)}
+          {open ? t("close", language) : t("filters", language)}
         </Button>
       </FormControl>
     </Stack>

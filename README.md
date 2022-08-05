@@ -70,28 +70,20 @@ JSON should be in the format:
 ## Install and Run Locally
 
 1. Clone this repository.
-1. In the project directory, run `yarn` once to install the dependencies.
-1. Run `yarn start` to start the app in development mode.
+1. In the project directory, run `npm i` once to install the dependencies.
+1. Run `npm start` to start the app in development mode.
 
 ## Deploy to your Website
 
-1. In the project directory, run `yarn build`.
+1. In the project directory, run `npm build`.
 
 ## Staying Up to Date
 
 1. In the project directory, run `git pull`.
-1. Re-run `yarn` in case dependencies were updated.
+1. Re-run `npm` in case dependencies were updated.
 
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
 1. Create a branch with your code. (Style note: please use [Prettier](https://prettier.io), and keep properties in alphabetical order)
 1. Create a pull request that references the issue. Please name [@joshreisner](https://github.com/joshreisner) as a reviewer.
-
-## Deployments
-
-The demo is hosted on Netlify. Commits to the `main` branch are automatically built and deployed.
-
-```
-
-```

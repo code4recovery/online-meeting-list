@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
-import Highlighter from 'react-highlight-words';
-import Linkify from 'react-linkify';
+import React, { useContext } from "react";
+import { Box, Heading, Stack, Text, Tag } from "@chakra-ui/react";
+import Highlighter from "react-highlight-words";
+import Linkify from "react-linkify";
 
-import { ButtonPrimary } from './ButtonPrimary';
-import { Meeting as MeetingType, i18n } from '../helpers';
+import { ButtonPrimary } from "./ButtonPrimary";
+import { Meeting as MeetingType, i18n } from "../helpers";
 
 export type MeetingProps = {
   meeting: MeetingType;
@@ -25,46 +25,46 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
       overflow="hidden"
       rounded="md"
       shadow="md"
-      textAlign={rtl ? 'right' : 'left'}
+      textAlign={rtl ? "right" : "left"}
     >
       <Stack spacing={3}>
         <Box alignItems="baseline">
-          <Heading as="h2" d={{ lg: 'inline' }} fontSize="2xl">
+          <Heading as="h2" display={{ lg: "inline" }} fontSize="2xl">
             <Highlighter searchWords={search} textToHighlight={meeting.name} />
           </Heading>
           <Heading
             as="h3"
             color="gray.600"
-            d={{ lg: 'inline' }}
+            display={{ lg: "inline" }}
             fontSize="lg"
             fontWeight="normal"
             ml={{ lg: 2 }}
           >
             {!meeting.time
-              ? t('ongoing')
-              : t(meeting.time.format('dddd'), language) +
-                ' ' +
-                meeting.time.format('LT').toLocaleLowerCase()}
+              ? t("ongoing")
+              : t(meeting.time.format("dddd"), language) +
+                " " +
+                meeting.time.format("LT").toLocaleLowerCase()}
           </Heading>
         </Box>
         {!!meeting.buttons.length && (
           <Box>
             {meeting.buttons.map((button, index) => {
               const text =
-                button.icon === 'email'
-                  ? t('email')
-                  : button.icon === 'phone'
-                  ? t('telephone')
+                button.icon === "email"
+                  ? t("email")
+                  : button.icon === "phone"
+                  ? t("telephone")
                   : button.value;
               const title =
-                button.icon === 'email'
-                  ? t('email_use', button.value)
-                  : button.icon === 'phone'
-                  ? t('telephone_use', button.value)
-                  : t('video_use', button.value);
+                button.icon === "email"
+                  ? t("email_use", button.value)
+                  : button.icon === "phone"
+                  ? t("telephone_use", button.value)
+                  : t("video_use", button.value);
               return (
                 <Box
-                  float={rtl ? 'right' : 'left'}
+                  float={rtl ? "right" : "left"}
                   mr={rtl ? 0 : 2}
                   ml={rtl ? 2 : 0}
                   my={1}
@@ -89,11 +89,11 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
           <Box>
             {meeting.tags.map((tag: string, index: number) => (
               <Tag
-                bg={tags.includes(tag) ? 'gray.300' : 'gray.100'}
+                bg={tags.includes(tag) ? "gray.300" : "gray.100"}
                 border="1px"
-                borderColor={tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                borderColor={tags.includes(tag) ? "gray.400" : "gray.200"}
                 borderRadius="base"
-                color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
+                color={tags.includes(tag) ? "gray.700" : "gray.600"}
                 key={index}
                 ml={rtl ? 2 : 0}
                 mr={rtl ? 0 : 2}
