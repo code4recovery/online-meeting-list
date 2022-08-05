@@ -78,8 +78,8 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
         )}
         {!!meeting.notes.length && (
           <Stack spacing={3}>
-            {meeting.notes.map((paragraph: string, index: number) => (
-              <Text key={index}>
+            {meeting.notes.map((paragraph: string, key: number) => (
+              <Text key={key} wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}

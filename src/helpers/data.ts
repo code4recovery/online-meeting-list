@@ -19,6 +19,11 @@ export function load(
   const types: string[] = [];
   const availableLanguages: Language[] = [];
 
+  //translate google sheet format
+  if (!process.env.REACT_APP_JSON_URL) {
+    data = translateGoogleSheet(data);
+  }
+
   //loop through json entries
   for (let i = 0; i < data.feed.entry.length; i++) {
     //handle language
@@ -44,16 +49,16 @@ export function load(
 
     //start creating meeting
     const meeting: Meeting = {
-      name: data.feed.entry[i]['gsx$name']['$t'].trim(),
+      name: data[i]['name'].trim(),
       buttons: [],
-      notes: stringToTrimmedArray(data.feed.entry[i]['gsx$notes']['$t'], '\n'),
-      updated: data.feed.entry[i]['updated']['$t'],
+      notes: stringToTrimmedArray(data[i]['notes'], '\n'),
+      updated: data[i]['updated'],
       search: '',
       tags: []
     };
 
     //handle url
-    const originalUrl = data.feed.entry[i]['gsx$url']['$t'].trim();
+    const originalUrl = data[i]['url'].trim();
     if (originalUrl) {
       let label;
       let icon: 'link' | 'video' = 'link';
@@ -87,11 +92,11 @@ export function load(
     }
 
     //handle phone
-    const originalPhone = data.feed.entry[i]['gsx$phone']['$t'].trim();
+    const originalPhone = data[i]['phone'].trim();
     if (originalPhone) {
       let phone = originalPhone.replace(/\D/g, '');
       if (phone.length > 8) {
-        const accessCode = data.feed.entry[i]['gsx$accesscode']['$t'].trim();
+        const accessCode = data[i]['access_code'].trim();
         if (accessCode.length) {
           phone += ',,' + accessCode;
         }
@@ -108,7 +113,7 @@ export function load(
     }
 
     //handle email
-    const email = data.feed.entry[i]['gsx$email']['$t'].trim();
+    const email = data[i]['email'].trim();
     if (email) {
       if (validateEmail(email)) {
         meeting.buttons.push({
@@ -124,26 +129,29 @@ export function load(
     }
 
     //handle formats
-    const meetingFormats = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$formats']['$t']
-    ).map(format => t(format));
+    const meeting_formats = stringToTrimmedArray(data[i]['formats']);
+
+    //append to formats array
+    meeting_formats.forEach((format: string) => {
+      if (!formats.includes(format)) {
+        formats.push(format);
+      }
+    });
 
     //append to meeting tags
-    meeting.tags = meeting.tags.concat(meetingFormats);
+    meeting.tags = meeting.tags.concat(meeting_formats);
 
-    //handle types
-    const meetingTypes = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$types']['$t']
-    ).map(format => t(format));
+    //get types
+    const meeting_types = stringToTrimmedArray(data[i]['types']);
 
     //append to formats & types arrays
     if (addMeeting) {
-      meetingFormats.forEach((format: string) => {
+      meeting_formats.forEach((format: string) => {
         if (!formats.includes(format)) {
           formats.push(format);
         }
       });
-      meetingTypes
+      meeting_types
         .filter(type => !types.includes(type))
         .forEach(type => {
           types.push(type);
@@ -151,7 +159,7 @@ export function load(
     }
 
     //append to meeting tags
-    meeting.tags = meeting.tags.concat(meetingTypes);
+    meeting.tags = meeting.tags.concat(meeting_formats);
 
     //add words to search index
     meeting.search = meeting.name
@@ -160,14 +168,11 @@ export function load(
       .filter(e => e)
       .join(' ');
 
-    //handle timezone
-    const timezone = data.feed.entry[i]['gsx$timezone']['$t'].trim();
+    //timezone
+    const timezone = data[i]['timezone'].trim();
 
     //handle times
-    const times = stringToTrimmedArray(
-      data.feed.entry[i]['gsx$times']['$t'],
-      '\n'
-    );
+    const times = stringToTrimmedArray(data[i]['times'], '\n');
 
     if (times.length) {
       //loop through create an entry for each time
@@ -229,6 +234,22 @@ function stringToTrimmedArray(str: string, sep = ','): string[] {
     .split(sep)
     .map(val => val.trim())
     .filter(val => val);
+}
+
+//translate response from Google Sheet v4
+function translateGoogleSheet(data: any) {
+  const { values } = data;
+  if (!values || !values.length) return [];
+  const headers = values
+    .shift()
+    .map((header: string) => header.toLowerCase().replace(' ', '_'));
+  return values.map((row: string[]) => {
+    const thisRow: any = {};
+    headers.forEach((header: string, index: number) => {
+      thisRow[header] = row[index];
+    });
+    return thisRow;
+  });
 }
 
 function validateEmail(email: string) {
