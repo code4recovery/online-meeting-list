@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Alert, Box, Stack } from '@chakra-ui/react';
 
 import { ButtonPrimary } from './ButtonPrimary';

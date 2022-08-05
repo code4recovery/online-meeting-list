@@ -1,16 +1,4 @@
-This is a meeting finder designed to list online recovery meetings across a variety of timezones. You can see it in production at the [Online Intergroup of AA](https://aa-intergroup.org/oiaa/meetings/) and elsewhere on the web. There is a demo version at [https://online-meeting-list.netlify.app](https://online-meeting-list.netlify.app).
-
-## Next Steps
-
-- [x] Search working
-- [x] Tags working
-- [x] Timezone picker working
-- [x] Mobile view for filter
-- [x] Highlight search results and active tags
-- [x] Bookmarkable search / tag state
-- [x] No results screen
-- [x] Clear search button
-- [x] Fail gracefully when encountering bad data
+This is a meeting finder designed to list online recovery meetings across many timezones. You can see it in production at the [Online Intergroup of AA](https://aa-intergroup.org/oiaa/meetings/) and elsewhere on the web. There is a demo version at [https://online-meeting-list.netlify.app](https://online-meeting-list.netlify.app).
 
 ## Managing Data
 
@@ -18,13 +6,10 @@ The data for the demo in managed in [this Google Sheet](https://docs.google.com/
 
 - It's helpful to use the `Format > Clear Formatting` command, since styling doesn't carry over to the app.
 - It's a good practice to remove the meeting times and phone numbers from the Notes column, this prevents the inevitable scenario where it gets updated in one place but not another
-- The Timezone column is necessary because time zones don't stay in sync due to daylight savings. Best to store them in their local time and allow the app to translate them for the user on the fly.
-- Use soft returns (control-return on a Mac) to separate times in the Times column and indicate paragraph breaks in the Notes column
-- In cases where the format or types vary between times of the same meeting, that can either be mentioned in the Notes column, or separate entries could be created. For example, if the Friday night ocurrence of a weekly meeting is Women-only, then it's probably best to create a new row for just that Friday meeting.
-
-## Technical Overview
-
-This project is written in [TypeScript](https://www.typescriptlang.org/) and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). UI elements by [Chakra](https://chakra-ui.com/). Uses [Moment.js](https://momentjs.com) for time conversions and [React Infinite Scroller](https://cassetterocks.github.io/react-infinite-scroller) for rendering performance.
+- The `Timezone` column is necessary because time zones don't stay in sync due to daylight savings. Best to store them in their local time and allow the app to translate them for the user on the fly.
+- Use soft returns (control-return on a Mac) to separate times in the `Times` column and indicate paragraph breaks in the Notes column
+- In cases where the format or types vary between times of the same meeting, that can either be mentioned in the `Notes` column, or separate entries could be created. For example, if the Friday night ocurrence of a weekly meeting is Women-only, then it's probably best to create a new row for just that Friday meeting.
+- Having a `Languages` column enables language support. When that column is present, the meeting finder will be translated into the user's browser language, and only show meetings in that language by default. The selected language can be changed via a dropdown in the filter area, like the timezone. If you don't want this behavior, but still want to note the meeting language, you can list the languages in the `Types` column (Online Intergroup of AA does it this way).
 
 ## Link Your Data
 
@@ -60,8 +45,9 @@ JSON should be in the format:
         "phone": "",
         "access_code": "",
         "email": "groupemail@gmail.com",
-        "types": "Open, English",
+        "types": "Open, Women",
         "formats": "Video",
+        "languages": "English",
         "notes": "Weekly meeting at 7pm Pacific. Meeting ID: 123 456 7890\nPassword: 255804"
     }
 ]
@@ -75,15 +61,15 @@ JSON should be in the format:
 
 ## Deploy to your Website
 
-1. In the project directory, run `npm build`.
-
-## Staying Up to Date
-
-1. In the project directory, run `git pull`.
-1. Re-run `npm` in case dependencies were updated.
+1. In the project directory, run `npm run build`.
 
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
 1. Create a branch with your code. (Style note: please use [Prettier](https://prettier.io), and keep properties in alphabetical order)
+1. Be sure your branch is current. Use `git pull origin && git merge main && npm i`
 1. Create a pull request that references the issue. Please name [@joshreisner](https://github.com/joshreisner) as a reviewer.
+
+## Technical Overview
+
+This project is written in [TypeScript](https://www.typescriptlang.org/) and was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). UI elements by [Chakra](https://chakra-ui.com/). Uses [Moment.js](https://momentjs.com) for time conversions and [React Infinite Scroller](https://cassetterocks.github.io/react-infinite-scroller) for rendering performance.

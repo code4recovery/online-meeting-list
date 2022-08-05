@@ -1,8 +1,7 @@
 //don't change this 👇 -- see README.md for help creating an .env file for your app
 const sheetUrl = process.env.REACT_APP_GOOGLE_SHEET
   ? process.env.REACT_APP_GOOGLE_SHEET
-  : 'https://docs.google.com/spreadsheets/d/1tYV4wBZkY_3hp0tresN6iZBCwOyqkK-dz4UAWQPI1Vs/edit#gid=1449507018';
-//'https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0';
+  : 'https://docs.google.com/spreadsheets/d/1wER2LP3dT_6_LEQ8fSY1rv2bGzIZ2aaMBi_0Bt1aN3I/edit#gid=0';
 
 export const dataUrl =
   process.env.REACT_APP_JSON_URL ||

@@ -27,7 +27,8 @@ export function load(
   //loop through json entries
   for (let i = 0; i < data.length; i++) {
     //handle language
-    const meetingLanguages = stringToTrimmedArray(data[i]['languages'])
+    const meeting_languages = stringToTrimmedArray(data[i]['languages']);
+    const meetingLanguages = meeting_languages
       .filter(string => {
         const isLanguageDefined = isLanguage(string);
         if (!isLanguageDefined) warn(string, 'language', i);
@@ -129,16 +130,6 @@ export function load(
     //handle formats
     const meeting_formats = stringToTrimmedArray(data[i]['formats']);
 
-    //append to formats array
-    meeting_formats.forEach((format: string) => {
-      if (!formats.includes(format)) {
-        formats.push(format);
-      }
-    });
-
-    //append to meeting tags
-    meeting.tags = meeting.tags.concat(meeting_formats);
-
     //get types
     const meeting_types = stringToTrimmedArray(data[i]['types']);
 
@@ -150,14 +141,16 @@ export function load(
         }
       });
       meeting_types
-        .filter(type => !types.includes(type))
+        .filter(
+          type => !meeting_languages.includes(type) && !types.includes(type)
+        )
         .forEach(type => {
           types.push(type);
         });
     }
 
     //append to meeting tags
-    meeting.tags = meeting.tags.concat(meeting_formats);
+    meeting.tags = meeting.tags.concat(meeting_formats, meeting_types);
 
     //add words to search index
     meeting.search = meeting.name

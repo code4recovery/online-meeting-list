@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button } from '@chakra-ui/react';
 
 import { Tag } from '../helpers/types';
