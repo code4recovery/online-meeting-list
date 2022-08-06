@@ -1,70 +1,111 @@
-import React, { useState } from 'react';
+import { FormEvent, useContext, useState } from 'react';
 import moment from 'moment-timezone';
-import { Button, FormControl, Select, Stack } from '@chakra-ui/core';
+import { Button, FormControl, Select, Stack } from '@chakra-ui/react';
 
 import { ButtonTag } from './ButtonTag';
 import { Search } from './Search';
-import { State, Tag } from '../helpers/data';
+import { Icon } from './Icon';
+import { languages, Language, State, Tag, i18n } from '../helpers';
 
-type Filter = {
-  setSearch: (search: string[]) => void;
+export type FilterProps = {
+  setSearch: (search: string) => void;
   setTimezone: (timezone: string) => void;
   state: State;
   toggleTag: (filter: string, value: string, checked: boolean) => void;
+  currentDays: string[];
 };
 
-export function Filter({ setSearch, setTimezone, state, toggleTag }: Filter) {
+export function Filter({
+  setSearch,
+  setTimezone,
+  state,
+  toggleTag,
+  currentDays
+}: FilterProps) {
   const [open, setOpen] = useState(false);
+  const { language, rtl, strings } = useContext(i18n);
+
+  //filter out unused days
+  state.filters.days = state.filters.days.filter(day =>
+    currentDays.includes(day.tag)
+  );
+
   return (
-    <Stack spacing={{ xs: 3, md: 6 }}>
+    <Stack spacing={{ base: 3, md: 6 }}>
       <FormControl>
-        <Search search={state.search} setSearch={setSearch} />
+        <Search search={state.search} setSearch={setSearch} state={state} />
       </FormControl>
       <Stack
-        d={{ xs: open ? 'block' : 'none', md: 'block' }}
-        spacing={{ xs: 3, md: 6 }}
+        display={{ base: open ? 'block' : 'none', md: 'block' }}
+        spacing={{ base: 3, md: 6 }}
       >
-        {Object.keys(state.filters).map((filter: string, index: number) => (
-          <FormControl key={index}>
-            {state.filters[filter].map((tag: Tag, index: number) => (
-              <ButtonTag
-                filter={filter}
-                key={index}
-                tag={tag}
-                toggleTag={toggleTag}
-              />
-            ))}
+        {Object.keys(state.filters).map(
+          (filter: string, index: number) =>
+            !!state.filters[filter].length && (
+              <FormControl key={index}>
+                {state.filters[filter].map((tag: Tag, index: number) => (
+                  <ButtonTag
+                    filter={filter}
+                    key={index}
+                    tag={tag}
+                    toggleTag={toggleTag}
+                  />
+                ))}
+              </FormControl>
+            )
+        )}
+        {state.languages.length > 1 && (
+          <FormControl display="block" as="fieldset">
+            <Select
+              aria-label={strings.language}
+              bgColor="white"
+              borderColor="gray.300"
+              color="gray.500"
+              iconColor="gray.500"
+              icon={rtl ? <div /> : <Icon name="language" />}
+              onChange={(e: FormEvent<HTMLSelectElement>) => {
+                //hard reload so types get refreshed
+                window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
+              }}
+              value={language}
+            >
+              {state.languages.map((language, index) => (
+                <option key={index} value={language}>
+                  {languages[language as Language].name}
+                </option>
+              ))}
+            </Select>
           </FormControl>
-        ))}
-        <FormControl d="block" as="fieldset">
+        )}
+        <FormControl display="block" as="fieldset">
           <Select
-            aria-label="Timezone"
+            aria-label={strings.timezone}
+            bgColor="white"
             borderColor="gray.300"
-            icon="time"
-            iconSize={4}
-            onChange={(e: React.FormEvent<HTMLSelectElement>) =>
+            color="gray.500"
+            icon={rtl ? <div /> : <Icon name="time" />}
+            onChange={(e: FormEvent<HTMLSelectElement>) =>
               setTimezone(e.currentTarget.value)
             }
             value={state.timezone}
           >
-            {moment.tz.names().map((name: string, index: number) => (
+            {moment.tz.names().map((name, index) => (
               <option key={index}>{name}</option>
             ))}
           </Select>
         </FormControl>
       </Stack>
-      <FormControl d={{ md: 'none' }}>
+      <FormControl display={{ md: 'none' }}>
         <Button
-          bg={open ? 'gray.100' : 'white'}
+          bg={open ? 'transparent' : 'white'}
           borderColor="gray.300"
-          onClick={() => {
-            setOpen(!open);
-          }}
-          rightIcon={open ? 'chevron-up' : 'chevron-down'}
+          color="gray.500"
+          onClick={() => setOpen(!open)}
+          rightIcon={<Icon name={open ? 'chevron-up' : 'chevron-down'} />}
           variant="outline"
           w="100%"
         >
-          {open ? 'Close' : 'Filters'}
+          {open ? strings.close : strings.filters}
         </Button>
       </FormControl>
     </Stack>

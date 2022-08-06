@@ -1,17 +1,32 @@
 import moment from 'moment-timezone';
 
-import { days } from './config';
-import { State } from './data';
-import { Meeting } from '../components/Meeting';
+import { LanguageStrings } from './i18n';
+
+import { Meeting, State } from './types';
 
 //set time zones, apply filters, and sort meetings, runs on state change
 export function filter(
   { meetings, search, timezone }: State,
-  tags: string[]
-): Meeting[] {
+  tags: string[],
+  strings: LanguageStrings
+): [Meeting[], string[]] {
   //get current timestamp
   const now = moment();
   //const now = moment.tz('Saturday 8:12 PM', 'dddd h:mm a', timezone);
+
+  //track current days
+  const currentDays: string[] = [];
+
+  //array of all days in language
+  const allDays = [
+    strings.sunday,
+    strings.monday,
+    strings.tuesday,
+    strings.wednesday,
+    strings.thursday,
+    strings.friday,
+    strings.saturday
+  ];
 
   //loop through meetings for time operations
   meetings.map(meeting => {
@@ -33,9 +48,15 @@ export function filter(
         meeting.time.add(1, 'week');
       }
 
-      //add day to meeting tags
-      meeting.tags = meeting.tags.filter(tag => !days.includes(tag));
-      meeting.tags.push(meeting.time.format('dddd'));
+      //remove all days from meeting
+      meeting.tags = meeting.tags.filter(tag => !allDays.includes(tag));
+
+      //add meeting day to tags
+      const meetingDay = allDays[meeting.time.day()];
+      meeting.tags.push(meetingDay);
+      if (!currentDays.includes(meetingDay)) currentDays.push(meetingDay);
+
+      //sort tags
       meeting.tags.sort();
     }
 
@@ -54,15 +75,12 @@ export function filter(
 
   //search?
   if (search) {
-    meetings = meetings.filter(meeting => {
-      return (
-        search
-          .map(word => {
-            return meeting.search.includes(word);
-          })
-          .filter(e => e).length === search.length
-      );
-    });
+    const searchWords = search.split(' ').filter(e => e);
+    meetings = meetings.filter(
+      meeting =>
+        searchWords.map(word => meeting.search.includes(word)).filter(e => e)
+          .length === searchWords.length
+    );
   }
 
   //sort meetings (by time then name)
@@ -78,5 +96,5 @@ export function filter(
   });
 
   //return
-  return meetings;
+  return [meetings, currentDays];
 }

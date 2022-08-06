@@ -9,17 +9,6 @@ export const dataUrl =
     sheetUrl.split('/')[5]
   }/values/A:ZZ?key=${process.env.REACT_APP_GOOGLE_API_KEY}`;
 
-//todo internationalize
-export const days = [
-  'Sunday',
-  'Monday',
-  'Tuesday',
-  'Wednesday',
-  'Thursday',
-  'Friday',
-  'Saturday'
-];
-
 //number of meetings displayed (scroll to load more)
 export const meetingsPerPage = 10;
 

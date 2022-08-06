@@ -1,55 +1,62 @@
-import React, { ChangeEvent, useRef } from 'react';
+import { useRef, useContext } from 'react';
 import {
-  Icon,
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement
-} from '@chakra-ui/core';
+} from '@chakra-ui/react';
 
-type Search = {
-  setSearch: (search: string[]) => void;
-  search: string[];
+import { Icon } from './Icon';
+import { i18n, State } from '../helpers';
+
+export type SearchProps = {
+  setSearch: (search: string) => void;
+  search: string;
+  state: State;
 };
 
-export function Search({ search, setSearch }: Search) {
+export function Search({ search, setSearch }: SearchProps) {
   const searchField = useRef<HTMLInputElement>(null);
+  const { rtl, strings } = useContext(i18n);
+  const clearButton = (
+    <IconButton
+      aria-label={strings.clear_search}
+      bg="transparent"
+      icon={<Icon name="small-close" />}
+      _active={{ bg: 'transparent', color: 'gray.500' }}
+      _hover={{ bg: 'transparent', color: 'gray.500' }}
+      onClick={() => {
+        setSearch('');
+        if (searchField.current) {
+          searchField.current.focus();
+        }
+      }}
+    />
+  );
   return (
-    <InputGroup borderColor="gray.300">
-      <InputLeftElement>
-        <Icon color="gray.300" name="search-2" />
-      </InputLeftElement>
+    <InputGroup borderColor="gray.300" color="gray.500">
+      {(!rtl || (rtl && !!search.length)) && (
+        <InputLeftElement>
+          {rtl && !!search.length && clearButton}
+          {!rtl && <Icon name="search" />}
+        </InputLeftElement>
+      )}
       <Input
-        aria-label="Search"
-        placeholder="Search"
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setSearch(
-            e.target.value
-              .toLowerCase()
-              .split(' ')
-              .filter(e => e)
-          );
-        }}
+        aria-label={strings.search}
+        bgColor="white"
+        placeholder={strings.search}
+        onChange={e => setSearch(e.target.value)}
+        value={search}
+        pl={rtl ? 4 : 10}
+        pr={rtl ? 10 : 4}
         ref={searchField}
+        textAlign={rtl ? 'right' : 'left'}
       />
-      {!!search.length && (
+      {(rtl || (!rtl && !!search.length)) && (
         <InputRightElement>
-          <IconButton
-            aria-label="Clear search"
-            bg="transparent"
-            color="gray.300"
-            icon="small-close"
-            _active={{ bg: 'transparent', color: 'gray.500' }}
-            _hover={{ bg: 'transparent', color: 'gray.500' }}
-            onClick={() => {
-              setSearch([]);
-              if (searchField.current) {
-                searchField.current.value = '';
-                searchField.current.focus();
-              }
-            }}
-          ></IconButton>
+          {!rtl && !!search.length && clearButton}
+          {rtl && <Icon name="search" />}
         </InputRightElement>
       )}
     </InputGroup>

@@ -1,18 +1,19 @@
-import React from 'react';
-import { Button, Icon } from '@chakra-ui/core';
+import { Box, Button } from '@chakra-ui/react';
+
+import { Icon } from './Icon';
 
 export type ButtonPrimaryProps = {
   icon: 'link' | 'email' | 'phone' | 'small-close' | 'video';
   onClick: () => void;
   text: string;
-  title?: string;
+  title: string;
 };
 
 export function ButtonPrimary({
   icon,
+  onClick,
   text,
-  title,
-  onClick
+  title
 }: ButtonPrimaryProps) {
   return (
     <Button
@@ -22,7 +23,9 @@ export function ButtonPrimary({
       title={title}
       _hover={{ bg: 'blue.800' }}
     >
-      <Icon name={icon} mr={2} />
+      <Box me={1}>
+        <Icon name={icon} />
+      </Box>
       {text}
     </Button>
   );
