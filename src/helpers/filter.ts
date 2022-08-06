@@ -75,15 +75,12 @@ export function filter(
 
   //search?
   if (search) {
-    meetings = meetings.filter(meeting => {
-      return (
-        search
-          .map(word => {
-            return meeting.search.includes(word);
-          })
-          .filter(e => e).length === search.length
-      );
-    });
+    const searchWords = search.split(' ').filter(e => e);
+    meetings = meetings.filter(
+      meeting =>
+        searchWords.map(word => meeting.search.includes(word)).filter(e => e)
+          .length === searchWords.length
+    );
   }
 
   //sort meetings (by time then name)

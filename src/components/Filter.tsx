@@ -8,7 +8,7 @@ import { Icon } from './Icon';
 import { languages, Language, State, Tag, i18n } from '../helpers';
 
 export type FilterProps = {
-  setSearch: (search: string[]) => void;
+  setSearch: (search: string) => void;
   setTimezone: (timezone: string) => void;
   state: State;
   toggleTag: (filter: string, value: string, checked: boolean) => void;

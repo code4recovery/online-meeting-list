@@ -37,15 +37,21 @@ export const App = () => {
     limit: meetingsPerPage,
     loading: true,
     meetings: [],
-    search: [],
+    search: '',
     timezone: '',
     language,
     languages: []
   });
 
+  const [searchWords, setSearchWords] = useState<string[]>([]);
+
   useEffect(() => {
     setQuery(state);
   }, [state]);
+
+  useEffect(() => {
+    setSearchWords(state.search.split(' ').filter(e => e));
+  }, [state.search]);
 
   //set html attributes
   document.documentElement.lang = language;
@@ -65,12 +71,6 @@ export const App = () => {
     //this will cause a re-render; the actual filtering is done in filterData
     setState({ ...state });
   };
-
-  const clearSearch = () =>
-    setState({
-      ...state,
-      search: []
-    });
 
   //on first render, get data
   if (state.loading) {
@@ -128,12 +128,10 @@ export const App = () => {
             >
               <Box as="section" order={{ base: 1, md: 2 }}>
                 <Filter
-                  setSearch={(search: string[]) => {
-                    setState({ ...state, search });
-                  }}
-                  setTimezone={(timezone: string) => {
-                    setState({ ...state, timezone });
-                  }}
+                  setSearch={(search: string) => setState({ ...state, search })}
+                  setTimezone={(timezone: string) =>
+                    setState({ ...state, timezone })
+                  }
                   state={state}
                   currentDays={currentDays}
                   toggleTag={toggleTag}
@@ -144,7 +142,7 @@ export const App = () => {
                   <NoResults
                     state={state}
                     toggleTag={toggleTag}
-                    clearSearch={clearSearch}
+                    clearSearch={() => setState({ ...state, search: '' })}
                   />
                 )}
                 {!!filteredMeetings.length && (
@@ -161,7 +159,7 @@ export const App = () => {
                         <Meeting
                           key={index}
                           meeting={meeting}
-                          search={state.search}
+                          searchWords={searchWords}
                           tags={tags}
                         />
                       ))}

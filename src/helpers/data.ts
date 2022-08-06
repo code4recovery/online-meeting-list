@@ -1,7 +1,7 @@
 import moment from 'moment-timezone';
 
 import { meetingsPerPage, videoServices } from './config';
-import { Meeting, State, Tag } from './types';
+import { DataRow, Meeting, State, Tag } from './types';
 
 import { Language, isLanguage, languageLookup, LanguageStrings } from './i18n';
 
@@ -22,114 +22,134 @@ export function load(
     data = translateGoogleSheet(data);
   }
 
+  const hasLanguages = data.some((row: DataRow) => row.languages);
+  let meeting_languages: string[] = [];
+
   //loop through json entries
-  for (let i = 0; i < data.length; i++) {
+  data.forEach((row: DataRow, i: number) => {
+    //required fields
+    if (!row.name || !row.timezone) return;
+
+    //let
+    let addMeeting = true;
+
     //handle language
-    const meeting_languages = stringToTrimmedArray(data[i]['languages']);
-    const meetingLanguages = meeting_languages
-      .filter(string => {
-        const isLanguageDefined = isLanguage(string);
-        if (!isLanguageDefined) warn(string, 'language', i);
-        return isLanguageDefined;
-      })
-      .map(string => languageLookup[string]);
+    if (hasLanguages) {
+      meeting_languages = stringToTrimmedArray(row.languages);
+      const meetingLanguages = meeting_languages
+        .filter(string => {
+          const isLanguageDefined = isLanguage(string);
+          if (!isLanguageDefined) warn(string, 'language', i);
+          return isLanguageDefined;
+        })
+        .map(string => languageLookup[string]);
 
-    //make sure available languages is populated
-    meetingLanguages.forEach(language => {
-      if (language && !availableLanguages.includes(language)) {
-        availableLanguages.push(language);
-      }
-    });
+      console.log({ meeting_languages, meetingLanguages });
 
-    //only want meetings for current language, but need to keep going to see all data issues
-    const addMeeting = meetingLanguages.includes(language);
+      //make sure available languages is populated
+      meetingLanguages.forEach(language => {
+        if (language && !availableLanguages.includes(language)) {
+          availableLanguages.push(language);
+        }
+      });
+
+      //only want meetings for current language, but need to keep going to see all data issues
+      addMeeting = meetingLanguages.includes(language);
+    }
 
     //start creating meeting
     const meeting: Meeting = {
-      name: data[i]['name'].trim(),
+      name: row.name.trim(),
       buttons: [],
-      notes: stringToTrimmedArray(data[i]['notes'], true),
-      updated: data[i]['updated'],
+      notes: stringToTrimmedArray(row.notes, true),
       search: '',
       tags: []
     };
 
     //handle url
-    const originalUrl = data[i]['url'].trim();
-    if (originalUrl) {
-      let label;
-      let icon: 'link' | 'video' = 'link';
-      try {
-        const url = new URL(originalUrl);
-        if (!['http:', 'https:'].includes(url.protocol)) {
-          throw new Error();
+    if (row.url) {
+      const originalUrl = row.url.trim();
+      if (originalUrl) {
+        let label;
+        let icon: 'link' | 'video' = 'link';
+        try {
+          const url = new URL(originalUrl);
+          if (!['http:', 'https:'].includes(url.protocol)) {
+            throw new Error();
+          }
+          const host = url.hostname;
+          const service = Object.keys(videoServices).filter(
+            service =>
+              videoServices[service].filter(domain => host.endsWith(domain))
+                .length
+          );
+          if (service.length) {
+            label = service[0];
+            icon = 'video';
+          } else {
+            label = url.hostname.replace('www.', '');
+          }
+          meeting.buttons.push({
+            icon: icon,
+            onClick: () => {
+              window.open(originalUrl, '_blank');
+            },
+            value: label
+          });
+        } catch {
+          warn(originalUrl, 'URL', i);
         }
-        const host = url.hostname;
-        const service = Object.keys(videoServices).filter(
-          service =>
-            videoServices[service].filter(domain => host.endsWith(domain))
-              .length
-        );
-        if (service.length) {
-          label = service[0];
-          icon = 'video';
-        } else {
-          label = url.hostname.replace('www.', '');
-        }
-        meeting.buttons.push({
-          icon: icon,
-          onClick: () => {
-            window.open(originalUrl, '_blank');
-          },
-          value: label
-        });
-      } catch {
-        warn(originalUrl, 'URL', i);
       }
     }
 
     //handle phone
-    const originalPhone = data[i]['phone'].trim();
-    if (originalPhone) {
-      let phone = originalPhone.replace(/\D/g, '');
-      if (phone.length > 8) {
-        const accessCode = data[i]['access_code'].trim();
-        if (accessCode.length) {
-          phone += ',,' + accessCode;
+    if (row.phone) {
+      const originalPhone = row.phone.trim();
+      if (originalPhone) {
+        let phone = originalPhone.replace(/\D/g, '');
+        if (phone.length > 8) {
+          if (row.access_code) {
+            const accessCode = row.access_code.trim();
+            if (accessCode.length) {
+              phone += ',,' + accessCode;
+            }
+          }
+          meeting.buttons.push({
+            icon: 'phone',
+            onClick: () => {
+              window.open(`tel:${phone}`);
+            },
+            value: phone
+          });
+        } else {
+          warn(originalPhone, 'phone number', i);
         }
-        meeting.buttons.push({
-          icon: 'phone',
-          onClick: () => {
-            window.open(`tel:${phone}`);
-          },
-          value: phone
-        });
-      } else {
-        warn(originalPhone, 'phone number', i);
       }
     }
 
     //handle email
-    const email = data[i]['email'].trim();
-    if (email) {
-      if (validateEmail(email)) {
-        meeting.buttons.push({
-          icon: 'email',
-          onClick: () => {
-            window.open('mailto:' + email);
-          },
-          value: email
-        });
-      } else {
-        warn(email, 'email address', i);
+    if (row.email) {
+      const email = row.email.trim();
+      if (email) {
+        if (validateEmail(email)) {
+          meeting.buttons.push({
+            icon: 'email',
+            onClick: () => {
+              window.open('mailto:' + email);
+            },
+            value: email
+          });
+        } else {
+          warn(email, 'email address', i);
+        }
       }
     }
 
     //handle formats
-    const meeting_formats = stringToTrimmedArray(data[i]['formats']);
+    const meeting_formats = stringToTrimmedArray(row['formats']);
 
     //get types
-    const meeting_types = stringToTrimmedArray(data[i]['types']);
+    const meeting_types = stringToTrimmedArray(row['types']);
 
     //append to formats & types arrays
     if (addMeeting) {
@@ -158,10 +178,10 @@ export function load(
       .join(' ');
 
     //timezone
-    const timezone = data[i]['timezone'].trim();
+    const timezone = row.timezone.trim();
 
     //handle times
-    const times = stringToTrimmedArray(data[i]['times']);
+    const times = stringToTrimmedArray(row['times']);
 
     if (times.length) {
       //loop through create an entry for each time
@@ -182,7 +202,7 @@ export function load(
       //ongoing meeting; add to meetings
       meetings.push(meeting);
     }
-  }
+  });
 
   //sort
   formats.sort();
@@ -212,7 +232,7 @@ export function load(
     limit: meetingsPerPage,
     loading: false,
     meetings: meetings,
-    search: [],
+    search: '',
     timezone: moment.tz.guess(),
     language: language,
     languages: availableLanguages
@@ -226,7 +246,8 @@ function arrayToTagsArray(array: string[], values: string[]): Tag[] {
 }
 
 //split "foo, bar\nbaz" into ["foo", "bar", "baz"]
-function stringToTrimmedArray(str: string, breaksOnly = false): string[] {
+function stringToTrimmedArray(str?: string, breaksOnly = false): string[] {
+  if (!str) return [];
   const sep = '\n';
   if (!breaksOnly) str = str.replaceAll(',', sep);
   return str
@@ -236,7 +257,7 @@ function stringToTrimmedArray(str: string, breaksOnly = false): string[] {
 }
 
 //translate response from Google Sheet v4
-function translateGoogleSheet(data: any) {
+function translateGoogleSheet(data: any): DataRow[] {
   const { values } = data;
   if (!values || !values.length) return [];
   const headers = values

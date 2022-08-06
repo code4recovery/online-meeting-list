@@ -2,13 +2,26 @@ import { Moment } from 'moment-timezone';
 
 import { Language } from './i18n';
 
+export type DataRow = {
+  name?: string;
+  times?: string;
+  timezone?: string;
+  url?: string;
+  phone?: string;
+  access_code?: string;
+  email?: string;
+  notes?: string;
+  types?: string;
+  formats?: string;
+  languages?: string;
+};
+
 export type Meeting = {
   name: string;
   time?: Moment;
   buttons: MeetingLink[];
   notes: string[];
   tags: string[];
-  updated: string;
   search: string;
 };
 
@@ -23,7 +36,7 @@ export type State = {
   limit: number;
   loading: boolean;
   meetings: Meeting[];
-  search: string[];
+  search: string;
   timezone: string;
   language: Language;
   languages: Language[];

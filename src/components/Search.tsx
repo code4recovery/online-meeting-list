@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useContext } from 'react';
+import { useRef, useContext } from 'react';
 import {
   IconButton,
   Input,
@@ -11,8 +11,8 @@ import { Icon } from './Icon';
 import { i18n, State } from '../helpers';
 
 export type SearchProps = {
-  setSearch: (search: string[]) => void;
-  search: string[];
+  setSearch: (search: string) => void;
+  search: string;
   state: State;
 };
 
@@ -27,13 +27,12 @@ export function Search({ search, setSearch }: SearchProps) {
       _active={{ bg: 'transparent', color: 'gray.500' }}
       _hover={{ bg: 'transparent', color: 'gray.500' }}
       onClick={() => {
-        setSearch([]);
+        setSearch('');
         if (searchField.current) {
-          searchField.current.value = '';
           searchField.current.focus();
         }
       }}
-    ></IconButton>
+    />
   );
   return (
     <InputGroup borderColor="gray.300" color="gray.500">
@@ -47,14 +46,8 @@ export function Search({ search, setSearch }: SearchProps) {
         aria-label={strings.search}
         bgColor="white"
         placeholder={strings.search}
-        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-          setSearch(
-            e.target.value
-              .toLowerCase()
-              .split(' ')
-              .filter(e => e)
-          );
-        }}
+        onChange={e => setSearch(e.target.value)}
+        value={search}
         pl={rtl ? 4 : 10}
         pr={rtl ? 10 : 4}
         ref={searchField}

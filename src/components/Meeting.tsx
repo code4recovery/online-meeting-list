@@ -8,11 +8,11 @@ import { Meeting as MeetingType, i18n } from '../helpers';
 
 export type MeetingProps = {
   meeting: MeetingType;
-  search: string[];
+  searchWords: string[];
   tags: string[];
 };
 
-export function Meeting({ meeting, search, tags }: MeetingProps) {
+export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
   const { rtl, strings } = useContext(i18n);
   const days = [
     strings.sunday,
@@ -39,7 +39,10 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
       <Stack spacing={3}>
         <Box alignItems="baseline">
           <Heading as="h2" display={{ lg: 'inline' }} fontSize="2xl">
-            <Highlighter searchWords={search} textToHighlight={meeting.name} />
+            <Highlighter
+              searchWords={searchWords}
+              textToHighlight={meeting.name}
+            />
           </Heading>
           <Heading
             as="h3"
