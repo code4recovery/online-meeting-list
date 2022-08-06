@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, CSSReset, Grid, ChakraProvider } from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -16,8 +16,8 @@ import {
   isLanguageCode,
   languages,
   load,
-  meetingsPerPage
-  //setQuery
+  meetingsPerPage,
+  setQuery
 } from './helpers';
 
 export const App = () => {
@@ -29,19 +29,23 @@ export const App = () => {
 
   const [state, setState] = useState<State>({
     filters: {
-      Days: [],
-      Times: [],
-      Formats: [],
-      Types: []
+      days: [],
+      times: [],
+      formats: [],
+      types: []
     },
     limit: meetingsPerPage,
     loading: true,
     meetings: [],
     search: [],
     timezone: '',
-    language: language,
+    language,
     languages: []
   });
+
+  useEffect(() => {
+    setQuery(state);
+  }, [state]);
 
   //set html attributes
   document.documentElement.lang = language;
@@ -62,11 +66,21 @@ export const App = () => {
     setState({ ...state });
   };
 
+  const clearSearch = () =>
+    setState({
+      ...state,
+      search: []
+    });
+
   //on first render, get data
   if (state.loading) {
     fetch(dataUrl)
       .then(result => result.json())
-      .then(result => setState(load(result, query, state.language, t)));
+      .then(result =>
+        setState(
+          load(result, query, state.language, languages[state.language].strings)
+        )
+      );
   }
 
   //get currently-checked tags
@@ -78,26 +92,18 @@ export const App = () => {
     )
     .flat();
 
-  const t = (string?: string, value?: string): string => {
-    if (!string) return '';
-    const key = string.replaceAll(' ', '_').toLowerCase();
-    const translations = languages[state.language].strings;
-    const translation =
-      translations.hasOwnProperty(key) &&
-      typeof translations[key as keyof typeof translations] === 'string'
-        ? translations[key as keyof typeof translations]
-        : string;
-    return value ? translation.replaceAll('{{value}}', value) : translation;
-  };
-
-  const [filteredMeetings, currentDays] = filter(state, tags, t);
+  const [filteredMeetings, currentDays] = filter(
+    state,
+    tags,
+    languages[state.language].strings
+  );
 
   return (
     <i18n.Provider
       value={{
         language: state.language,
         rtl: languages[state.language].rtl,
-        t: t
+        strings: languages[state.language].strings
       }}
     >
       <ChakraProvider>
@@ -135,7 +141,11 @@ export const App = () => {
               </Box>
               <Box order={{ base: 2, md: 1 }}>
                 {!filteredMeetings.length && (
-                  <NoResults state={state} toggleTag={toggleTag} />
+                  <NoResults
+                    state={state}
+                    toggleTag={toggleTag}
+                    clearSearch={clearSearch}
+                  />
                 )}
                 {!!filteredMeetings.length && (
                   <InfiniteScroll

@@ -18,10 +18,10 @@ export type SearchProps = {
 
 export function Search({ search, setSearch }: SearchProps) {
   const searchField = useRef<HTMLInputElement>(null);
-  const { rtl, t } = useContext(i18n);
+  const { rtl, strings } = useContext(i18n);
   const clearButton = (
     <IconButton
-      aria-label={t('clear_search')}
+      aria-label={strings.clear_search}
       bg="transparent"
       icon={<Icon name="small-close" />}
       _active={{ bg: 'transparent', color: 'gray.500' }}
@@ -44,9 +44,9 @@ export function Search({ search, setSearch }: SearchProps) {
         </InputLeftElement>
       )}
       <Input
-        aria-label={t('search')}
+        aria-label={strings.search}
         bgColor="white"
-        placeholder={t('search')}
+        placeholder={strings.search}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           setSearch(
             e.target.value

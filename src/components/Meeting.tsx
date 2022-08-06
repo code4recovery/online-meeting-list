@@ -13,7 +13,16 @@ export type MeetingProps = {
 };
 
 export function Meeting({ meeting, search, tags }: MeetingProps) {
-  const { language, rtl, t } = useContext(i18n);
+  const { rtl, strings } = useContext(i18n);
+  const days = [
+    strings.sunday,
+    strings.monday,
+    strings.tuesday,
+    strings.wednesday,
+    strings.thursday,
+    strings.friday,
+    strings.saturday
+  ];
   return (
     <Box
       as="article"
@@ -41,8 +50,8 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
             ml={{ lg: 2 }}
           >
             {!meeting.time
-              ? t('ongoing')
-              : t(meeting.time.format('dddd'), language) +
+              ? strings.ongoing
+              : days[meeting.time.day()] +
                 ' ' +
                 meeting.time.format('LT').toLocaleLowerCase()}
           </Heading>
@@ -52,16 +61,16 @@ export function Meeting({ meeting, search, tags }: MeetingProps) {
             {meeting.buttons.map((button, index) => {
               const text =
                 button.icon === 'email'
-                  ? t('email')
+                  ? strings.email
                   : button.icon === 'phone'
-                  ? t('telephone')
+                  ? strings.telephone
                   : button.value;
               const title =
                 button.icon === 'email'
-                  ? t('email_use', button.value)
+                  ? strings.email_use.replace('{{value}}', button.value)
                   : button.icon === 'phone'
-                  ? t('telephone_use', button.value)
-                  : t('video_use', button.value);
+                  ? strings.telephone_use.replace('{{value}}', button.value)
+                  : strings.video_use.replace('{{value}}', button.value);
               return (
                 <Box
                   float={rtl ? 'right' : 'left'}

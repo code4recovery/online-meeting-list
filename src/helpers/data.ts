@@ -3,16 +3,14 @@ import moment from 'moment-timezone';
 import { meetingsPerPage, videoServices } from './config';
 import { Meeting, State, Tag } from './types';
 
-import { days } from './config';
-
-import { Language, isLanguage, languageLookup } from './i18n';
+import { Language, isLanguage, languageLookup, LanguageStrings } from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(
   data: any,
   query: URLSearchParams,
   language: Language,
-  t: (string: string, value?: string) => string
+  strings: LanguageStrings
 ): State {
   const meetings: Meeting[] = [];
   const formats: string[] = [];
@@ -50,7 +48,7 @@ export function load(
     const meeting: Meeting = {
       name: data[i]['name'].trim(),
       buttons: [],
-      notes: stringToTrimmedArray(data[i]['notes'], '\n'),
+      notes: stringToTrimmedArray(data[i]['notes'], true),
       updated: data[i]['updated'],
       search: '',
       tags: []
@@ -163,7 +161,7 @@ export function load(
     const timezone = data[i]['timezone'].trim();
 
     //handle times
-    const times = stringToTrimmedArray(data[i]['times'], '\n');
+    const times = stringToTrimmedArray(data[i]['times']);
 
     if (times.length) {
       //loop through create an entry for each time
@@ -194,7 +192,15 @@ export function load(
   return {
     filters: {
       days: arrayToTagsArray(
-        days.map(day => t(day)),
+        [
+          strings.sunday,
+          strings.monday,
+          strings.tuesday,
+          strings.wednesday,
+          strings.thursday,
+          strings.friday,
+          strings.saturday
+        ],
         query.get('days')?.split(',') || []
       ),
       formats: arrayToTagsArray(
@@ -219,8 +225,10 @@ function arrayToTagsArray(array: string[], values: string[]): Tag[] {
   });
 }
 
-//split "foo, bar, baz" into ["foo", "bar", "baz"]
-function stringToTrimmedArray(str: string, sep = ','): string[] {
+//split "foo, bar\nbaz" into ["foo", "bar", "baz"]
+function stringToTrimmedArray(str: string, breaksOnly = false): string[] {
+  const sep = '\n';
+  if (!breaksOnly) str = str.replaceAll(',', sep);
   return str
     .split(sep)
     .map(val => val.trim())

@@ -23,7 +23,7 @@ export function Filter({
   currentDays
 }: FilterProps) {
   const [open, setOpen] = useState(false);
-  const { language, rtl, t } = useContext(i18n);
+  const { language, rtl, strings } = useContext(i18n);
 
   //filter out unused days
   state.filters.days = state.filters.days.filter(day =>
@@ -57,7 +57,7 @@ export function Filter({
         {state.languages.length > 1 && (
           <FormControl display="block" as="fieldset">
             <Select
-              aria-label={t('language')}
+              aria-label={strings.language}
               bgColor="white"
               borderColor="gray.300"
               color="gray.500"
@@ -79,7 +79,7 @@ export function Filter({
         )}
         <FormControl display="block" as="fieldset">
           <Select
-            aria-label={t('timezone')}
+            aria-label={strings.timezone}
             bgColor="white"
             borderColor="gray.300"
             color="gray.500"
@@ -105,7 +105,7 @@ export function Filter({
           variant="outline"
           w="100%"
         >
-          {open ? t('close', language) : t('filters', language)}
+          {open ? strings.close : strings.filters}
         </Button>
       </FormControl>
     </Stack>

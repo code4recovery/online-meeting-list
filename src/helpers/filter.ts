@@ -1,6 +1,6 @@
 import moment from 'moment-timezone';
 
-import { days } from './config';
+import { LanguageStrings } from './i18n';
 
 import { Meeting, State } from './types';
 
@@ -8,7 +8,7 @@ import { Meeting, State } from './types';
 export function filter(
   { meetings, search, timezone }: State,
   tags: string[],
-  t: (string: string, value?: string) => string
+  strings: LanguageStrings
 ): [Meeting[], string[]] {
   //get current timestamp
   const now = moment();
@@ -18,7 +18,15 @@ export function filter(
   const currentDays: string[] = [];
 
   //array of all days in language
-  const allDays = days.map(day => t(day));
+  const allDays = [
+    strings.sunday,
+    strings.monday,
+    strings.tuesday,
+    strings.wednesday,
+    strings.thursday,
+    strings.friday,
+    strings.saturday
+  ];
 
   //loop through meetings for time operations
   meetings.map(meeting => {
@@ -44,7 +52,7 @@ export function filter(
       meeting.tags = meeting.tags.filter(tag => !allDays.includes(tag));
 
       //add meeting day to tags
-      const meetingDay = t(days[meeting.time.day()]);
+      const meetingDay = allDays[meeting.time.day()];
       meeting.tags.push(meetingDay);
       if (!currentDays.includes(meetingDay)) currentDays.push(meetingDay);
 
