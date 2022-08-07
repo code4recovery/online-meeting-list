@@ -16,6 +16,8 @@ export type DataRow = {
   languages?: string;
 };
 
+export type GoogleSheetData = { values: string[][] };
+
 export type Meeting = {
   name: string;
   time?: Moment;
@@ -34,7 +36,7 @@ export type MeetingLink = {
 export type State = {
   filters: { [key: string]: Tag[] };
   limit: number;
-  loading: boolean;
+  loaded: boolean;
   meetings: Meeting[];
   search: string;
   timezone: string;

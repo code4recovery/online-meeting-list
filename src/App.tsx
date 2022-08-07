@@ -27,6 +27,8 @@ export const App = () => {
   const language = isLanguageCode(queryLang) ? queryLang : getLanguage();
   const direction = languages[language].rtl ? 'rtl' : 'ltr';
 
+  const [loading, setLoading] = useState(true);
+
   const [state, setState] = useState<State>({
     filters: {
       days: [],
@@ -35,7 +37,7 @@ export const App = () => {
       types: []
     },
     limit: meetingsPerPage,
-    loading: true,
+    loaded: false,
     meetings: [],
     search: '',
     timezone: '',
@@ -73,7 +75,8 @@ export const App = () => {
   };
 
   //on first render, get data
-  if (state.loading) {
+  if (loading) {
+    setLoading(false);
     fetch(dataUrl)
       .then(result => result.json())
       .then(result =>
@@ -108,7 +111,7 @@ export const App = () => {
     >
       <ChakraProvider>
         <CSSReset />
-        {state.loading ? (
+        {!state.loaded ? (
           <Loading />
         ) : (
           <Box

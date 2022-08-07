@@ -1,13 +1,13 @@
 import moment from 'moment-timezone';
 
 import { meetingsPerPage, videoServices } from './config';
-import { DataRow, Meeting, State, Tag } from './types';
+import { DataRow, GoogleSheetData, Meeting, State, Tag } from './types';
 
 import { Language, isLanguage, languageLookup, LanguageStrings } from './i18n';
 
 //parse google spreadsheet data into state object (runs once on init)
 export function load(
-  data: any,
+  data: GoogleSheetData | DataRow[],
   query: URLSearchParams,
   language: Language,
   strings: LanguageStrings
@@ -18,11 +18,13 @@ export function load(
   const availableLanguages: Language[] = [];
 
   //translate google sheet format
-  if (!process.env.REACT_APP_JSON_URL) {
+  if (isGoogleSheetData(data)) {
     data = translateGoogleSheet(data);
   }
 
-  const hasLanguages = data.some((row: DataRow) => row.languages);
+  //does the data contain any language column data
+  const hasLanguages = data.some(row => row.languages);
+
   let meeting_languages: string[] = [];
 
   //loop through json entries
@@ -43,8 +45,6 @@ export function load(
           return isLanguageDefined;
         })
         .map(string => languageLookup[string]);
-
-      console.log({ meeting_languages, meetingLanguages });
 
       //make sure available languages is populated
       meetingLanguages.forEach(language => {
@@ -230,7 +230,7 @@ export function load(
       types: arrayToTagsArray(types, query.get('types')?.split(',') || [])
     },
     limit: meetingsPerPage,
-    loading: false,
+    loaded: true,
     meetings: meetings,
     search: '',
     timezone: moment.tz.guess(),
@@ -240,9 +240,11 @@ export function load(
 }
 
 function arrayToTagsArray(array: string[], values: string[]): Tag[] {
-  return array.map(tag => {
-    return { tag: tag, checked: values.includes(tag) };
-  });
+  return array.map(tag => ({ tag: tag, checked: values.includes(tag) }));
+}
+
+function isGoogleSheetData(data: unknown): data is GoogleSheetData {
+  return !process.env.REACT_APP_JSON_URL;
 }
 
 //split "foo, bar\nbaz" into ["foo", "bar", "baz"]
@@ -257,16 +259,14 @@ function stringToTrimmedArray(str?: string, breaksOnly = false): string[] {
 }
 
 //translate response from Google Sheet v4
-function translateGoogleSheet(data: any): DataRow[] {
-  const { values } = data;
-  if (!values || !values.length) return [];
+function translateGoogleSheet({ values }: GoogleSheetData): DataRow[] {
   const headers = values
-    .shift()
-    .map((header: string) => header.toLowerCase().replace(' ', '_'));
-  return values.map((row: string[]) => {
-    const thisRow: any = {};
-    headers.forEach((header: string, index: number) => {
-      thisRow[header] = row[index];
+    ?.shift()
+    ?.map((header: string) => header.toLowerCase().replace(' ', '_'));
+  return values.map(row => {
+    const thisRow: DataRow = {};
+    headers?.forEach((header: string, index: number) => {
+      thisRow[header as keyof DataRow] = row[index];
     });
     return thisRow;
   });
