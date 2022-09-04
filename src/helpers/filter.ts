@@ -75,7 +75,10 @@ export function filter(
 
   //search?
   if (search) {
-    const searchWords = search.split(' ').filter(e => e);
+    const searchWords = search
+      .toLowerCase()
+      .split(' ')
+      .filter(e => e);
     meetings = meetings.filter(
       meeting =>
         searchWords.map(word => meeting.search.includes(word)).filter(e => e)

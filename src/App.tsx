@@ -52,7 +52,12 @@ export const App = () => {
   }, [state]);
 
   useEffect(() => {
-    setSearchWords(state.search.split(' ').filter(e => e));
+    setSearchWords(
+      state.search
+        .toLowerCase()
+        .split(' ')
+        .filter(e => e)
+    );
   }, [state.search]);
 
   //set html attributes
