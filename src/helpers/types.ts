@@ -14,6 +14,7 @@ export type DataRow = {
   types?: string;
   formats?: string;
   languages?: string;
+  meeting_id?: string;
 };
 
 export type GoogleSheetData = { values: string[][] };
@@ -25,6 +26,8 @@ export type Meeting = {
   notes: string[];
   tags: string[];
   search: string;
+  meeting_id? :string;
+  meeting_email? :string;
 };
 
 export type MeetingLink = {
@@ -45,3 +48,15 @@ export type State = {
 };
 
 export type Tag = { tag: string; checked: boolean };
+
+// Add Report Type
+export type Report = {
+  reporterName : string;
+  reporterEmail : string;
+  buttons : MeetingProblem[];
+}
+//MeetingProblem is the RadioButtons
+export type MeetingProblem = {
+  value : string;
+  onClick : void;
+}

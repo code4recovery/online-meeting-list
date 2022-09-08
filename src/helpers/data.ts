@@ -63,7 +63,9 @@ export function load(
       buttons: [],
       notes: stringToTrimmedArray(row.notes, true),
       search: '',
-      tags: []
+      tags: [],
+      meeting_id : row.meeting_id,
+      meeting_email : row.email
     };
 
     //handle url

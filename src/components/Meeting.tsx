@@ -5,6 +5,7 @@ import Linkify from 'react-linkify';
 
 import { ButtonPrimary } from './ButtonPrimary';
 import { Meeting as MeetingType, i18n } from '../helpers';
+import { Report } from './Report';
 
 export type MeetingProps = {
   meeting: MeetingType;
@@ -119,6 +120,13 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
             ))}
           </Box>
         )}
+        <Box>
+          <Report 
+            meeting_id={meeting.meeting_id} 
+            meeting_name={meeting.name}
+            meeting_email={meeting.meeting_email}          
+          />
+        </Box>
       </Stack>
     </Box>
   );

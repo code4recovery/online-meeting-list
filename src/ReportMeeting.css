@@ -1,0 +1,64 @@
+.report-label {
+    font-weight:700;
+}
+/* 
+.report-select {
+    padding:1em;
+    width:100%;
+    background-color:#fff;
+
+} */
+
+.report-form {
+    position:relative;
+    width:100%;
+    background-color:#f7fafc;
+    padding:2em;
+    border-radius: 10px;
+
+}
+
+.report-problem {
+    font-size: 0.75em;
+    font-weight:300;
+    text-align:left;
+    float:right;
+    color:#a9a9a9;
+}
+
+.report-input {
+width:100%;
+padding:5px;
+
+}
+
+.report-button {
+    border:1px solid #a9a9a9;
+    color:#a9a9a9;
+    padding:5px 10px;
+    border-radius:3px;
+    font-weight:300;
+}
+/* 
+.report-button:hover {
+    background-color: rgba(43, 107, 160, 0.6);
+} */
+
+/* .close-report {
+    background-color: #fe2500;
+    padding:3px 4px;
+    color:white;
+    font-weight:800;
+    border-radius:2px;
+    float:right;
+    margin-top:-1em;
+} */
+
+.sendEmailButton {
+    margin-top:2em;
+}
+
+.chakra-form-control {
+    font-size: 0.75em;
+  }
+
