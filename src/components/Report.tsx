@@ -1,12 +1,10 @@
 import {useState} from 'react';
-import {Accordion, AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,Box, FormControl,FormLabel,FormErrorMessage,FormHelperText, Input, useRadio, RadioGroup, Radio,Alert, AlertIcon, AlertTitle,  AlertDescription, useDisclosure, CloseButton, Button, Stack, Heading, useRadioGroup, HStack, Tag} from '@chakra-ui/react';
+import {Accordion, AccordionItem,AccordionButton,AccordionPanel,AccordionIcon,Box, FormControl,FormLabel,Input,Alert, AlertIcon, AlertTitle,  AlertDescription, useDisclosure, useRadioGroup, HStack} from '@chakra-ui/react';
 import '../ReportMeeting.css';
 import {ButtonReport} from './ButtonReport';
-import {MeetingProblem as ReportType}  from '../helpers';
 import {RadioButtons} from './RadioButtons'
 import emailjs from '@emailjs/browser';
 import { serviceID, templateID, publicKey } from '../helpers/config';
-import { report } from 'process';
 
  export type ReportProps = {
     meeting_name: string;
