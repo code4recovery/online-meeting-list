@@ -122,9 +122,9 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
         )}
         <Box>
           <Report 
-            meeting_id={meeting.meeting_id} 
-            meeting_name={meeting.name}
-            meeting_email={meeting.meeting_email}          
+            meetingId={meeting.meetingId} 
+            meetingName={meeting.name}
+            meetingEmail={meeting.meetingEmail}          
           />
         </Box>
       </Stack>

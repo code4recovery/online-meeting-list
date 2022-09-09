@@ -26,8 +26,8 @@ export type Meeting = {
   notes: string[];
   tags: string[];
   search: string;
-  meeting_id? :string;
-  meeting_email? :string;
+  meetingId? :string;
+  meetingEmail? :string;
 };
 
 export type MeetingLink = {

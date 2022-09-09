@@ -7,21 +7,21 @@ import emailjs from '@emailjs/browser';
 import { serviceID, templateID, publicKey } from '../helpers/config';
 
  export type ReportProps = {
-    meeting_name: string;
-    meeting_id?: string;
-    meeting_email?: string;
+    meetingName: string;
+    meetingId?: string;
+    meetingEmail?: string;
 
    }
 
-   export function Report({meeting_name,meeting_id,meeting_email} : ReportProps) {
+   export function Report({meetingName,meetingId,meetingEmail} : ReportProps) {
 
     const [formValues, setFormValues] = useState(
         {
-            meeting_id : meeting_id,
-            meeting_name : meeting_name,
-            meeting_email : meeting_email,
-            reporter_name : '',
-            reporter_email : '',
+            meetingId : meetingId,
+            meetingName : meetingName,
+            meetingEmail : meetingEmail,
+            reporterName : '',
+            reporterEmail : '',
             problem : '',
             submitDisabled : true
         }
@@ -33,7 +33,8 @@ import { serviceID, templateID, publicKey } from '../helpers/config';
             ...formValues,
             [e.target.name] : e.target.value
         }))
-        if(formValues.reporter_name && formValues.reporter_email.length > 8) {
+        console.log(formValues);
+        if(formValues.reporterName && formValues.reporterEmail.length > 8) {
             setFormValues(formValues =>({
                 ...formValues,
                 submitDisabled : false
@@ -77,6 +78,8 @@ import { serviceID, templateID, publicKey } from '../helpers/config';
 
     const group = getRootProps();
 
+
+
     return isVisible ?(
     <Accordion allowToggle>
         <Box>
@@ -93,11 +96,11 @@ import { serviceID, templateID, publicKey } from '../helpers/config';
             <AccordionPanel>
                 <FormControl mt={5}>
                     <FormLabel>Your Name</FormLabel>
-                    <Input type='text' name="reporter_name" onChange={changeData} />
+                    <Input type='text' name="reporterName" onChange={changeData} />
                 </FormControl>
                 <FormControl mt={5}>
                     <FormLabel>Your Email</FormLabel>
-                    <Input type='text' name="reporter_email" onChange={changeData} />
+                    <Input type='text' name="reporterEmail" onChange={changeData} />
                 </FormControl>
                 <FormControl mt={5}>
                 {!!problems.length && (
@@ -120,9 +123,9 @@ import { serviceID, templateID, publicKey } from '../helpers/config';
                     title={'report'}
                     onClick={handleSubmit}/>                                
                 </FormControl>
-                <Input type="hidden" name="meeting_email" value={meeting_email}></Input>
-                <Input type="hidden" value={meeting_name} name="meeting_name"></Input>
-                <Input type="hidden" name="meeting_id" value={meeting_id}></Input>
+                <Input type="hidden" name="meetingEmail" value={meetingEmail}></Input>
+                <Input type="hidden" value={meetingName} name="meetingName"></Input>
+                <Input type="hidden" name="meetingId" value={meetingId}></Input>
             </AccordionPanel>  
              </AccordionItem>
         </Box>

@@ -30,7 +30,7 @@ export function load(
   //loop through json entries
   data.forEach((row: DataRow, i: number) => {
     //required fields
-    if (!row.name || !row.timezone) return;
+    if (!row.name || !row.timezone ) return;
 
     //let
     let addMeeting = true;
@@ -64,8 +64,8 @@ export function load(
       notes: stringToTrimmedArray(row.notes, true),
       search: '',
       tags: [],
-      meeting_id : row.meeting_id,
-      meeting_email : row.email
+      meetingId : row.meeting_id,
+      meetingEmail : row.email
     };
 
     //handle url
