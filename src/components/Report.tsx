@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -16,26 +16,29 @@ import {
   useDisclosure,
   useRadioGroup,
   HStack,
-  Stack
+  Stack,
+  Textarea
 } from '@chakra-ui/react';
 import { ButtonReport } from './ButtonReport';
 import { RadioButtons } from './RadioButtons';
 import emailjs from '@emailjs/browser';
-import { Meeting as MeetingType } from '../helpers';
+import { Meeting as MeetingType, i18n } from '../helpers';
 
 export type ReportProps = {
   meeting: MeetingType;
 };
 
 export function Report({ meeting }: ReportProps) {
+  const { rtl, strings } = useContext(i18n);
   const [formValues, setFormValues] = useState({
-    meeting: meeting,
-    id: meeting.id,
-    name: meeting.name,
     email: meeting.email,
+    id: meeting.id,
+    meeting: meeting,
+    name: meeting.name,
     problem: '',
-    reporterName: '',
+    reporterComments: '',
     reporterEmail: '',
+    reporterName: '',
     submitDisabled: true
   }); // End form values useState
 
@@ -100,7 +103,7 @@ export function Report({ meeting }: ReportProps) {
     <Accordion allowToggle>
       <Box>
         <AccordionItem>
-          <Box className="report-problem">
+          <Box>
             <AccordionButton onClick={onOpen}>
               <Box textAlign={'right'} flex={'1'} fontSize={'xs'}>
                 Report Problem
@@ -109,7 +112,7 @@ export function Report({ meeting }: ReportProps) {
             </AccordionButton>
           </Box>
           <AccordionPanel>
-            <FormControl mt={5}>
+            <FormControl>
               <FormLabel>Your Name</FormLabel>
               <Input type="text" name="reporterName" onChange={changeData} />
             </FormControl>
@@ -118,15 +121,16 @@ export function Report({ meeting }: ReportProps) {
               <Input type="text" name="reporterEmail" onChange={changeData} />
             </FormControl>
             <FormControl mt={5}>
+              <FormLabel mb={3}>Please Choose One...</FormLabel>
               {!!problems.length && (
-                <HStack {...group}>
+                <Stack {...group}>
                   {problems.map((value: any) => {
                     const radio = getRadioProps({ value });
                     return (
-                      <Stack spacing={3}>
+                      <Stack spacing={10} direction={rtl ? 'row' : 'column'}>
                         <RadioButtons
-                          key={value}
                           {...radio}
+                          key={value}
                           name={'problem'}
                           onChange={changeData}
                         >
@@ -135,8 +139,15 @@ export function Report({ meeting }: ReportProps) {
                       </Stack>
                     );
                   })}
-                </HStack>
+                </Stack>
               )}
+            </FormControl>
+            <FormControl mt={5}>
+              <FormLabel>Additional Comments</FormLabel>
+              <Textarea
+                name="reporterComments"
+                onChange={changeData}
+              ></Textarea>
             </FormControl>
             <FormControl>
               <ButtonReport

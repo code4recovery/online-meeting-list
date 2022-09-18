@@ -121,7 +121,12 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
         )}
 
         {!!process.env.REACT_APP_EMAIL_JS_SERVICE_ID === true && (
-          <Box>
+          <Box
+            float={rtl ? 'right' : 'left'}
+            mr={rtl ? 0 : 2}
+            ml={rtl ? 2 : 0}
+            my={1}
+          >
             <Report meeting={meeting} />
           </Box>
         )}
