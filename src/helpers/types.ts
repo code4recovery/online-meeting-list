@@ -26,8 +26,8 @@ export type Meeting = {
   notes: string[];
   tags: string[];
   search: string;
-  meetingId? :string;
-  meetingEmail? :string;
+  id?: string;
+  email?: string;
 };
 
 export type MeetingLink = {
@@ -51,12 +51,12 @@ export type Tag = { tag: string; checked: boolean };
 
 // Add Report Type
 export type Report = {
-  reporterName : string;
-  reporterEmail : string;
-  buttons : MeetingProblem[];
-}
+  buttons: MeetingProblem[];
+  reporterName: string;
+  reporterEmail: string;
+};
 //MeetingProblem is the RadioButtons
 export type MeetingProblem = {
-  value : string;
-  onClick : void;
-}
+  onClick: void;
+  value: string;
+};

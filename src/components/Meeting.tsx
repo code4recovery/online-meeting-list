@@ -2,7 +2,6 @@ import { useContext } from 'react';
 import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
-
 import { ButtonPrimary } from './ButtonPrimary';
 import { Meeting as MeetingType, i18n } from '../helpers';
 import { Report } from './Report';
@@ -120,13 +119,12 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
             ))}
           </Box>
         )}
-        <Box>
-          <Report 
-            meetingId={meeting.meetingId} 
-            meetingName={meeting.name}
-            meetingEmail={meeting.meetingEmail}          
-          />
-        </Box>
+
+        {!!process.env.REACT_APP_EMAIL_JS_SERVICE_ID === true && (
+          <Box>
+            <Report meeting={meeting} />
+          </Box>
+        )}
       </Stack>
     </Box>
   );
