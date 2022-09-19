@@ -18,7 +18,8 @@ import {
   Stack,
   Textarea,
   FormHelperText,
-  FormErrorMessage
+  FormErrorMessage,
+  RadioGroup
 } from '@chakra-ui/react';
 import { ButtonReport } from './ButtonReport';
 import { RadioButtons } from './RadioButtons';
@@ -87,13 +88,13 @@ export function Report({ meeting }: ReportProps) {
   } = useDisclosure({ defaultIsOpen: true });
 
   const problems = [
-    'Abuse / Descrimination',
-    'Broken Link',
-    "Meeting Doesn't Exist",
-    'Refused Verification',
-    'Removed From Meeting',
-    'Wrong Passcode'
+    'No such meeting',
+    'Broken link',
+    'Incorrect passcode',
+    'Removed from meeting',
+    'Abusive behaviour'
   ];
+
   const { getRootProps, getRadioProps } = useRadioGroup({
     name: 'meeting_problem',
     defaultValue: 'Choose One',
@@ -118,7 +119,9 @@ export function Report({ meeting }: ReportProps) {
             <FormControl isRequired>
               <FormLabel>Your Name</FormLabel>
               <Input type="text" name="reporterName" onChange={changeData} />
-              <FormHelperText>Please Enter Your Name</FormHelperText>
+              <FormHelperText>
+                Please Enter Your First Name &amp; Last Initial
+              </FormHelperText>
             </FormControl>
             <FormControl mt={5} isRequired>
               <FormLabel>Your Email</FormLabel>
@@ -138,6 +141,7 @@ export function Report({ meeting }: ReportProps) {
                           key={value}
                           name={'problem'}
                           onChange={changeData}
+                          _checked={rtl ? true : false}
                         >
                           {value}
                         </RadioButtons>
