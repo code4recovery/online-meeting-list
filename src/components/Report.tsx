@@ -64,18 +64,15 @@ export function Report({ meeting }: ReportProps) {
   let templateParams = formValues;
 
   const sendEmail = () => {
-    emailjs.send(serviceId, templateId, templateParams, PublicKey);
-  };
-
-  const handleSubmit = () => {
-    try {
-      sendEmail();
-      onClose();
-    } catch (e: any) {
-      <Alert status="error">
-        <AlertTitle>{e.target.value}</AlertTitle>
-      </Alert>;
-    }
+    emailjs.send(serviceId, templateId, templateParams, PublicKey).then(
+      () => {
+        onClose();
+      },
+      function (error: any) {
+        alert('Something Went Wrong - Please try again Later');
+        console.log(error);
+      }
+    );
   };
 
   const {
@@ -152,7 +149,7 @@ export function Report({ meeting }: ReportProps) {
             <FormControl>
               <ButtonReport
                 disabled={formValues.submitDisabled}
-                onClick={handleSubmit}
+                onClick={sendEmail}
                 text={'Send Report'}
                 title={'report'}
               />
