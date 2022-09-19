@@ -15,14 +15,15 @@ import {
   AlertDescription,
   useDisclosure,
   useRadioGroup,
-  HStack,
   Stack,
-  Textarea
+  Textarea,
+  FormHelperText,
+  FormErrorMessage
 } from '@chakra-ui/react';
 import { ButtonReport } from './ButtonReport';
 import { RadioButtons } from './RadioButtons';
 import emailjs from '@emailjs/browser';
-import { Meeting as MeetingType, i18n } from '../helpers';
+import { Meeting as MeetingType, i18n, validateEmail } from '../helpers';
 
 export type ReportProps = {
   meeting: MeetingType;
@@ -48,7 +49,11 @@ export function Report({ meeting }: ReportProps) {
       ...formValues,
       [e.target.name]: e.target.value
     }));
-    if (formValues.reporterName && formValues.reporterEmail.length > 8) {
+    if (
+      formValues.reporterName &&
+      validateEmail(formValues.reporterEmail) &&
+      formValues.reporterEmail != ''
+    ) {
       setFormValues(formValues => ({
         ...formValues,
         submitDisabled: false
@@ -82,9 +87,10 @@ export function Report({ meeting }: ReportProps) {
   } = useDisclosure({ defaultIsOpen: true });
 
   const problems = [
-    'Abusive Behaviour',
+    'Abuse / Descrimination',
     'Broken Link',
-    'Discrimination',
+    "Meeting Doesn't Exist",
+    'Refused Verification',
     'Removed From Meeting',
     'Wrong Passcode'
   ];
@@ -109,16 +115,18 @@ export function Report({ meeting }: ReportProps) {
             </AccordionButton>
           </Box>
           <AccordionPanel>
-            <FormControl>
+            <FormControl isRequired>
               <FormLabel>Your Name</FormLabel>
               <Input type="text" name="reporterName" onChange={changeData} />
+              <FormHelperText>Please Enter Your Name</FormHelperText>
             </FormControl>
-            <FormControl mt={5}>
+            <FormControl mt={5} isRequired>
               <FormLabel>Your Email</FormLabel>
               <Input type="text" name="reporterEmail" onChange={changeData} />
+              <FormHelperText>Please Enter Your Email</FormHelperText>
             </FormControl>
             <FormControl mt={5}>
-              <FormLabel mb={3}>Please Choose One...</FormLabel>
+              <FormLabel mb={3}>What is the problem?</FormLabel>
               {!!problems.length && (
                 <Stack {...group}>
                   {problems.map((value: any) => {
@@ -138,7 +146,9 @@ export function Report({ meeting }: ReportProps) {
                   })}
                 </Stack>
               )}
+              <FormHelperText>Please Choose One</FormHelperText>
             </FormControl>
+
             <FormControl mt={5}>
               <FormLabel>Additional Comments</FormLabel>
               <Textarea
