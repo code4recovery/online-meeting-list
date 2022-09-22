@@ -19,7 +19,8 @@ import {
   Textarea,
   FormHelperText,
   FormErrorMessage,
-  RadioGroup
+  RadioGroup,
+  Text
 } from '@chakra-ui/react';
 import { ButtonReport } from './ButtonReport';
 import { RadioButtons } from './RadioButtons';
@@ -102,8 +103,10 @@ export function Report({ meeting }: ReportProps) {
         <AccordionItem>
           <Box>
             <AccordionButton onClick={onOpen}>
-              <Box textAlign={'right'} flex={'1'} fontSize={'xs'}>
-                Report Problem
+              <Box textAlign="right" flex="1" border="sm">
+                <Text as="u" fontSize="xs" px={1} color={'gray.400'}>
+                  Report Problem
+                </Text>
               </Box>
               <AccordionIcon />
             </AccordionButton>
