@@ -20,10 +20,7 @@ export function RadioButtons(props: any) {
           borderColor: 'blue.600'
         }}
         _focus={{
-          boxShadow: 'outline',
-          bg: 'blue.600',
-          color: 'white',
-          borderColor: 'blue.600'
+          boxShadow: 'outline'
         }}
         px={5}
         py={3}

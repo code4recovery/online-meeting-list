@@ -45,21 +45,14 @@ export function Report({ meeting }: ReportProps) {
   }); // End form values useState
 
   // Set form Values based on Meeting Report Submitted
-  const changeData = (e: any) => {
+  const changeData = (name: keyof typeof formValues, value: string) => {
     setFormValues(formValues => ({
       ...formValues,
-      [e.target.name]: e.target.value
+      [name]: value,
+      submitDisabled: !(
+        formValues.reporterName && validateEmail(formValues.reporterEmail)
+      )
     }));
-    if (
-      formValues.reporterName &&
-      validateEmail(formValues.reporterEmail) &&
-      formValues.reporterEmail != ''
-    ) {
-      setFormValues(formValues => ({
-        ...formValues,
-        submitDisabled: false
-      }));
-    }
   }; // End Change Data Method
 
   // Handle The Form Submission & Send The Email
@@ -96,9 +89,9 @@ export function Report({ meeting }: ReportProps) {
   ];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'meeting_problem',
+    name: 'problem',
     defaultValue: 'Choose One',
-    onChange: console.log
+    onChange: value => changeData('problem', value)
   });
 
   const group = getRootProps();
@@ -118,14 +111,22 @@ export function Report({ meeting }: ReportProps) {
           <AccordionPanel>
             <FormControl isRequired>
               <FormLabel>Your Name</FormLabel>
-              <Input type="text" name="reporterName" onChange={changeData} />
+              <Input
+                type="text"
+                name="reporterName"
+                onChange={e => changeData('reporterName', e.target.value)}
+              />
               <FormHelperText>
                 Please Enter Your First Name &amp; Last Initial
               </FormHelperText>
             </FormControl>
             <FormControl mt={5} isRequired>
               <FormLabel>Your Email</FormLabel>
-              <Input type="text" name="reporterEmail" onChange={changeData} />
+              <Input
+                type="text"
+                name="reporterEmail"
+                onChange={e => changeData('reporterEmail', e.target.value)}
+              />
               <FormHelperText>Please Enter Your Email</FormHelperText>
             </FormControl>
             <FormControl mt={5}>
@@ -136,13 +137,7 @@ export function Report({ meeting }: ReportProps) {
                     const radio = getRadioProps({ value });
                     return (
                       <Stack spacing={10} direction={rtl ? 'row' : 'column'}>
-                        <RadioButtons
-                          {...radio}
-                          key={value}
-                          name={'problem'}
-                          onChange={changeData}
-                          _checked={rtl ? true : false}
-                        >
+                        <RadioButtons {...radio} key={value}>
                           {value}
                         </RadioButtons>
                       </Stack>
@@ -157,7 +152,7 @@ export function Report({ meeting }: ReportProps) {
               <FormLabel>Additional Comments</FormLabel>
               <Textarea
                 name="reporterComments"
-                onChange={changeData}
+                onChange={e => changeData('reporterComments', e.target.value)}
               ></Textarea>
             </FormControl>
             <FormControl>
