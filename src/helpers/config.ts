@@ -24,8 +24,3 @@ export const videoServices: { [key: string]: string[] } = {
   Zoho: ['zoho.com'],
   Zoom: ['zoom.com', 'zoom.us']
 };
-
-//Added Environment Variables for EmailJs
-export const serviceID = process.env.REACT_APP_EMAIL_JS_SERVICE_ID;
-export const templateID = process.env.REACT_APP_EMAIL_JS_TEMPLATE_ID;
-export const publicKey = process.env.REACT_APP_EMAIL_JS_PUBLIC_KEY;

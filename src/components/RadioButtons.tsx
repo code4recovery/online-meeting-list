@@ -1,19 +1,13 @@
-import { Box, Input, useRadio, useRadioGroup } from '@chakra-ui/react';
+import { Box, Input, useRadio } from '@chakra-ui/react';
 
 export function RadioButtons(props: any) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
-  const input = getInputProps();
-  const checkbox = getCheckboxProps();
 
   return (
     <Box as="label">
-      <Input {...input} />
+      <Input {...getInputProps()} />
       <Box
-        {...checkbox}
-        cursor="pointer"
-        borderWidth="1px"
-        borderRadius="md"
-        boxShadow="md"
+        {...getCheckboxProps()}
         _checked={{
           bg: 'blue.600',
           color: 'white',
@@ -22,6 +16,10 @@ export function RadioButtons(props: any) {
         _focus={{
           boxShadow: 'outline'
         }}
+        borderRadius="md"
+        borderWidth="1px"
+        boxShadow="md"
+        cursor="pointer"
         px={5}
         py={3}
       >

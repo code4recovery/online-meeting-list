@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import {
   Accordion,
   AccordionItem,
@@ -17,33 +17,29 @@ import {
   useRadioGroup,
   Stack,
   Textarea,
-  FormHelperText,
-  FormErrorMessage,
-  RadioGroup,
   Text
 } from '@chakra-ui/react';
+import emailjs from '@emailjs/browser';
+
+import { Meeting as MeetingType, validateEmail } from '../helpers';
 import { ButtonReport } from './ButtonReport';
 import { RadioButtons } from './RadioButtons';
-import emailjs from '@emailjs/browser';
-import { Meeting as MeetingType, i18n, validateEmail } from '../helpers';
 
 export type ReportProps = {
   meeting: MeetingType;
 };
 
 export function Report({ meeting }: ReportProps) {
-  const { rtl, strings } = useContext(i18n);
   const [formValues, setFormValues] = useState({
     email: meeting.email,
     id: meeting.id,
-    meeting: meeting,
     name: meeting.name,
     problem: '',
     reporterComments: '',
     reporterEmail: '',
     reporterName: '',
     submitDisabled: true
-  }); // End form values useState
+  });
 
   // Set form Values based on Meeting Report Submitted
   const changeData = (name: keyof typeof formValues, value: string) => {
@@ -54,32 +50,9 @@ export function Report({ meeting }: ReportProps) {
         formValues.reporterName && validateEmail(formValues.reporterEmail)
       )
     }));
-  }; // End Change Data Method
-
-  // Handle The Form Submission & Send The Email
-
-  const serviceId = `${process.env.REACT_APP_EMAIL_JS_SERVICE_ID}`;
-  const templateId = `${process.env.REACT_APP_EMAIL_JS_TEMPLATE_ID}`;
-  const PublicKey = `${process.env.REACT_APP_EMAIL_JS_PUBLIC_KEY}`;
-  let templateParams = formValues;
-
-  const sendEmail = () => {
-    emailjs.send(serviceId, templateId, templateParams, PublicKey).then(
-      () => {
-        onClose();
-      },
-      function (error: any) {
-        alert('Something Went Wrong - Please try again Later');
-        console.log(error);
-      }
-    );
   };
 
-  const {
-    isOpen: isVisible,
-    onClose,
-    onOpen
-  } = useDisclosure({ defaultIsOpen: true });
+  const { isOpen, onClose, onOpen } = useDisclosure({ defaultIsOpen: true });
 
   const problems = [
     'No such meeting',
@@ -90,106 +63,107 @@ export function Report({ meeting }: ReportProps) {
   ];
 
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'problem',
     defaultValue: 'Choose One',
+    name: 'problem',
     onChange: value => changeData('problem', value)
   });
 
-  const group = getRootProps();
+  const sendEmail = () => {
+    emailjs
+      .send(
+        process.env.REACT_APP_EMAIL_JS_SERVICE_ID ?? '',
+        process.env.REACT_APP_EMAIL_JS_TEMPLATE_ID ?? '',
+        formValues,
+        process.env.REACT_APP_EMAIL_JS_PUBLIC_KEY
+      )
+      .then(() => onClose())
+      .catch(error => {
+        alert('Something went wrong. Please try again later.');
+        console.log(error);
+      });
+  };
 
-  return isVisible ? (
+  return isOpen ? (
     <Accordion allowToggle>
-      <Box>
-        <AccordionItem>
-          <Box>
-            <AccordionButton onClick={onOpen}>
-              <Box textAlign="right" flex="1" border="sm">
-                <Text as="u" fontSize="xs" px={1} color={'gray.400'}>
-                  Report Problem
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
+      <AccordionItem>
+        <AccordionButton onClick={onOpen}>
+          <Box textAlign="end" flex="1" border="sm">
+            <Text fontSize="sm" color="gray.500">
+              Report Problem
+            </Text>
           </Box>
-          <AccordionPanel>
+          <AccordionIcon />
+        </AccordionButton>
+        <AccordionPanel>
+          <Stack gap={5}>
             <FormControl isRequired>
-              <FormLabel>Your Name</FormLabel>
+              <FormLabel>Your name</FormLabel>
               <Input
-                type="text"
                 name="reporterName"
                 onChange={e => changeData('reporterName', e.target.value)}
-              />
-              <FormHelperText>
-                Please Enter Your First Name &amp; Last Initial
-              </FormHelperText>
-            </FormControl>
-            <FormControl mt={5} isRequired>
-              <FormLabel>Your Email</FormLabel>
-              <Input
+                placeholder="Jennifer E."
                 type="text"
+              />
+            </FormControl>
+            <FormControl isRequired>
+              <FormLabel>Your email</FormLabel>
+              <Input
                 name="reporterEmail"
                 onChange={e => changeData('reporterEmail', e.target.value)}
+                placeholder="your.email@service.com"
+                type="text"
               />
-              <FormHelperText>Please Enter Your Email</FormHelperText>
             </FormControl>
-            <FormControl mt={5}>
+            <FormControl>
               <FormLabel mb={3}>What is the problem?</FormLabel>
               {!!problems.length && (
-                <Stack {...group}>
-                  {problems.map((value: any) => {
-                    const radio = getRadioProps({ value });
-                    return (
-                      <Stack spacing={10} direction={rtl ? 'row' : 'column'}>
-                        <RadioButtons {...radio} key={value}>
-                          {value}
-                        </RadioButtons>
-                      </Stack>
-                    );
-                  })}
+                <Stack {...getRootProps()}>
+                  {problems.map((value: any) => (
+                    <Stack spacing={10}>
+                      <RadioButtons {...getRadioProps({ value })} key={value}>
+                        {value}
+                      </RadioButtons>
+                    </Stack>
+                  ))}
                 </Stack>
               )}
-              <FormHelperText>Please Choose One</FormHelperText>
             </FormControl>
-
-            <FormControl mt={5}>
-              <FormLabel>Additional Comments</FormLabel>
+            <FormControl>
+              <FormLabel>Comments</FormLabel>
               <Textarea
                 name="reporterComments"
                 onChange={e => changeData('reporterComments', e.target.value)}
-              ></Textarea>
+              />
             </FormControl>
             <FormControl>
               <ButtonReport
                 disabled={formValues.submitDisabled}
                 onClick={sendEmail}
-                text={'Send Report'}
-                title={'report'}
+                text="Send Report"
+                title="report"
               />
             </FormControl>
-            <Input type="hidden" name="email" value={meeting.email}></Input>
-            <Input type="hidden" name="name" value={meeting.name}></Input>
-            <Input type="hidden" name="id" value={meeting.id}></Input>
-          </AccordionPanel>
-        </AccordionItem>
-      </Box>
+          </Stack>
+        </AccordionPanel>
+      </AccordionItem>
     </Accordion>
   ) : (
     <Alert
-      status="success"
-      variant="subtle"
-      flexDirection="column"
       alignItems="center"
+      flexDirection="column"
       justifyContent="center"
+      p="30px"
+      status="success"
       textAlign="center"
-      height="200px"
+      variant="subtle"
     >
-      <AlertIcon boxSize="40px" mr={0} />
+      <AlertIcon boxSize="40px" m={0} />
       <AlertTitle mt={4} mb={1} fontSize="lg">
-        Meeting Reported
+        Report Sent
       </AlertTitle>
       <AlertDescription maxWidth="sm">
         Thanks for letting us know. We will get in touch with the group!
       </AlertDescription>
     </Alert>
   );
-} //End Report Function
+}

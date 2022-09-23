@@ -15,13 +15,13 @@ export function ButtonReport({
 }: ButtonReportProps) {
   return (
     <Button
+      _hover={{ bg: 'blue.800' }}
       bg="blue.600"
       color="white"
       disabled={disabled}
+      mt={5}
       onClick={onClick}
       title={title}
-      _hover={{ bg: 'blue.800' }}
-      mt={5}
     >
       {text}
     </Button>
