@@ -48,15 +48,3 @@ export type State = {
 };
 
 export type Tag = { tag: string; checked: boolean };
-
-// Add Report Type
-export type Report = {
-  buttons: MeetingProblem[];
-  reporterName: string;
-  reporterEmail: string;
-};
-//MeetingProblem is the RadioButtons
-export type MeetingProblem = {
-  onClick: void;
-  value: string;
-};
