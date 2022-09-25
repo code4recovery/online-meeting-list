@@ -63,7 +63,9 @@ export function load(
       buttons: [],
       notes: stringToTrimmedArray(row.notes, true),
       search: '',
-      tags: []
+      tags: [],
+      id: row.meeting_id,
+      email: row.email
     };
 
     //handle url
@@ -272,7 +274,7 @@ function translateGoogleSheet({ values }: GoogleSheetData): DataRow[] {
   });
 }
 
-function validateEmail(email: string) {
+export function validateEmail(email: string) {
   return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );

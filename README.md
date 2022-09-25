@@ -20,7 +20,7 @@ The data for the demo in managed in [this Google Sheet](https://docs.google.com/
 
 ```
 REACT_APP_GOOGLE_SHEET="https://docs.google.com/spreadsheets/d/<your-spreadsheet-url-goes-here>/edit#gid=0"
-REACT_APP_GOOGLE_API_KEY="9sfjoKsfJukwDZhWs48fhs4fioRsRerEhf8ghs9"
+REACT_APP_GOOGLE_API_KEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 ```
 
 Or, if you are using a service like [Netlify](https://www.netlify.com), you can skip that step and add these variables directly to your build settings.
@@ -51,6 +51,38 @@ JSON should be in the format:
         "notes": "Weekly meeting at 7pm Pacific. Meeting ID: 123 456 7890\nPassword: 255804"
     }
 ]
+```
+
+## Email Feedback Form
+
+Optionally you may enable a feedback form using [EmailJS](https://www.emailjs.com/). Sign up for a free account, create an email template, and add the following variables to your `.env` file environment variables:
+
+```
+REACT_APP_EMAIL_JS_SERVICE_ID="service_XXXXXXX"
+REACT_APP_EMAIL_JS_TEMPLATE_ID="template_XXXXXXX"
+REACT_APP_EMAIL_JS_PUBLIC_KEY="XXXXXXXXXXXXXXXXX"
+```
+
+Here is an example email template:
+
+```
+Hello
+
+The following meeting has been reported
+
+Reported by:
+
+Name: {{reporterName}}:
+Email: {{reporterEmail}}
+
+Meeting details:
+
+Name: {{name}}
+Meeting ID:  {{id}}
+Group Email: {{email}}
+
+Comments:
+{{reporterComments}}
 ```
 
 ## Install and Run Locally

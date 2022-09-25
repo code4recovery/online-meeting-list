@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
-
 import { ButtonPrimary } from './ButtonPrimary';
 import { Meeting as MeetingType, i18n } from '../helpers';
+import { Report } from './Report';
 
 export type MeetingProps = {
   meeting: MeetingType;
@@ -30,13 +30,12 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
       border="1px"
       borderColor="gray.300"
       mb={{ base: 3, md: 6 }}
-      p={{ base: 3, md: 5 }}
       overflow="hidden"
       rounded="md"
       shadow="md"
       textAlign={rtl ? 'right' : 'left'}
     >
-      <Stack spacing={3}>
+      <Stack spacing={3} p={{ base: 3, md: 5 }}>
         <Box alignItems="baseline">
           <Heading as="h2" display={{ lg: 'inline' }} fontSize="2xl">
             <Highlighter
@@ -107,8 +106,7 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
                 borderRadius="base"
                 color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
                 key={index}
-                ml={rtl ? 2 : 0}
-                mr={rtl ? 0 : 2}
+                me={2}
                 my={1}
                 px={3}
                 py={1}
@@ -120,6 +118,9 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
           </Box>
         )}
       </Stack>
+      {process.env.REACT_APP_EMAIL_JS_SERVICE_ID && (
+        <Report meeting={meeting} />
+      )}
     </Box>
   );
 }

@@ -14,6 +14,7 @@ export type DataRow = {
   types?: string;
   formats?: string;
   languages?: string;
+  meeting_id?: string;
 };
 
 export type GoogleSheetData = { values: string[][] };
@@ -25,6 +26,8 @@ export type Meeting = {
   notes: string[];
   tags: string[];
   search: string;
+  id?: string;
+  email?: string;
 };
 
 export type MeetingLink = {
