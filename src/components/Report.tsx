@@ -1,25 +1,25 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   Accordion,
-  AccordionItem,
   AccordionButton,
-  AccordionPanel,
   AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
   Box,
   FormControl,
   FormLabel,
   Input,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
   Stack,
-  Textarea,
-  Text
+  Text,
+  Textarea
 } from '@chakra-ui/react';
 import emailjs from '@emailjs/browser';
 
-import { Meeting as MeetingType, validateEmail } from '../helpers';
+import { i18n, Meeting as MeetingType, validateEmail } from '../helpers';
 import { ButtonPrimary } from './ButtonPrimary';
 
 export type ReportProps = {
@@ -27,6 +27,8 @@ export type ReportProps = {
 };
 
 export function Report({ meeting }: ReportProps) {
+  const { strings } = useContext(i18n);
+
   const [formValues, setFormValues] = useState({
     email: meeting.email,
     id: meeting.id,
@@ -39,13 +41,12 @@ export function Report({ meeting }: ReportProps) {
   //false = sending, true = sent, string = error
   const [formStatus, setFormStatus] = useState<boolean | string | undefined>();
 
-  // Set form Values based on Meeting Report Submitted
-  const changeData = (name: keyof typeof formValues, value: string) => {
+  //set form values
+  const changeData = (name: keyof typeof formValues, value: string) =>
     setFormValues(formValues => ({
       ...formValues,
       [name]: value
     }));
-  };
 
   const sendEmail = () => {
     setFormStatus(false);
@@ -66,7 +67,7 @@ export function Report({ meeting }: ReportProps) {
         <AccordionButton>
           <Box textAlign="end" flex="1" border="sm">
             <Text fontSize="sm" color="gray.500">
-              Report Problem
+              {strings.report}
             </Text>
           </Box>
           <AccordionIcon />
@@ -75,7 +76,7 @@ export function Report({ meeting }: ReportProps) {
           <Stack gap={5}>
             <Stack direction={{ base: 'column', lg: 'row' }} gap={5}>
               <FormControl isRequired>
-                <FormLabel>Your name</FormLabel>
+                <FormLabel>{strings.report_name}</FormLabel>
                 <Input
                   name="reporterName"
                   onChange={e => changeData('reporterName', e.target.value)}
@@ -83,7 +84,7 @@ export function Report({ meeting }: ReportProps) {
                 />
               </FormControl>
               <FormControl isRequired>
-                <FormLabel>Your email</FormLabel>
+                <FormLabel>{strings.report_email}</FormLabel>
                 <Input
                   name="reporterEmail"
                   onChange={e => changeData('reporterEmail', e.target.value)}
@@ -92,7 +93,7 @@ export function Report({ meeting }: ReportProps) {
               </FormControl>
             </Stack>
             <FormControl isRequired>
-              <FormLabel>Comments</FormLabel>
+              <FormLabel>{strings.report_comments}</FormLabel>
               <Textarea
                 name="reporterComments"
                 onChange={e => changeData('reporterComments', e.target.value)}
@@ -108,7 +109,7 @@ export function Report({ meeting }: ReportProps) {
                   !validateEmail(formValues.reporterEmail)
                 }
                 onClick={sendEmail}
-                text="Send Report"
+                text={strings.report_send}
               />
             </FormControl>
           </Stack>
@@ -130,16 +131,14 @@ export function Report({ meeting }: ReportProps) {
       <AlertIcon boxSize={10} m={0} />
       <AlertTitle fontSize="lg" mb={2} mt={4} mx={0}>
         {formStatus === false
-          ? 'Sending'
+          ? strings.report_sending
           : formStatus === true
-          ? 'Report Sent'
-          : 'Error'}
+          ? strings.report_sent
+          : strings.report_error}
       </AlertTitle>
       {formStatus && (
         <AlertDescription maxWidth="sm" textAlign="center">
-          {formStatus === true
-            ? 'Thanks for letting us know. We will follow up with the group!'
-            : formStatus}
+          {formStatus === true ? strings.report_confirm : formStatus}
         </AlertDescription>
       )}
     </Alert>

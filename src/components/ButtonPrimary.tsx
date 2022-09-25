@@ -26,7 +26,11 @@ export function ButtonPrimary({
       title={title}
       _hover={{ bg: 'blue.800' }}
     >
-      <Box me={1}>{icon && <Icon name={icon} />}</Box>
+      {icon && (
+        <Box me={1}>
+          <Icon name={icon} />
+        </Box>
+      )}
       {text}
     </Button>
   );
