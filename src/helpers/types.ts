@@ -2,22 +2,21 @@ import { Moment } from 'moment-timezone';
 
 import { Language } from './i18n';
 
-export type DataRow = {
+export type JSONRow = {
+  slug: string;
   name?: string;
-  times?: string;
+  time?: string;
+  day?: number;
   timezone?: string;
-  url?: string;
-  phone?: string;
-  access_code?: string;
+  conference_url?: string;
+  conference_phone?: string;
   email?: string;
   notes?: string;
-  types?: string;
-  formats?: string;
-  languages?: string;
-  meeting_id?: string;
+  types?: string[];
+  group?: string;
+  group_notes?: string;
+  updated?: string;
 };
-
-export type GoogleSheetData = { values: string[][] };
 
 export type Meeting = {
   name: string;
