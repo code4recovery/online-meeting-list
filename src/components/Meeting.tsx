@@ -14,15 +14,6 @@ export type MeetingProps = {
 
 export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
   const { rtl, strings } = useContext(i18n);
-  const days = [
-    strings.sunday,
-    strings.monday,
-    strings.tuesday,
-    strings.wednesday,
-    strings.thursday,
-    strings.friday,
-    strings.saturday
-  ];
   return (
     <Box
       as="article"
@@ -53,7 +44,7 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
           >
             {!meeting.time
               ? strings.ongoing
-              : days[meeting.time.day()] +
+              : strings.days[meeting.time.day()] +
                 ' ' +
                 meeting.time.format('LT').toLocaleLowerCase()}
           </Heading>

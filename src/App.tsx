@@ -9,7 +9,6 @@ import { NoResults } from './components/NoResults';
 import {
   Meeting as MeetingType,
   State,
-  dataUrl,
   filter,
   getLanguage,
   i18n,
@@ -80,9 +79,9 @@ export const App = () => {
   };
 
   //on first render, get data
-  if (loading) {
+  if (loading && process.env.REACT_APP_JSON_URL) {
     setLoading(false);
-    fetch(dataUrl)
+    fetch(process.env.REACT_APP_JSON_URL)
       .then(result => result.json())
       .then(result =>
         setState(

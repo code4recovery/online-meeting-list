@@ -1,9 +1,14 @@
 import moment from 'moment-timezone';
 
 import { meetingsPerPage, videoServices } from './config';
-import { JSONRow, Meeting, State, Tag } from './types';
-
-import { Language, LanguageStrings } from './i18n';
+import type {
+  JSONRow,
+  Language,
+  LanguageStrings,
+  Meeting,
+  State,
+  Tag
+} from './types';
 
 // parse google spreadsheet data into state object (runs once on init)
 export function load(
@@ -17,9 +22,7 @@ export function load(
   const types: string[] = [];
   const availableLanguages: Language[] = [];
 
-  console.log('hi josh', data);
-
-  let meeting_languages: string[] = [];
+  //let meeting_languages: string[] = [];
 
   // loop through json entries
   data.forEach((row: JSONRow, i: number) => {
@@ -112,16 +115,18 @@ export function load(
     // handle formats
 
     // types
+    row.types = row.types
+      ? row.types
+          .filter(type => type in strings.types)
+          .map(type => strings.types[type])
+      : [];
+
     row.types
-      ?.filter(
-        type => !meeting_languages.includes(type) && !types.includes(type)
-      )
-      .forEach(type => {
-        types.push(type);
-      });
+      .filter(type => !types.includes(type))
+      .forEach(type => types.push(type));
 
     // append to meeting tags
-    // meeting.tags = meeting.tags.concat([], row.types);
+    meeting.tags = [...meeting.tags, ...row.types];
 
     // add words to search index
     meeting.search = meeting.name
@@ -132,16 +137,9 @@ export function load(
 
     // timezone
     const timezone = row.timezone.trim();
-    const days = [
-      'Sunday',
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday'
-    ];
-    let timestring = row.day ? `${days[row.day]} ${row.time}` : undefined;
+    let timestring = row.day
+      ? `${strings.days[row.day]} ${row.time}`
+      : undefined;
 
     if (timestring) {
       // momentize start time
@@ -167,22 +165,8 @@ export function load(
 
   return {
     filters: {
-      days: arrayToTagsArray(
-        [
-          strings.sunday,
-          strings.monday,
-          strings.tuesday,
-          strings.wednesday,
-          strings.thursday,
-          strings.friday,
-          strings.saturday
-        ],
-        query.get('days')?.split(',') || []
-      ),
-      formats: arrayToTagsArray(
-        formats,
-        query.get('formats')?.split(',') || []
-      ),
+      days: arrayToTagsArray(strings.days, query.get('days')?.split(',') || []),
+      formats: [],
       types: arrayToTagsArray(types, query.get('types')?.split(',') || [])
     },
     limit: meetingsPerPage,
