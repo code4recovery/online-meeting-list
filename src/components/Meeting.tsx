@@ -78,9 +78,18 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
             })}
           </Box>
         )}
-        {!!meeting.notes.length && (
+        {!!meeting.notes?.length && (
           <Stack spacing={3}>
             {meeting.notes.map((paragraph: string, key: number) => (
+              <Text key={key} wordBreak="break-word">
+                <Linkify>{paragraph}</Linkify>
+              </Text>
+            ))}
+          </Stack>
+        )}
+        {!!meeting.group_notes?.length && (
+          <Stack spacing={3}>
+            {meeting.group_notes.map((paragraph: string, key: number) => (
               <Text key={key} wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>

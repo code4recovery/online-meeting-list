@@ -31,9 +31,11 @@ export function load(
 
     //start creating meeting
     const meeting: Meeting = {
+      slug: row.slug,
       name: row.name.trim(),
       buttons: [],
       notes: stringToTrimmedArray(row.notes, true),
+      group_notes: stringToTrimmedArray(row.group_notes, true),
       search: '',
       tags: [],
       email: row.email

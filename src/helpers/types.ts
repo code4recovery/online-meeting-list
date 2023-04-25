@@ -75,10 +75,12 @@ export type JSONRow = {
 };
 
 export type Meeting = {
+  slug: string;
   name: string;
   time?: Moment;
   buttons: MeetingLink[];
-  notes: string[];
+  notes?: string[];
+  group_notes?: string[];
   tags: string[];
   search: string;
   id?: string;
