@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box, CSSReset, Grid, ChakraProvider } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  CSSReset,
+  ChakraProvider,
+  Grid,
+  Stack
+} from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroller';
 
 import { Filter } from './components/Filter';
+import { Icon } from './components/Icon';
 import { Loading } from './components/Loading';
 import { Meeting } from './components/Meeting';
 import { NoResults } from './components/NoResults';
@@ -105,6 +113,10 @@ export const App = () => {
     languages[state.language].strings
   );
 
+  const meeting = state.meeting
+    ? state.meetings.find(({ slug }) => slug === state.meeting)
+    : undefined;
+
   return (
     <i18n.Provider
       value={{
@@ -145,14 +157,27 @@ export const App = () => {
                 />
               </Box>
               <Box order={{ base: 2, md: 1 }}>
-                {!filteredMeetings.length && (
+                {meeting ? (
+                  <Stack gap={3} alignItems="start">
+                    <Button
+                      leftIcon={<Icon name="arrow-left" />}
+                      onClick={() => setState({ ...state, meeting: undefined })}
+                    >
+                      Back to Meetings
+                    </Button>
+                    <Meeting
+                      meeting={meeting}
+                      searchWords={searchWords}
+                      tags={tags}
+                    />
+                  </Stack>
+                ) : !filteredMeetings.length ? (
                   <NoResults
                     state={state}
                     toggleTag={toggleTag}
                     clearSearch={() => setState({ ...state, search: '' })}
                   />
-                )}
-                {!!filteredMeetings.length && (
+                ) : (
                   <InfiniteScroll
                     loadMore={() => {
                       const limit = state.limit + meetingsPerPage;
@@ -165,6 +190,9 @@ export const App = () => {
                       .map((meeting: MeetingType, index: number) => (
                         <Meeting
                           key={index}
+                          link={() =>
+                            setState({ ...state, meeting: meeting.slug })
+                          }
                           meeting={meeting}
                           searchWords={searchWords}
                           tags={tags}

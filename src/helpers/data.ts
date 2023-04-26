@@ -173,6 +173,7 @@ export function load(
     },
     limit: meetingsPerPage,
     loaded: true,
+    meeting: query.get('meeting') || undefined,
     meetings: meetings,
     search: '',
     timezone: moment.tz.guess(),

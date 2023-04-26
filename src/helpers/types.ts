@@ -97,6 +97,7 @@ export type State = {
   filters: { [key: string]: Tag[] };
   limit: number;
   loaded: boolean;
+  meeting?: string;
   meetings: Meeting[];
   search: string;
   timezone: string;

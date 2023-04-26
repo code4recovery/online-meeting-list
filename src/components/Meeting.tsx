@@ -7,12 +7,13 @@ import { Meeting as MeetingType, i18n } from '../helpers';
 import { Report } from './Report';
 
 export type MeetingProps = {
+  link?: () => void;
   meeting: MeetingType;
   searchWords: string[];
   tags: string[];
 };
 
-export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
+export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
   const { rtl, strings } = useContext(i18n);
   return (
     <Box
@@ -28,7 +29,15 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
     >
       <Stack spacing={3} p={{ base: 3, md: 5 }}>
         <Box alignItems="baseline">
-          <Heading as="h2" display={{ lg: 'inline' }} fontSize="2xl">
+          <Heading
+            as="h2"
+            display={{ lg: 'inline' }}
+            fontSize="2xl"
+            onClick={link}
+            _hover={
+              link ? { cursor: 'pointer', textDecoration: 'underline' } : {}
+            }
+          >
             <Highlighter
               searchWords={searchWords}
               textToHighlight={meeting.name}

@@ -15,6 +15,10 @@ export function setQuery(state: State) {
     }
   });
 
+  if (state.meeting) {
+    params.set('meeting', state.meeting);
+  }
+
   const str = params.toString();
 
   window.history.pushState(

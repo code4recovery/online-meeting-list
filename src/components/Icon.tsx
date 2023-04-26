@@ -1,4 +1,5 @@
 import {
+  ArrowLeftIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   ClockIcon,
@@ -13,6 +14,7 @@ import {
 
 export type IconProps = {
   name:
+    | 'arrow-left'
     | 'chevron-down'
     | 'chevron-up'
     | 'email'
@@ -26,6 +28,7 @@ export type IconProps = {
 };
 
 export function Icon({ name }: IconProps) {
+  if (name === 'arrow-left') return <ArrowLeftIcon width={18} height={18} />;
   if (name === 'chevron-down')
     return <ChevronDownIcon width={18} height={18} />;
   if (name === 'chevron-up') return <ChevronUpIcon width={18} height={18} />;
