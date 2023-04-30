@@ -108,18 +108,31 @@ export function load(
     // handle formats
 
     // types
-    row.types = row.types
+    const meetingTypes = row.types
       ? row.types
           .filter(type => type in strings.types)
           .map(type => strings.types[type as keyof typeof strings.types])
       : [];
 
-    row.types
+    meetingTypes
       .filter(type => !types.includes(type))
       .forEach(type => types.push(type));
 
+    const meetingLanguages = row.types
+      ? row.types
+          .filter(language => language in strings.languages)
+          .map(
+            language =>
+              strings.languages[language as keyof typeof strings.languages]
+          )
+      : [];
+
+    meetingLanguages
+      .filter(language => !languages.includes(language))
+      .forEach(language => languages.push(language));
+
     // append to meeting tags
-    meeting.tags = [...meeting.tags, ...row.types];
+    meeting.tags = [...meeting.tags, ...meetingTypes, ...meetingLanguages];
 
     // add words to search index
     meeting.search = meeting.name
@@ -159,8 +172,8 @@ export function load(
   return {
     filters: {
       days: strings.days,
-      languages,
-      types
+      types,
+      languages
     },
     filteredMeetings: [],
     limit: meetingsPerPage,
