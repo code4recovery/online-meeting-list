@@ -1,20 +1,29 @@
-import { useContext } from 'react';
 import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
-import { ButtonPrimary } from './ButtonPrimary';
-import { Meeting as MeetingType, i18n } from '../helpers';
-import { Report } from './Report';
+import { Link } from 'react-router-dom';
 
-export type MeetingProps = {
-  link?: () => void;
+import { Button } from './Button';
+import { Meeting as MeetingType, useI18n, useAppState } from '../helpers';
+
+export function Meeting({
+  link,
+  meeting
+}: {
+  link?: string;
   meeting: MeetingType;
-  searchWords: string[];
-  tags: string[];
-};
+}) {
+  const { rtl, strings } = useI18n();
+  const { state } = useAppState();
 
-export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
-  const { rtl, strings } = useContext(i18n);
+  const title = state.searchWords?.length ? (
+    <Highlighter
+      searchWords={state.searchWords}
+      textToHighlight={meeting.name}
+    />
+  ) : (
+    meeting.name
+  );
   return (
     <Box
       as="article"
@@ -33,15 +42,11 @@ export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
             as="h2"
             display={{ lg: 'inline' }}
             fontSize="2xl"
-            onClick={link}
             _hover={
               link ? { cursor: 'pointer', textDecoration: 'underline' } : {}
             }
           >
-            <Highlighter
-              searchWords={searchWords}
-              textToHighlight={meeting.name}
-            />
+            {link ? <Link to={link}>{title}</Link> : title}
           </Heading>
           <Heading
             as="h3"
@@ -81,7 +86,7 @@ export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
                   my={1}
                   key={index}
                 >
-                  <ButtonPrimary text={text} title={title} {...button} />
+                  <Button text={text} title={title} {...button} />
                 </Box>
               );
             })}
@@ -109,11 +114,11 @@ export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
           <Box>
             {meeting.tags.map((tag: string, index: number) => (
               <Tag
-                bg={tags.includes(tag) ? 'gray.300' : 'gray.100'}
+                bg={state.tags.includes(tag) ? 'gray.300' : 'gray.100'}
                 border="1px"
-                borderColor={tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                borderColor={state.tags.includes(tag) ? 'gray.400' : 'gray.200'}
                 borderRadius="base"
-                color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
+                color={state.tags.includes(tag) ? 'gray.700' : 'gray.600'}
                 key={index}
                 me={2}
                 my={1}
@@ -127,9 +132,6 @@ export function Meeting({ link, meeting, searchWords, tags }: MeetingProps) {
           </Box>
         )}
       </Stack>
-      {process.env.REACT_APP_EMAIL_JS_SERVICE_ID && (
-        <Report meeting={meeting} />
-      )}
     </Box>
   );
 }

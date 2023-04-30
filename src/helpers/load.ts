@@ -1,16 +1,9 @@
 import moment from 'moment-timezone';
 
+import type { Language, LanguageStrings } from './i18n';
 import { meetingsPerPage, videoServices } from './config';
-import type {
-  JSONRow,
-  Language,
-  LanguageStrings,
-  Meeting,
-  State,
-  Tag
-} from './types';
+import type { JSONRow, Meeting, State } from './types';
 
-// parse google spreadsheet data into state object (runs once on init)
 export function load(
   data: JSONRow[],
   query: URLSearchParams,
@@ -20,9 +13,7 @@ export function load(
   const meetings: Meeting[] = [];
   const formats: string[] = [];
   const types: string[] = [];
-  const availableLanguages: Language[] = [];
-
-  //let meeting_languages: string[] = [];
+  const languages: string[] = [];
 
   // loop through json entries
   data.forEach((row: JSONRow, i: number) => {
@@ -120,7 +111,7 @@ export function load(
     row.types = row.types
       ? row.types
           .filter(type => type in strings.types)
-          .map(type => strings.types[type])
+          .map(type => strings.types[type as keyof typeof strings.types])
       : [];
 
     row.types
@@ -163,27 +154,24 @@ export function load(
   //sort
   formats.sort();
   types.sort();
-  availableLanguages.sort();
+  languages.sort();
 
   return {
     filters: {
-      days: arrayToTagsArray(strings.days, query.get('days')?.split(',') || []),
-      formats: [],
-      types: arrayToTagsArray(types, query.get('types')?.split(',') || [])
+      days: strings.days,
+      languages,
+      types
     },
+    filteredMeetings: [],
     limit: meetingsPerPage,
     loaded: true,
     meeting: query.get('meeting') || undefined,
     meetings: meetings,
-    search: '',
+    searchWords: [],
+    tags: [],
     timezone: moment.tz.guess(),
-    language: language,
-    languages: availableLanguages
+    language: language
   };
-}
-
-function arrayToTagsArray(array: string[], values: string[]): Tag[] {
-  return array.map(tag => ({ tag: tag, checked: values.includes(tag) }));
 }
 
 //split "foo, bar\nbaz" into ["foo", "bar", "baz"]
@@ -197,7 +185,7 @@ function stringToTrimmedArray(str?: string, breaksOnly = false): string[] {
     .filter(val => val);
 }
 
-export function validateEmail(email: string) {
+function validateEmail(email: string) {
   return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );

@@ -1,24 +1,22 @@
-import { Box, Button } from '@chakra-ui/react';
+import { Box, Button as ChakraButton } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
 
-export type ButtonPrimaryProps = {
-  disabled?: boolean;
-  icon?: 'link' | 'email' | 'phone' | 'small-close' | 'video';
-  onClick: () => void;
-  text: string;
-  title?: string;
-};
-
-export function ButtonPrimary({
+export function Button({
   disabled,
   icon,
   onClick,
   text,
   title
-}: ButtonPrimaryProps) {
+}: {
+  disabled?: boolean;
+  icon?: 'link' | 'email' | 'phone' | 'small-close' | 'video';
+  onClick: () => void;
+  text: string;
+  title?: string;
+}) {
   return (
-    <Button
+    <ChakraButton
       bg="blue.600"
       color="white"
       disabled={disabled}
@@ -32,6 +30,6 @@ export function ButtonPrimary({
         </Box>
       )}
       {text}
-    </Button>
+    </ChakraButton>
   );
 }

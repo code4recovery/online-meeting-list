@@ -1,83 +1,43 @@
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import moment from 'moment-timezone';
-import { Button, FormControl, Select, Stack } from '@chakra-ui/react';
+import { Button, Select, Stack } from '@chakra-ui/react';
 
-import { ButtonTag } from './ButtonTag';
+import { Checkboxes } from './Checkboxes';
 import { Search } from './Search';
 import { Icon } from './Icon';
-import { languages, Language, State, Tag, i18n } from '../helpers';
+import { useAppState, useI18n } from '../helpers';
+import { Form, useSubmit } from 'react-router-dom';
 
-export type FilterProps = {
-  setSearch: (search: string) => void;
-  setTimezone: (timezone: string) => void;
-  state: State;
-  toggleTag: (filter: string, value: string, checked: boolean) => void;
-  currentDays: string[];
-};
-
-export function Filter({
-  setSearch,
-  setTimezone,
-  state,
-  toggleTag,
-  currentDays
-}: FilterProps) {
+export function Filter() {
   const [open, setOpen] = useState(false);
-  const { language, rtl, strings } = useContext(i18n);
-
-  //filter out unused days
-  state.filters.days = state.filters.days.filter(day =>
-    currentDays.includes(day.tag)
-  );
+  const { rtl, strings } = useI18n();
+  const { state, setState } = useAppState();
+  const submit = useSubmit();
 
   return (
-    <Stack spacing={{ base: 3, md: 6 }}>
-      <FormControl>
-        <Search search={state.search} setSearch={setSearch} state={state} />
-      </FormControl>
-      <Stack
-        display={{ base: open ? 'block' : 'none', md: 'block' }}
-        spacing={{ base: 3, md: 6 }}
-      >
-        {Object.keys(state.filters).map(
-          (filter: string, index: number) =>
-            !!state.filters[filter].length && (
-              <FormControl key={index}>
-                {state.filters[filter].map((tag: Tag, index: number) => (
-                  <ButtonTag
-                    filter={filter}
-                    key={index}
-                    tag={tag}
-                    toggleTag={toggleTag}
-                  />
-                ))}
-              </FormControl>
-            )
-        )}
-        {state.languages.length > 1 && (
-          <FormControl display="block" as="fieldset">
-            <Select
-              aria-label={strings.language}
-              bgColor="white"
-              borderColor="gray.300"
-              color="gray.500"
-              iconColor="gray.500"
-              icon={rtl ? <div /> : <Icon name="language" />}
-              onChange={(e: FormEvent<HTMLSelectElement>) => {
-                //hard reload so types get refreshed
-                window.location.href = `${window.location.pathname}?lang=${e.currentTarget.value}`;
-              }}
-              value={language}
-            >
-              {state.languages.map((language, index) => (
-                <option key={index} value={language}>
-                  {languages[language as Language].name}
-                </option>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-        <FormControl display="block" as="fieldset">
+    <Form
+      onChange={e => {
+        const formData = new FormData(e.currentTarget);
+        const search = formData.get('search');
+        if (!search) formData.delete('search');
+        submit(formData);
+      }}
+      onSubmit={e => {
+        e.preventDefault();
+        console.log('submitting');
+      }}
+    >
+      <Stack spacing={{ base: 3, md: 6 }}>
+        <Search />
+        <Stack
+          display={{ base: open ? 'block' : 'none', md: 'block' }}
+          spacing={{ base: 3, md: 6 }}
+        >
+          {Object.keys(state.filters)
+            .filter(filter => state.filters[filter].length)
+            .map(filter => (
+              <Checkboxes key={filter} filter={filter} />
+            ))}
           <Select
             aria-label={strings.timezone}
             bgColor="white"
@@ -85,7 +45,7 @@ export function Filter({
             color="gray.500"
             icon={rtl ? <div /> : <Icon name="time" />}
             onChange={(e: FormEvent<HTMLSelectElement>) =>
-              setTimezone(e.currentTarget.value)
+              setState({ ...state, timezone: e.currentTarget.value })
             }
             value={state.timezone}
           >
@@ -93,13 +53,12 @@ export function Filter({
               <option key={index}>{name}</option>
             ))}
           </Select>
-        </FormControl>
-      </Stack>
-      <FormControl display={{ md: 'none' }}>
+        </Stack>
         <Button
           bg={open ? 'transparent' : 'white'}
           borderColor="gray.300"
           color="gray.500"
+          display={{ base: 'flex', md: 'none' }}
           onClick={() => setOpen(!open)}
           rightIcon={<Icon name={open ? 'chevron-up' : 'chevron-down'} />}
           variant="outline"
@@ -107,7 +66,7 @@ export function Filter({
         >
           {open ? strings.close : strings.filters}
         </Button>
-      </FormControl>
-    </Stack>
+      </Stack>
+    </Form>
   );
 }

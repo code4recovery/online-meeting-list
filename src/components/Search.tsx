@@ -1,6 +1,4 @@
-import { useRef, useContext } from 'react';
 import {
-  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -8,55 +6,32 @@ import {
 } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
-import { i18n, State } from '../helpers';
+import { useAppState, useI18n } from '../helpers';
 
-export type SearchProps = {
-  setSearch: (search: string) => void;
-  search: string;
-  state: State;
-};
+export function Search() {
+  const { rtl, strings } = useI18n();
+  const { state } = useAppState();
 
-export function Search({ search, setSearch }: SearchProps) {
-  const searchField = useRef<HTMLInputElement>(null);
-  const { rtl, strings } = useContext(i18n);
-  const clearButton = (
-    <IconButton
-      aria-label={strings.clear_search}
-      bg="transparent"
-      icon={<Icon name="small-close" />}
-      _active={{ bg: 'transparent', color: 'gray.500' }}
-      _hover={{ bg: 'transparent', color: 'gray.500' }}
-      onClick={() => {
-        setSearch('');
-        if (searchField.current) {
-          searchField.current.focus();
-        }
-      }}
-    />
-  );
   return (
     <InputGroup borderColor="gray.300" color="gray.500">
-      {(!rtl || (rtl && !!search.length)) && (
+      {!rtl && (
         <InputLeftElement>
-          {rtl && !!search.length && clearButton}
-          {!rtl && <Icon name="search" />}
+          <Icon name="search" />
         </InputLeftElement>
       )}
       <Input
         aria-label={strings.search}
         bgColor="white"
+        defaultValue={state.searchWords.join(' ')}
+        name="search"
+        pl={rtl ? 4 : 9}
         placeholder={strings.search}
-        onChange={e => setSearch(e.target.value)}
-        value={search}
-        pl={rtl ? 4 : 10}
-        pr={rtl ? 10 : 4}
-        ref={searchField}
+        pr={rtl ? 9 : 4}
         textAlign={rtl ? 'right' : 'left'}
       />
-      {(rtl || (!rtl && !!search.length)) && (
+      {rtl && (
         <InputRightElement>
-          {!rtl && !!search.length && clearButton}
-          {rtl && <Icon name="search" />}
+          <Icon name="search" />
         </InputRightElement>
       )}
     </InputGroup>
