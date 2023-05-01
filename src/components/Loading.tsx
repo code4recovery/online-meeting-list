@@ -5,7 +5,7 @@ export function Loading() {
     <Box
       alignItems="center"
       display="flex"
-      height="100%"
+      flexGrow={1}
       justifyContent="center"
     >
       <Spinner size="xl" />

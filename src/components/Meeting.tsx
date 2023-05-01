@@ -4,7 +4,7 @@ import Linkify from 'react-linkify';
 import { Link } from 'react-router-dom';
 
 import { Button } from './Button';
-import { Meeting as MeetingType, useI18n, useAppState } from '../helpers';
+import { Meeting as MeetingType, useI18n, useInput } from '../helpers';
 
 export function Meeting({
   link,
@@ -14,11 +14,11 @@ export function Meeting({
   meeting: MeetingType;
 }) {
   const { rtl, strings } = useI18n();
-  const { state } = useAppState();
+  const { input } = useInput();
 
-  const title = state.searchWords?.length ? (
+  const title = input.searchWords?.length ? (
     <Highlighter
-      searchWords={state.searchWords}
+      searchWords={input.searchWords}
       textToHighlight={meeting.name}
     />
   ) : (
@@ -114,11 +114,11 @@ export function Meeting({
           <Box>
             {meeting.tags.map((tag: string, index: number) => (
               <Tag
-                bg={state.tags.includes(tag) ? 'gray.300' : 'gray.100'}
+                bg={input.tags.includes(tag) ? 'gray.300' : 'gray.100'}
                 border="1px"
-                borderColor={state.tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                borderColor={input.tags.includes(tag) ? 'gray.400' : 'gray.200'}
                 borderRadius="base"
-                color={state.tags.includes(tag) ? 'gray.700' : 'gray.600'}
+                color={input.tags.includes(tag) ? 'gray.700' : 'gray.600'}
                 key={index}
                 me={2}
                 my={1}

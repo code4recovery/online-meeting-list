@@ -1,88 +1,105 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { Box, CSSReset, ChakraProvider, Grid } from '@chakra-ui/react';
-import { Outlet, useLoaderData, useSearchParams } from 'react-router-dom';
+import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
-import { Filter } from './components';
-import { AppState, State, filter, i18n, languages } from './helpers';
+import { Error, Filter, Loading } from './components';
+import {
+  Data,
+  DataType,
+  filter,
+  i18n,
+  Input,
+  InputType,
+  languages
+} from './helpers';
 
 export const App = () => {
-  const [state, setState] = useState(useLoaderData() as State);
-  const [query] = useSearchParams();
+  const { load, ...data } = useLoaderData() as InputType & {
+    load: Promise<DataType>;
+  };
+  const [input, setInput] = useState(data);
 
-  // set html langauge attributes
+  // set html language attributes
   useEffect(() => {
-    document.documentElement.lang = state.language;
-    document.documentElement.dir = languages[state.language].rtl
+    console.log('settin language attributes');
+    document.documentElement.lang = input.language;
+    document.documentElement.dir = languages[input.language].rtl
       ? 'rtl'
       : 'ltr';
-  }, [state.language]);
+  }, [input.language]);
 
-  // listen to query string, set state
+  // update query string
   useEffect(() => {
-    const tags = Object.keys(state.filters)
-      .filter(filter => query.has(filter))
-      .map(filter => query.getAll(filter))
-      .flat();
-
-    const searchWords =
-      query
-        .get('search')
-        ?.toLocaleLowerCase()
-        .split(' ')
-        .map(e => e.trim())
-        .filter(e => e) || [];
-
-    // get currently-checked tags
-    setState(state => ({
-      ...state,
-      searchWords,
-      tags,
-      filteredMeetings: filter(
-        state.meetings,
-        searchWords,
-        state.timezone,
-        tags,
-        languages[state.language].strings
-      )
-    }));
-  }, [query, state.filters]);
+    console.log('applyin query string');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('tags');
+    url.searchParams.delete('search');
+    input.tags.forEach(tag => {
+      url.searchParams.append('tags', tag);
+    });
+    if (input.searchWords.length) {
+      url.searchParams.append('search', input.searchWords.join(' '));
+    }
+    window.history.pushState(null, '', url.toString());
+  }, [input.tags, input.searchWords]);
 
   return (
     <i18n.Provider
       value={{
-        language: state.language,
-        rtl: languages[state.language].rtl,
-        strings: languages[state.language].strings
+        language: input.language,
+        rtl: languages[input.language].rtl,
+        strings: languages[input.language].strings
       }}
     >
-      <AppState.Provider value={{ state, setState }}>
+      <Input.Provider value={{ input, setInput }}>
         <ChakraProvider>
           <CSSReset />
           <Box
             as="main"
+            display="flex"
             maxW={1240}
             minH="100%"
-            w="100%"
             mx="auto"
             p={{ base: 3, md: 6 }}
+            w="full"
           >
-            <Grid
-              as="section"
-              gap={{ base: 3, md: 6 }}
-              templateColumns={{
-                md: 'auto 300px'
-              }}
-            >
-              <Box as="section" order={{ base: 1, md: 2 }}>
-                <Filter />
-              </Box>
-              <Box order={{ base: 2, md: 1 }}>
-                <Outlet />
-              </Box>
-            </Grid>
+            <Suspense fallback={<Loading />}>
+              <Await resolve={load} errorElement={<Error />}>
+                {load => (
+                  <Data.Provider
+                    value={{
+                      ...load,
+                      filteredMeetings: filter(
+                        load.meetings,
+                        input.searchWords,
+                        input.timezone,
+                        input.tags,
+                        languages[input.language].strings
+                      )
+                    }}
+                  >
+                    <Grid
+                      as="section"
+                      gap={{ base: 3, md: 6 }}
+                      templateColumns={{
+                        md: 'auto 300px'
+                      }}
+                      w="full"
+                    >
+                      <Box as="section" order={{ base: 1, md: 2 }}>
+                        <Filter />
+                      </Box>
+                      <Box order={{ base: 2, md: 1 }}>
+                        <Outlet />
+                      </Box>
+                    </Grid>
+                  </Data.Provider>
+                )}
+              </Await>
+            </Suspense>
           </Box>
         </ChakraProvider>
-      </AppState.Provider>
+      </Input.Provider>
     </i18n.Provider>
   );
 };

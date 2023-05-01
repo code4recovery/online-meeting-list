@@ -6,11 +6,11 @@ import {
 } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
-import { useAppState, useI18n } from '../helpers';
+import { parseSearchWords, useInput, useI18n } from '../helpers';
 
 export function Search() {
   const { rtl, strings } = useI18n();
-  const { state } = useAppState();
+  const { input, setInput } = useInput();
 
   return (
     <InputGroup borderColor="gray.300" color="gray.500">
@@ -22,7 +22,13 @@ export function Search() {
       <Input
         aria-label={strings.search}
         bgColor="white"
-        defaultValue={state.searchWords.join(' ')}
+        defaultValue={input.searchWords.join(' ')}
+        onChange={e =>
+          setInput({
+            ...input,
+            searchWords: parseSearchWords(e.currentTarget.value)
+          })
+        }
         name="search"
         pl={rtl ? 4 : 9}
         placeholder={strings.search}

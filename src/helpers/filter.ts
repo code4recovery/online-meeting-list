@@ -11,6 +11,8 @@ export function filter(
   tags: string[],
   strings: LanguageStrings
 ) {
+  console.log('filterin');
+
   //get current timestamp
   const now = moment();
   //const now = moment.tz('Saturday 8:12 PM', 'dddd h:mm a', timezone);

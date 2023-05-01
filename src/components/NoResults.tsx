@@ -1,39 +1,38 @@
 import { Alert, Box, Stack } from '@chakra-ui/react';
 
 import { Button } from './Button';
-import { useI18n, useAppState } from '../helpers';
+import { useI18n, useInput } from '../helpers';
 
 export function NoResults() {
-  const { state, setState } = useAppState();
+  const { input, setInput } = useInput();
   const { strings } = useI18n();
 
   return (
     <Alert flexDirection="column" py={60} rounded="md" w="full">
       <Stack spacing={5} align="center">
         <Box>{strings.no_results}</Box>
-        {!!state.searchWords.length && (
+        {!!input.searchWords.length && (
           <Button
             icon="small-close"
-            onClick={() => setState({ ...state, searchWords: [] })}
+            onClick={() => setInput({ ...input, searchWords: [] })}
             text={strings.clear_search}
             title={strings.clear_search}
           />
         )}
-        {state.tags.map(value => (
+        {input.tags.map(value => (
           <Button
             key={value}
             icon="small-close"
             onClick={() =>
-              setState({
-                ...state,
-                tags: state.tags.filter(tag => tag !== value)
+              setInput({
+                ...input,
+                tags: input.tags.filter(tag => tag !== value)
               })
             }
             text={value}
             title={value}
           />
         ))}
-        {}
       </Stack>
     </Alert>
   );

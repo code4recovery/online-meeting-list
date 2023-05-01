@@ -1,6 +1,3 @@
-// number of meetings displayed (scroll to load more)
-export const meetingsPerPage = 10;
-
 // any link is supported, but these conference URLs identified by service name
 export const videoServices: { [key: string]: string[] } = {
   BlueJeans: ['bluejeans.com'],

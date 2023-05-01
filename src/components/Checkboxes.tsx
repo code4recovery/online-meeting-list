@@ -1,18 +1,26 @@
 import { Box } from '@chakra-ui/react';
-import { useAppState } from '../helpers';
+import { useData, useInput } from '../helpers';
 import { Checkbox } from './Checkbox';
 
 export function Checkboxes({ filter }: { filter: string }) {
-  const { state } = useAppState();
-
+  const { filters } = useData();
+  const { input, setInput } = useInput();
   return (
     <Box display="flex" gap={3} flexWrap="wrap">
-      {state.filters[filter].map(value => (
+      {filters[filter].map(value => (
         <Checkbox
           key={value}
-          isChecked={state.tags.includes(value)}
-          name={filter}
+          isChecked={input.tags.includes(value)}
+          name="tags"
           value={value}
+          onChange={e =>
+            setInput({
+              ...input,
+              tags: e.currentTarget.checked
+                ? [...input.tags, value]
+                : input.tags.filter(e => e !== value)
+            })
+          }
         />
       ))}
     </Box>

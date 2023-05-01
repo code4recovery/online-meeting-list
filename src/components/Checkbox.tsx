@@ -1,9 +1,15 @@
 import { FormLabel, UseCheckboxProps, useCheckbox } from '@chakra-ui/react';
 
-export function Checkbox({ isChecked, name, value }: UseCheckboxProps) {
+export function Checkbox({
+  isChecked,
+  name,
+  value,
+  onChange
+}: UseCheckboxProps) {
   const { getInputProps, getLabelProps } = useCheckbox({
     isChecked,
     name,
+    onChange,
     value
   });
   return (

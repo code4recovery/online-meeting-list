@@ -1,5 +1,4 @@
 import { Moment } from 'moment-timezone';
-import { languages } from './i18n';
 
 export type JSONRow = {
   slug: string;
@@ -34,17 +33,4 @@ export type MeetingLink = {
   icon: 'link' | 'email' | 'phone' | 'video';
   onClick: () => void;
   value: string;
-};
-
-export type State = {
-  filters: { [key: string]: string[] };
-  filteredMeetings: Meeting[];
-  limit: number;
-  loaded: boolean;
-  meeting?: string;
-  meetings: Meeting[];
-  searchWords: string[];
-  tags: string[];
-  timezone: string;
-  language: keyof typeof languages;
 };

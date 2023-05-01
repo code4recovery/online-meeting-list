@@ -1,30 +1,28 @@
+import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
+import { Meeting as MeetingType, useData } from '../helpers';
 import { NoResults } from './NoResults';
 import { Meeting } from './Meeting';
 
-import {
-  Meeting as MeetingType,
-  meetingsPerPage,
-  useAppState
-} from '../helpers';
-
 export function Meetings() {
-  const { state, setState } = useAppState();
-  return !state.filteredMeetings.length ? (
+  const { filteredMeetings } = useData();
+  const meetingsPerPage = 25;
+  const [limit, setLimit] = useState(meetingsPerPage);
+
+  if (!filteredMeetings) return null;
+
+  return !filteredMeetings.length ? (
     <NoResults />
   ) : (
     <InfiniteScroll
-      hasMore={state.filteredMeetings.length > state.limit}
-      loadMore={() => {
-        const limit = state.limit + meetingsPerPage;
-        setState({ ...state, limit });
-      }}
+      hasMore={filteredMeetings.length > limit}
+      loadMore={() => setLimit(limit + meetingsPerPage)}
     >
-      {state.filteredMeetings
-        .slice(0, state.limit)
+      {filteredMeetings
+        .slice(0, limit)
         .map((meeting: MeetingType, index: number) => (
-          <Meeting key={index} meeting={meeting} link={`/${meeting.slug}`} />
+          <Meeting key={index} link={`/${meeting.slug}`} meeting={meeting} />
         ))}
     </InfiniteScroll>
   );

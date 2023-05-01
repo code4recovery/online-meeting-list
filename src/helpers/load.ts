@@ -1,19 +1,21 @@
 import moment from 'moment-timezone';
 
-import type { Language, LanguageStrings } from './i18n';
-import { meetingsPerPage, videoServices } from './config';
-import type { JSONRow, Meeting, State } from './types';
+import { videoServices } from './config';
+import { DataType } from './data';
+import { languages as languageStrings } from './i18n';
+import type { JSONRow, Meeting } from './types';
 
-export function load(
-  data: JSONRow[],
-  query: URLSearchParams,
-  language: Language,
-  strings: LanguageStrings
-): State {
+export async function load(url: string): Promise<DataType> {
+  const { strings } = languageStrings.en;
   const meetings: Meeting[] = [];
   const formats: string[] = [];
   const types: string[] = [];
   const languages: string[] = [];
+
+  console.log('loadin');
+
+  const result = await fetch(url);
+  const data = await result.json();
 
   // loop through json entries
   data.forEach((row: JSONRow, i: number) => {
@@ -149,9 +151,7 @@ export function load(
 
     if (timestring) {
       // momentize start time
-      const time = moment
-        .tz(timestring, 'dddd hh:mm', timezone)
-        .locale(language);
+      const time = moment.tz(timestring, 'dddd hh:mm', timezone);
 
       if (!time.isValid()) {
         warn(timestring, 'time', i);
@@ -175,15 +175,7 @@ export function load(
       types,
       languages
     },
-    filteredMeetings: [],
-    limit: meetingsPerPage,
-    loaded: true,
-    meeting: query.get('meeting') || undefined,
-    meetings: meetings,
-    searchWords: [],
-    tags: [],
-    timezone: moment.tz.guess(),
-    language: language
+    meetings
   };
 }
 

@@ -3,15 +3,15 @@ import { Button, Stack } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
 import { Meeting } from './Meeting';
-import { useAppState } from '../helpers';
+import { useData } from '../helpers';
 
 export function SingleMeeting() {
   const navigate = useNavigate();
   const request = useLoaderData();
-  const { state } = useAppState();
+  const { meetings } = useData();
 
   const meeting = request
-    ? state.meetings.find(({ slug }) => slug === request)
+    ? meetings.find(({ slug }) => slug === request)
     : undefined;
 
   if (!meeting) return null;
