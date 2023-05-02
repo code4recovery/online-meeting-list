@@ -15,30 +15,30 @@ export const languages = {
       filters: 'ማጣሪያዎች',
       language: 'ቋንቋ',
       languages: {
-        AM: 'Amharic',
-        DA: 'Danish',
-        DE: 'German',
-        EL: 'Greek',
-        EN: 'English',
-        S: 'Spanish', // ES
-        FA: 'Persian',
-        FR: 'French',
-        HE: 'Hebrew',
-        HI: 'Hindi',
-        HR: 'Croatian',
-        HU: 'Hungarian',
-        ITA: 'Italian', // IT
-        JA: 'Japanese',
-        KOR: 'Korean', // KO
-        LT: 'Lithuanian',
-        ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
-        POL: 'Polish', // PL
-        POR: 'Portuguese', // PT
-        RUS: 'Russian', // RU
-        SK: 'Slovak',
-        SV: 'Swedish',
-        UK: 'Ukranian'
+        AM: 'አማርኛ',
+        DA: 'ዳኒሽ',
+        DE: 'ጀርመንኛ',
+        EL: 'ግሪክኛ',
+        EN: 'እንግሊዝኛ',
+        FA: 'ፐርሽያን',
+        FR: 'ፈረንሳይኛ',
+        HE: 'ሂብሩ',
+        HI: 'ሂንዲ',
+        HR: 'ክሮኤሽያን',
+        HU: 'ሃንጋሪያን',
+        ITA: 'ጣሊያንኛ', // IT
+        JA: 'ጃፓንኛ',
+        KOR: 'ኮሪያኛ', // KO
+        LT: 'ሊቱኒያን',
+        ML: 'ማላያላም',
+        POL: 'ፖሊሽ', // PL
+        POR: 'ፖርቹጋልኛ', // PT
+        PUN: 'ፑንጃቢ', // PA
+        RUS: 'ራሺያኛ', // RU
+        S: 'ስፓንኛ', // ES
+        SK: 'ስሎቫክ',
+        SV: 'ስዊድንኛ',
+        UK: 'ዩክሬንያን'
       },
       no_results: 'ከተመረጡት ማጣሪያዎች ጋር የሚዛመዱ ውጤቶች የሉም',
       ongoing: 'በመካሄድ ላይ',
@@ -56,58 +56,60 @@ export const languages = {
       telephone_use: 'ወደ {{እሴት}} ይደውሉ',
       timezone: 'የጊዜ ክልል',
       types: {
-        '11': '11th Step Meditation',
-        '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
-        'AL-AN': 'Concurrent with Al-Anon',
-        A: 'Secular',
-        ABSI: 'As Bill Sees It',
-        AL: 'Concurrent with Alateen',
-        ASL: 'American Sign Language',
-        B: 'Big Book',
-        BA: 'Babysitting Available',
-        BE: 'Newcomer',
-        BRK: 'Breakfast',
-        BI: 'Bisexual',
-        C: 'Closed',
-        CAN: 'Candlelight',
-        CF: 'Child-Friendly',
-        D: 'Discussion',
-        DB: 'Digital Basket',
-        DD: 'Dual Diagnosis',
-        DR: 'Daily Reflections',
-        FF: 'Fragrance Free',
-        G: 'Gay',
-        GR: 'Grapevine',
-        H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
-        L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
-        LIT: 'Literature',
-        LS: 'Living Sober',
-        M: 'Men',
-        MED: 'Meditation',
-        N: 'Native American',
-        NDG: 'Indigenous',
-        O: 'Open',
-        online: 'Online',
-        OUT: 'Outdoor',
-        P: 'Professionals',
-        POC: 'People of Color',
-        SEN: 'Seniors',
-        SM: 'Smoking Permitted',
-        SP: 'Speaker',
-        SPD: 'Speaker/Discussion',
-        ST: 'Step Study',
-        T: 'Transgender',
-        TC: 'Location Temporarily Closed',
-        TR: 'Tradition Study',
-        W: 'Women',
-        X: 'Wheelchair Access',
-        XB: 'Wheelchair-Accessible Bathroom',
-        XT: 'Cross Talk Permitted',
-        Y: 'Young People'
+        '11': '11 ኛ ደረጃ ማሰላሰል',
+        '12x12': '12 ደረጃዎች እና 12 ወጎች',
+        'AL-AN': 'ከአል-አኖን ጋር ተመሳሳይ',
+        'BV-I': 'ማየት የተሳናቸው / ማየት የተሳናቸው',
+        'D-HOH': 'መስማት የተሳናቸው / ለመስማት አስቸጋሪ',
+        'LO-I': 'ብቸኞች / ገለልተኞች',
+        A: 'ዓለማዊ',
+        ABSI: 'ቢል እንደሚያየው',
+        AL: 'ከአላቲን ጋር የሚስማማ',
+        ASL: 'የአሜሪካ የምልክት ቋንቋ',
+        B: 'ትልቅ መጽሐፍ',
+        BA: 'የሕፃን እንክብካቤ ይገኛል።',
+        BE: 'አዲስ መጤ',
+        BI: 'ቢሴክሹዋል',
+        BRK: 'ቁርስ',
+        C: 'ዝግ',
+        CAN: 'የሻማ መብራት',
+        CF: 'ልጅ-ተስማሚ',
+        D: 'ውይይት',
+        DB: 'ዲጂታል ቅርጫት',
+        DD: 'ድርብ ምርመራ',
+        DR: 'ዕለታዊ ነጸብራቅ',
+        FF: 'ሽቶ ነፃ',
+        G: 'ጌይ',
+        GR: 'የወይን ወይን',
+        H: 'የልደት ቀን',
+        L: 'ሌዝቢያን',
+        LGBTQ: 'LGBTQIAA+',
+        LIT: 'ስነ-ጽሁፍ',
+        LS: 'ሕያው ጨዋነት',
+        M: 'ወንዶች',
+        MED: 'ማሰላሰል',
+        N: 'የአሜሪካ ተወላጅ',
+        NDG: 'ተወላጅ',
+        O: 'ክፈት',
+        OUT: 'ከቤት ውጭ',
+        P: 'ባለሙያዎች',
+        POA: 'የመገኘት ማረጋገጫ',
+        POC: 'የቀለም ሰዎች',
+        QSL: 'የኩቤክ የምልክት ቋንቋ',
+        RSL: 'የሩሲያ የምልክት ቋንቋ',
+        SEN: 'አዛውንቶች',
+        SM: 'ማጨስ ተፈቅዷል',
+        SP: 'ተናጋሪ',
+        SPD: 'ተናጋሪ/ውይይት',
+        ST: 'ደረጃ ጥናት',
+        T: 'ትራንስጀንደር',
+        TC: 'አካባቢ ለጊዜው ተዘግቷል።',
+        TR: 'የባህል ጥናት',
+        W: 'ሴቶች',
+        X: 'የተሽከርካሪ ወንበር መዳረሻ',
+        XB: 'በተሽከርካሪ ወንበር ተደራሽ የሆነ መታጠቢያ ቤት',
+        XT: 'ክሮስ ቶክ ተፈቅዷል',
+        Y: 'ወጣቶች'
       },
       video_use: '{{value}} ን ይቀላቀሉ'
     }
@@ -133,30 +135,30 @@ export const languages = {
       filters: 'Filtre',
       language: 'Sprog',
       languages: {
-        AM: 'Amharic',
-        DA: 'Danish',
-        DE: 'German',
-        EL: 'Greek',
-        EN: 'English',
-        S: 'Spanish', // ES
-        FA: 'Persian',
-        FR: 'French',
-        HE: 'Hebrew',
+        AM: 'Amharisk',
+        DA: 'Dansk',
+        DE: 'Tysk',
+        EL: 'Græsk',
+        EN: 'Engelsk',
+        FA: 'Persisk',
+        FR: 'Fransk',
+        HE: 'Hebraisk',
         HI: 'Hindi',
-        HR: 'Croatian',
-        HU: 'Hungarian',
-        ITA: 'Italian', // IT
-        JA: 'Japanese',
-        KOR: 'Korean', // KO
-        LT: 'Lithuanian',
+        HR: 'Kroatisk',
+        HU: 'Ungarsk',
+        ITA: 'Italiensk', // IT
+        JA: 'Japansk',
+        KOR: 'Koreansk', // KO
+        LT: 'Litauisk',
         ML: 'Malayalam',
+        POL: 'Polere', // PL
+        POR: 'Portugisisk', // PT
         PUN: 'Punjabi', // PA
-        POL: 'Polish', // PL
-        POR: 'Portuguese', // PT
-        RUS: 'Russian', // RU
-        SK: 'Slovak',
-        SV: 'Swedish',
-        UK: 'Ukranian'
+        RUS: 'Russisk', // RU
+        S: 'Spansk', // ES
+        SK: 'Slovakisk',
+        SV: 'Svensk',
+        UK: 'Ukrainsk'
       },
       no_results: 'Ingen resultater matcher de valgte filtre:',
       ongoing: 'Igangværende',
@@ -174,58 +176,60 @@ export const languages = {
       telephone_use: 'Ring til {{value}}',
       timezone: 'Tidszone',
       types: {
-        '11': '11th Step Meditation',
-        '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
-        'AL-AN': 'Concurrent with Al-Anon',
-        A: 'Secular',
-        ABSI: 'As Bill Sees It',
-        AL: 'Concurrent with Alateen',
-        ASL: 'American Sign Language',
-        B: 'Big Book',
-        BA: 'Babysitting Available',
-        BE: 'Newcomer',
-        BRK: 'Breakfast',
-        BI: 'Bisexual',
-        C: 'Closed',
-        CAN: 'Candlelight',
-        CF: 'Child-Friendly',
-        D: 'Discussion',
-        DB: 'Digital Basket',
-        DD: 'Dual Diagnosis',
-        DR: 'Daily Reflections',
-        FF: 'Fragrance Free',
-        G: 'Gay',
+        '11': '11. Trin Meditation',
+        '12x12': '12 trin & 12 traditioner',
+        'AL-AN': 'Samtidig med Al-Anon',
+        'BV-I': 'Blind/synshæmmet',
+        'D-HOH': 'Døv/hørehæmmet',
+        'LO-I': 'Enspændere / isolationister',
+        A: 'Sekulære',
+        ABSI: 'Som Bill ser det',
+        AL: 'Samtidig med Alateen',
+        ASL: 'Amerikansk tegnsprog',
+        B: 'Stor Bog',
+        BA: 'Børnepasning tilgængelig',
+        BE: 'Nykommer',
+        BI: 'Biseksuel',
+        BRK: 'Morgenmad',
+        C: 'Lukket',
+        CAN: 'Stearinlys',
+        CF: 'Børnevenlig',
+        D: 'Diskussion',
+        DB: 'Digital kurv',
+        DD: 'Dobbelt diagnose',
+        DR: 'Daglige refleksioner',
+        FF: 'Duftfri',
+        G: 'Homoseksuel',
         GR: 'Grapevine',
-        H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
-        L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
-        LIT: 'Literature',
-        LS: 'Living Sober',
-        M: 'Men',
+        H: 'Fødselsdag',
+        L: 'Lesbisk',
+        LGBTQ: 'LGBTQIAA+',
+        LIT: 'Litteratur',
+        LS: 'At leve ædru',
+        M: 'Mænd',
         MED: 'Meditation',
-        N: 'Native American',
-        NDG: 'Indigenous',
-        O: 'Open',
-        online: 'Online',
-        OUT: 'Outdoor',
-        P: 'Professionals',
-        POC: 'People of Color',
-        SEN: 'Seniors',
-        SM: 'Smoking Permitted',
-        SP: 'Speaker',
-        SPD: 'Speaker/Discussion',
-        ST: 'Step Study',
-        T: 'Transgender',
-        TC: 'Location Temporarily Closed',
-        TR: 'Tradition Study',
-        W: 'Women',
-        X: 'Wheelchair Access',
-        XB: 'Wheelchair-Accessible Bathroom',
-        XT: 'Cross Talk Permitted',
-        Y: 'Young People'
+        N: 'Indianer',
+        NDG: 'Indfødte',
+        O: 'Åben',
+        OUT: 'Udendørs',
+        P: 'Fagfolk',
+        POA: 'Bevis for deltagelse',
+        POC: 'Farvede mennesker',
+        QSL: 'Quebec tegnsprog',
+        RSL: 'Russisk tegnsprog',
+        SEN: 'Seniorer',
+        SM: 'Rygning tilladt',
+        SP: 'Højttaler',
+        SPD: 'Foredragsholder/diskussion',
+        ST: 'Trinstudie',
+        T: 'Transkønnet',
+        TC: 'Sted Midlertidigt Lukket',
+        TR: 'Traditionsstudie',
+        W: 'Kvinder',
+        X: 'Kørestols adgang',
+        XB: 'Kørestolsvenligt badeværelse',
+        XT: 'Krydssnak tilladt',
+        Y: 'Unge mennesker'
       },
       video_use: 'Deltag i {{value}}'
     }
@@ -256,7 +260,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -268,10 +271,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -296,8 +300,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -305,8 +311,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -318,10 +324,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -329,10 +333,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -376,7 +382,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -388,10 +393,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -415,8 +421,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -424,8 +432,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -437,10 +445,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -448,10 +454,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -495,7 +503,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -507,10 +514,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -534,8 +542,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -543,8 +553,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -556,10 +566,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -567,10 +575,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -614,7 +624,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -626,10 +635,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -652,8 +662,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -661,8 +673,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -674,10 +686,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -685,10 +695,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -707,7 +719,7 @@ export const languages = {
     }
   },
   fa: {
-    english_name: 'Farsi',
+    english_name: 'Persian',
     name: 'فارسی',
     rtl: true,
     strings: {
@@ -732,7 +744,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -744,10 +755,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -771,8 +783,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -780,8 +794,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -793,10 +807,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -804,10 +816,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -851,7 +865,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -863,10 +876,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -890,8 +904,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -899,8 +915,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -912,10 +928,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -923,10 +937,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -970,7 +986,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -982,10 +997,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1009,8 +1025,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1018,8 +1036,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1031,10 +1049,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1042,10 +1058,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1089,7 +1107,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1101,10 +1118,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1128,8 +1146,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1137,8 +1157,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1150,10 +1170,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1161,10 +1179,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1208,7 +1228,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1220,10 +1239,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1246,8 +1266,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1255,8 +1277,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1268,10 +1290,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1279,10 +1299,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1326,7 +1348,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1338,10 +1359,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1365,8 +1387,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1374,8 +1398,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1387,10 +1411,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1398,10 +1420,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1445,7 +1469,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1457,10 +1480,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1483,8 +1507,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1492,8 +1518,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1505,10 +1531,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1516,10 +1540,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1563,7 +1589,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1575,10 +1600,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1601,8 +1627,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1610,8 +1638,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1623,10 +1651,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1634,10 +1660,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1681,7 +1709,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1693,10 +1720,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1720,8 +1748,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1729,8 +1759,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1742,10 +1772,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1753,10 +1781,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1800,7 +1830,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1812,10 +1841,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1838,8 +1868,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1847,8 +1879,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1860,10 +1892,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1871,10 +1901,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -1918,7 +1950,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -1930,10 +1961,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -1957,8 +1989,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -1966,8 +2000,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -1979,10 +2013,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -1990,10 +2022,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -2037,7 +2071,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -2049,10 +2082,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -2076,8 +2110,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -2085,8 +2121,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -2098,10 +2134,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -2109,10 +2143,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -2156,7 +2192,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -2168,10 +2203,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -2194,8 +2230,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -2203,8 +2241,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -2216,10 +2254,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -2227,10 +2263,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
@@ -2274,7 +2312,6 @@ export const languages = {
         DE: 'German',
         EL: 'Greek',
         EN: 'English',
-        S: 'Spanish', // ES
         FA: 'Persian',
         FR: 'French',
         HE: 'Hebrew',
@@ -2286,10 +2323,11 @@ export const languages = {
         KOR: 'Korean', // KO
         LT: 'Lithuanian',
         ML: 'Malayalam',
-        PUN: 'Punjabi', // PA
         POL: 'Polish', // PL
         POR: 'Portuguese', // PT
+        PUN: 'Punjabi', // PA
         RUS: 'Russian', // RU
+        S: 'Spanish', // ES
         SK: 'Slovak',
         SV: 'Swedish',
         UK: 'Ukranian'
@@ -2313,8 +2351,10 @@ export const languages = {
       types: {
         '11': '11th Step Meditation',
         '12x12': '12 Steps & 12 Traditions',
-        active: 'Active',
         'AL-AN': 'Concurrent with Al-Anon',
+        'BV-I': 'Blind / Visually Impaired',
+        'D-HOH': 'Deaf / Hard of Hearing',
+        'LO-I': 'Loners / Isolationists',
         A: 'Secular',
         ABSI: 'As Bill Sees It',
         AL: 'Concurrent with Alateen',
@@ -2322,8 +2362,8 @@ export const languages = {
         B: 'Big Book',
         BA: 'Babysitting Available',
         BE: 'Newcomer',
-        BRK: 'Breakfast',
         BI: 'Bisexual',
+        BRK: 'Breakfast',
         C: 'Closed',
         CAN: 'Candlelight',
         CF: 'Child-Friendly',
@@ -2335,10 +2375,8 @@ export const languages = {
         G: 'Gay',
         GR: 'Grapevine',
         H: 'Birthday',
-        inactive: 'Inactive',
-        'in-person': 'In-person',
         L: 'Lesbian',
-        LGBTQ: 'LGBTQ',
+        LGBTQ: 'LGBTQIAA+',
         LIT: 'Literature',
         LS: 'Living Sober',
         M: 'Men',
@@ -2346,10 +2384,12 @@ export const languages = {
         N: 'Native American',
         NDG: 'Indigenous',
         O: 'Open',
-        online: 'Online',
         OUT: 'Outdoor',
         P: 'Professionals',
+        POA: 'Proof of Attendance',
         POC: 'People of Color',
+        QSL: 'Quebec Sign Language',
+        RSL: 'Russian Sign Language',
         SEN: 'Seniors',
         SM: 'Smoking Permitted',
         SP: 'Speaker',
