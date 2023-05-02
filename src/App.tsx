@@ -57,8 +57,8 @@ export const App = () => {
           <Box
             as="main"
             display="flex"
+            h="full"
             maxW={1240}
-            minH="100%"
             mx="auto"
             p={{ base: 3, md: 6 }}
             w="full"

@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import {
+  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
@@ -11,12 +13,33 @@ import { parseSearchWords, useInput, useI18n } from '../helpers';
 export function Search() {
   const { rtl, strings } = useI18n();
   const { input, setInput } = useInput();
+  const searchField = useRef<HTMLInputElement>(null);
+
+  const clearButton = (
+    <IconButton
+      aria-label={strings.clear_search}
+      bg="transparent"
+      icon={<Icon name="small-close" />}
+      _active={{ bg: 'transparent', color: 'gray.500' }}
+      _hover={{ bg: 'transparent', color: 'gray.500' }}
+      onClick={() => {
+        setInput({
+          ...input,
+          searchWords: []
+        });
+        if (searchField.current) {
+          searchField.current.value = '';
+          searchField.current.focus();
+        }
+      }}
+    />
+  );
 
   return (
     <InputGroup borderColor="gray.300" color="gray.500">
-      {!rtl && (
+      {(!rtl || !!input.searchWords.length) && (
         <InputLeftElement>
-          <Icon name="search" />
+          {rtl ? clearButton : <Icon name="search" />}
         </InputLeftElement>
       )}
       <Input
@@ -33,11 +56,12 @@ export function Search() {
         pl={rtl ? 4 : 9}
         placeholder={strings.search}
         pr={rtl ? 9 : 4}
+        ref={searchField}
         textAlign={rtl ? 'right' : 'left'}
       />
-      {rtl && (
+      {(rtl || !!input.searchWords.length) && (
         <InputRightElement>
-          <Icon name="search" />
+          {rtl ? <Icon name="search" /> : clearButton}
         </InputRightElement>
       )}
     </InputGroup>

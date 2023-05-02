@@ -6,7 +6,7 @@ import moment from 'moment-timezone';
 import { App } from './App';
 import './index.css';
 import { getLanguage, load, parseSearchWords } from './helpers';
-import { Meetings, SingleMeeting } from './components';
+import { Error as ErrorBoundary, Meetings, SingleMeeting } from './components';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
@@ -18,9 +18,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <ErrorBoundary />,
     loader: ({ request }) => {
       if (!process.env.REACT_APP_JSON_URL) {
-        throw new Error('react app json not specified');
+        throw new Error('REACT_APP_JSON_URL not specified');
       }
 
       console.log('top loader');
