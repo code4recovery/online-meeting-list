@@ -20,14 +20,33 @@ REACT_APP_JSON_URL="https://your-website.org/meetings.json"
 ## Install and run locally
 
 1. Clone this repository.
-1. In the project directory, run `npm i` once to install the dependencies.
-1. Run `npm start` to start the app in development mode.
+1. In the project directory, run `npm i && npm run dev` to start the app in development mode.
 
 ## Deploy to your Website
 
-1. In the project directory, run `npm run build`. This creates new minified javascript files.
-1. Now copy just the javascript the files to your website.
-1. Update your `<script src="">` tag with the new URL.
+:warning: If you want to use this in a subfolder, add this line to your .env file:
+
+```
+REACT_APP_BASE_URL="/meetings"
+```
+
+1. In the project directory, run `npm i && npm run build`.
+1. Copy the `/build/static` folder to your website.
+1. Add the following HTML to your web page (replace `chunk` below with the correct file name):
+
+```
+<script defer="defer" src="/static/js/main.chunk.js"></script>
+<link href="/static/css/main.chunk.css" rel="stylesheet" />
+<div id="root"></div>
+```
+
+Your webserver should point inside pages to your main page. If you are using WordPress, create a page at `/meetings` and then add the following to your theme's `functions.php`, then re-save Settings > Permalinks:
+
+```
+add_action('init', function () {
+    add_rewrite_rule('^meetings/(.*)?', 'index.php?pagename=meetings', 'top');
+});
+```
 
 ## Contributing
 

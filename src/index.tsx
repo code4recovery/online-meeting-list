@@ -14,46 +14,49 @@ const root = ReactDOM.createRoot(container);
 
 console.log('out here');
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    errorElement: <ErrorBoundary />,
-    loader: ({ request }) => {
-      if (!process.env.REACT_APP_JSON_URL) {
-        throw new Error('REACT_APP_JSON_URL not specified');
-      }
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <ErrorBoundary />,
+      loader: ({ request }) => {
+        if (!process.env.REACT_APP_JSON_URL) {
+          throw new Error('REACT_APP_JSON_URL not specified');
+        }
 
-      console.log('top loader');
+        console.log('top loader');
 
-      const url = new URL(request.url);
-      const query = url.searchParams;
-      const searchWords = parseSearchWords(query.get('search')?.toString());
-      const language = getLanguage();
+        const url = new URL(request.url);
+        const query = url.searchParams;
+        const searchWords = parseSearchWords(query.get('search')?.toString());
+        const language = getLanguage();
 
-      const tags = query.getAll('tags');
+        const tags = query.getAll('tags');
 
-      return defer({
-        language,
-        searchWords,
-        tags,
-        timezone: moment.tz.guess(),
-        load: load(process.env.REACT_APP_JSON_URL)
-      });
-    },
-    children: [
-      {
-        path: '/',
-        element: <Meetings />
+        return defer({
+          language,
+          searchWords,
+          tags,
+          timezone: moment.tz.guess(),
+          load: load(process.env.REACT_APP_JSON_URL)
+        });
       },
-      {
-        path: '/:id',
-        element: <SingleMeeting />,
-        loader: ({ params }) => params.id
-      }
-    ]
-  }
-]);
+      children: [
+        {
+          path: '/',
+          element: <Meetings />
+        },
+        {
+          path: '/:id',
+          element: <SingleMeeting />,
+          loader: ({ params }) => params.id
+        }
+      ]
+    }
+  ],
+  { basename: process.env.REACT_APP_BASE_URL }
+);
 
 root.render(
   <StrictMode>
