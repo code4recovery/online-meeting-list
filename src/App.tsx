@@ -3,15 +3,8 @@ import { Box, CSSReset, ChakraProvider, Grid } from '@chakra-ui/react';
 import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
 import { Error, Filter, Loading } from './components';
-import {
-  Data,
-  DataType,
-  filter,
-  i18n,
-  Input,
-  InputType,
-  languages
-} from './helpers';
+import { Data, DataType, filter, i18n, Input, InputType } from './helpers';
+import * as languages from './languages';
 
 export const App = () => {
   const { load, ...data } = useLoaderData() as InputType & {

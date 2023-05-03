@@ -2,11 +2,12 @@ import moment from 'moment-timezone';
 
 import { videoServices } from './config';
 import { DataType } from './data';
-import { languages as languageStrings } from './i18n';
+import { defaultLanguage } from './i18n';
+import * as languageStrings from '../languages';
 import type { JSONRow, Meeting } from './types';
 
 export async function load(url: string): Promise<DataType> {
-  const { strings } = languageStrings.en;
+  const { strings } = languageStrings[defaultLanguage];
   const meetings: Meeting[] = [];
   const formats: string[] = [];
   const types: string[] = [];

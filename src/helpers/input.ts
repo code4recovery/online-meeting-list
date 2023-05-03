@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-import { Language } from './i18n';
+import { defaultLanguage, Language } from './i18n';
 
 export type InputType = {
   language: Language;
@@ -14,7 +14,7 @@ export const Input = createContext<{
   setInput: (input: InputType) => void;
 }>({
   input: {
-    language: 'en',
+    language: defaultLanguage,
     searchWords: [],
     tags: [],
     timezone: ''

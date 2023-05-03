@@ -17,7 +17,12 @@ export function Checkboxes({ filter }: { filter: string }) {
             setInput({
               ...input,
               tags: e.currentTarget.checked
-                ? [...input.tags, value]
+                ? [
+                    ...input.tags.filter(
+                      tag => filter !== 'days' || !filters[filter].includes(tag)
+                    ),
+                    value
+                  ]
                 : input.tags.filter(e => e !== value)
             })
           }
