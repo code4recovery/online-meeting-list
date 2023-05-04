@@ -179,13 +179,13 @@ export function Meeting({
       </Stack>
       {meeting.edit_url && (
         <ChakraButton
+          {...(rtl ? { left: -3 } : { right: -3 })}
           _hover={{ bg: 'transparent', color: 'gray.500' }}
           bg="transparent"
           color="gray.400"
           leftIcon={<Icon name="pencil" size={22} />}
           onClick={() => window.open(meeting.edit_url)}
           position="absolute"
-          right={-3}
           top={0}
         />
       )}

@@ -17,6 +17,12 @@ body.chakra-ui-dark {
   color: var(--chakra-colors-blue-500) !important;
 }
 
+/* fix slashes rendering at the start of the line */
+html[dir='rtl'] #root .chakra-text a {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
 #root .chakra-text a:hover {
   border-bottom: 1px solid var(--chakra-colors-blue-600) !important;
   color: var(--chakra-colors-blue-600) !important;
