@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
-import { Box, CSSReset, ChakraProvider, Grid } from '@chakra-ui/react';
+import { Box, Grid } from '@chakra-ui/react';
 import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
 import { Error, Filter, Loading } from './components';
@@ -45,53 +45,50 @@ export const App = () => {
       }}
     >
       <Input.Provider value={{ input, setInput }}>
-        <ChakraProvider>
-          <CSSReset />
-          <Box
-            as="main"
-            display="flex"
-            h="full"
-            maxW={1240}
-            mx="auto"
-            p={{ base: 3, md: 6 }}
-            w="full"
-          >
-            <Suspense fallback={<Loading />}>
-              <Await resolve={load} errorElement={<Error />}>
-                {load => (
-                  <Data.Provider
-                    value={{
-                      ...load,
-                      filteredMeetings: filter(
-                        load.meetings,
-                        input.searchWords,
-                        input.timezone,
-                        input.tags,
-                        languages[input.language].strings
-                      )
+        <Box
+          as="main"
+          display="flex"
+          h="full"
+          maxW={1240}
+          mx="auto"
+          p={{ base: 3, md: 6 }}
+          w="full"
+        >
+          <Suspense fallback={<Loading />}>
+            <Await resolve={load} errorElement={<Error />}>
+              {load => (
+                <Data.Provider
+                  value={{
+                    ...load,
+                    filteredMeetings: filter(
+                      load.meetings,
+                      input.searchWords,
+                      input.timezone,
+                      input.tags,
+                      languages[input.language].strings
+                    )
+                  }}
+                >
+                  <Grid
+                    as="section"
+                    gap={{ base: 3, md: 6 }}
+                    templateColumns={{
+                      md: 'auto 300px'
                     }}
+                    w="full"
                   >
-                    <Grid
-                      as="section"
-                      gap={{ base: 3, md: 6 }}
-                      templateColumns={{
-                        md: 'auto 300px'
-                      }}
-                      w="full"
-                    >
-                      <Box as="section" order={{ base: 1, md: 2 }}>
-                        <Filter />
-                      </Box>
-                      <Box order={{ base: 2, md: 1 }}>
-                        <Outlet />
-                      </Box>
-                    </Grid>
-                  </Data.Provider>
-                )}
-              </Await>
-            </Suspense>
-          </Box>
-        </ChakraProvider>
+                    <Box as="section" order={{ base: 1, md: 2 }}>
+                      <Filter />
+                    </Box>
+                    <Box order={{ base: 2, md: 1 }}>
+                      <Outlet />
+                    </Box>
+                  </Grid>
+                </Data.Provider>
+              )}
+            </Await>
+          </Suspense>
+        </Box>
       </Input.Provider>
     </i18n.Provider>
   );

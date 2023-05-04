@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react';
 import moment from 'moment-timezone';
-import { Button, Select, Stack } from '@chakra-ui/react';
+import { Button, Select, Stack, useColorModeValue } from '@chakra-ui/react';
 
 import { Checkboxes } from './Checkboxes';
 import { Search } from './Search';
@@ -13,12 +13,24 @@ export function Filter() {
   const { input, setInput } = useInput();
   const { filters } = useData();
 
+  const selectTheme = useColorModeValue(
+    {
+      bgColor: 'white',
+      borderColor: 'gray.300',
+      color: 'gray.500'
+    },
+    {
+      bgColor: 'gray.900',
+      borderColor: 'gray.700',
+      color: 'gray.500'
+    }
+  );
   return (
-    <Stack spacing={{ base: 3, md: 6 }}>
+    <Stack spacing={{ base: 3, md: 8 }}>
       <Search />
       <Stack
         display={{ base: open ? 'block' : 'none', md: 'block' }}
-        spacing={{ base: 3, md: 6 }}
+        spacing={{ base: 3, md: 8 }}
       >
         {Object.keys(filters)
           .filter(filter => filters[filter].length)
@@ -26,10 +38,8 @@ export function Filter() {
             <Checkboxes key={filter} filter={filter} />
           ))}
         <Select
+          {...selectTheme}
           aria-label={strings.timezone}
-          bgColor="white"
-          borderColor="gray.300"
-          color="gray.500"
           icon={rtl ? <div /> : <Icon name="time" />}
           onChange={(e: FormEvent<HTMLSelectElement>) =>
             setInput({ ...input, timezone: e.currentTarget.value })

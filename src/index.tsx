@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom';
+import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
 import moment from 'moment-timezone';
 
 import { App } from './App';
 import './index.css';
-import { getLanguage, load, parseSearchWords } from './helpers';
+import { getLanguage, load, parseSearchWords, theme } from './helpers';
 import { Error as ErrorBoundary, Meetings, SingleMeeting } from './components';
 
 const container = document.getElementById('root');
@@ -60,6 +61,9 @@ const router = createBrowserRouter(
 
 root.render(
   <StrictMode>
-    <RouterProvider router={router} />{' '}
+    <ChakraProvider theme={theme}>
+      <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+      <RouterProvider router={router} />
+    </ChakraProvider>
   </StrictMode>
 );

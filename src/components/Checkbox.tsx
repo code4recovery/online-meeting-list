@@ -1,4 +1,9 @@
-import { FormLabel, UseCheckboxProps, useCheckbox } from '@chakra-ui/react';
+import {
+  FormLabel,
+  UseCheckboxProps,
+  useCheckbox,
+  useColorModeValue
+} from '@chakra-ui/react';
 
 export function Checkbox({
   isChecked,
@@ -12,24 +17,46 @@ export function Checkbox({
     onChange,
     value
   });
+  const defaultTheme = useColorModeValue(
+    {
+      bg: 'gray.100',
+      borderColor: 'gray.200',
+      color: 'gray.600',
+      _hover: { bg: 'gray.200', color: 'gray.600' }
+    },
+    {
+      bg: 'gray.900',
+      borderColor: 'gray.800',
+      color: 'gray.400',
+      _hover: { bg: 'gray.800', color: 'gray.400' }
+    }
+  );
+  const checkedTheme = useColorModeValue(
+    {
+      bg: 'gray.900',
+      borderColor: 'gray.200',
+      color: 'gray.100',
+      _hover: { bg: 'gray.800', color: 'gray.100' }
+    },
+    {
+      bg: 'gray.100',
+      borderColor: 'gray.800',
+      color: 'gray.900',
+      _hover: { bg: 'gray.200', color: 'gray.900' }
+    }
+  );
   return (
     <FormLabel
       {...getLabelProps()}
-      bg={isChecked ? 'gray.900' : 'gray.100'}
-      border="1px"
+      {...(isChecked ? checkedTheme : defaultTheme)}
       borderRadius="base"
-      borderColor="gray.200"
-      color={isChecked ? 'gray.100' : 'gray.600'}
+      borderWidth="1px"
       cursor="pointer"
       fontWeight="semibold"
       fontSize="sm"
       m={0}
       px={2}
       py={1}
-      _hover={{
-        bg: isChecked ? 'gray.800' : 'gray.200',
-        color: isChecked ? 'gray.100' : 'gray.600'
-      }}
     >
       <input {...getInputProps()} hidden />
       {value}

@@ -4,7 +4,8 @@ import {
   Heading,
   Stack,
   Text,
-  Tag
+  Tag,
+  useColorModeValue
 } from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
@@ -24,6 +25,43 @@ export function Meeting({
   const { rtl, strings } = useI18n();
   const { input } = useInput();
 
+  const tagDefault = useColorModeValue(
+    {
+      bg: 'gray.100',
+      borderColor: 'gray.200',
+      color: 'gray.600'
+    },
+    {
+      bg: 'gray.800',
+      borderColor: 'gray.700',
+      color: 'gray.400'
+    }
+  );
+
+  const tagActive = useColorModeValue(
+    {
+      bg: 'gray.300',
+      borderColor: 'gray.400',
+      color: 'gray.700'
+    },
+    {
+      bg: 'gray.700',
+      borderColor: 'gray.600',
+      color: 'gray.300'
+    }
+  );
+
+  const meetingTheme = useColorModeValue(
+    {
+      bg: 'white',
+      borderColor: 'gray.300'
+    },
+    {
+      bg: 'gray.900',
+      borderColor: 'gray.800'
+    }
+  );
+
   const title = input.searchWords?.length ? (
     <Highlighter
       searchWords={input.searchWords}
@@ -34,10 +72,9 @@ export function Meeting({
   );
   return (
     <Box
+      {...meetingTheme}
       as="article"
-      bg="white"
-      border="1px"
-      borderColor="gray.300"
+      borderWidth="1px"
       mb={{ base: 3, md: 6 }}
       overflow="hidden"
       position="relative"
@@ -124,11 +161,9 @@ export function Meeting({
           <Box>
             {meeting.tags.map((tag: string, index: number) => (
               <Tag
-                bg={input.tags.includes(tag) ? 'gray.300' : 'gray.100'}
-                border="1px"
-                borderColor={input.tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                {...(input.tags.includes(tag) ? tagActive : tagDefault)}
                 borderRadius="base"
-                color={input.tags.includes(tag) ? 'gray.700' : 'gray.600'}
+                borderWidth="1px"
                 key={index}
                 me={2}
                 my={1}

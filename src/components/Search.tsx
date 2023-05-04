@@ -4,7 +4,8 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement
+  InputRightElement,
+  useColorModeValue
 } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
@@ -35,8 +36,19 @@ export function Search() {
     />
   );
 
+  const inputGroupStyle = useColorModeValue(
+    {
+      borderColor: 'gray.300',
+      color: 'gray.600'
+    },
+    {
+      borderColor: 'gray.700',
+      color: 'gray.400'
+    }
+  );
+
   return (
-    <InputGroup borderColor="gray.300" color="gray.500">
+    <InputGroup {...inputGroupStyle}>
       {(!rtl || !!input.searchWords.length) && (
         <InputLeftElement>
           {rtl ? clearButton : <Icon name="search" />}
@@ -44,7 +56,7 @@ export function Search() {
       )}
       <Input
         aria-label={strings.search}
-        bgColor="white"
+        bg={useColorModeValue('white', 'gray.900')}
         defaultValue={input.searchWords.join(' ')}
         onChange={e =>
           setInput({

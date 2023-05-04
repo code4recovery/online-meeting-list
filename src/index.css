@@ -1,19 +1,23 @@
 html,
 body,
 #root {
-  /* gray.50 */
-  background-color: #f7fafc !important;
   height: 100%;
 }
 
+body {
+  background-color: var(--chakra-colors-gray-50) !important;
+}
+
+body.chakra-ui-dark {
+  background-color: var(--chakra-colors-gray-700) !important;
+}
+
 #root .chakra-text a {
-  /* blue.500 */
-  border-bottom: 1px solid #3182ce;
-  color: #3182ce;
+  border-bottom: 1px solid var(--chakra-colors-blue-500) !important;
+  color: var(--chakra-colors-blue-500) !important;
 }
 
 #root .chakra-text a:hover {
-  /* blue.600 */
-  border-bottom: 1px solid #1e4e8c;
-  color: #1e4e8c;
+  border-bottom: 1px solid var(--chakra-colors-blue-600) !important;
+  color: var(--chakra-colors-blue-600) !important;
 }

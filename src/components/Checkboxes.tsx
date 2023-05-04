@@ -6,7 +6,7 @@ export function Checkboxes({ filter }: { filter: string }) {
   const { filters } = useData();
   const { input, setInput } = useInput();
   return (
-    <Box display="flex" gap={3} flexWrap="wrap">
+    <Box display="flex" gap={2} flexWrap="wrap">
       {filters[filter].map(value => (
         <Checkbox
           key={value}
