@@ -6,6 +6,7 @@ import {
   ExclamationIcon,
   LinkIcon,
   MailIcon,
+  PencilAltIcon,
   PhoneIcon,
   SearchIcon,
   TranslateIcon,
@@ -25,6 +26,7 @@ export function Icon({
     | 'error'
     | 'language'
     | 'link'
+    | 'pencil'
     | 'phone'
     | 'search'
     | 'small-close'
@@ -40,6 +42,7 @@ export function Icon({
   if (name === 'error') return <ExclamationIcon {...props} />;
   if (name === 'language') return <TranslateIcon {...props} />;
   if (name === 'link') return <LinkIcon {...props} />;
+  if (name === 'pencil') return <PencilAltIcon {...props} />;
   if (name === 'phone') return <PhoneIcon {...props} />;
   if (name === 'search') return <SearchIcon {...props} />;
   if (name === 'small-close') return <XCircleIcon {...props} />;

@@ -1,9 +1,17 @@
-import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
+import {
+  Box,
+  Button as ChakraButton,
+  Heading,
+  Stack,
+  Text,
+  Tag
+} from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
 import { Link } from 'react-router-dom';
 
 import { Button } from './Button';
+import { Icon } from './Icon';
 import { Meeting as MeetingType, useI18n, useInput } from '../helpers';
 
 export function Meeting({
@@ -32,9 +40,11 @@ export function Meeting({
       borderColor="gray.300"
       mb={{ base: 3, md: 6 }}
       overflow="hidden"
+      position="relative"
       rounded="md"
       shadow="md"
       textAlign={rtl ? 'right' : 'left'}
+      w="full"
     >
       <Stack spacing={3} p={{ base: 3, md: 5 }}>
         <Box alignItems="baseline">
@@ -132,6 +142,18 @@ export function Meeting({
           </Box>
         )}
       </Stack>
+      {meeting.edit_url && (
+        <ChakraButton
+          _hover={{ bg: 'transparent', color: 'gray.500' }}
+          bg="transparent"
+          color="gray.400"
+          leftIcon={<Icon name="pencil" size={22} />}
+          onClick={() => window.open(meeting.edit_url)}
+          position="absolute"
+          right={-3}
+          top={0}
+        />
+      )}
     </Box>
   );
 }

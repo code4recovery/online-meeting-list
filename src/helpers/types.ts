@@ -14,6 +14,7 @@ export type JSONRow = {
   group?: string;
   group_notes?: string;
   updated?: string;
+  edit_url?: string;
 };
 
 export type Meeting = {
@@ -27,6 +28,7 @@ export type Meeting = {
   search: string;
   id?: string;
   email?: string;
+  edit_url?: string;
 };
 
 export type MeetingLink = {

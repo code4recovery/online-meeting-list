@@ -2,12 +2,12 @@ import moment from 'moment-timezone';
 
 import { videoServices } from './config';
 import { DataType } from './data';
-import { defaultLanguage } from './i18n';
+import { Language } from './i18n';
 import * as languageStrings from '../languages';
 import type { JSONRow, Meeting } from './types';
 
-export async function load(url: string): Promise<DataType> {
-  const { strings } = languageStrings[defaultLanguage];
+export async function load(url: string, language: Language): Promise<DataType> {
+  const { strings } = languageStrings[language];
   const meetings: Meeting[] = [];
   const formats: string[] = [];
   const types: string[] = [];
@@ -15,7 +15,10 @@ export async function load(url: string): Promise<DataType> {
 
   console.log('loadin');
 
-  const result = await fetch(url);
+  const cacheBustedUrl = `${url}${
+    url.includes('?') ? '&' : '?'
+  }${new Date().getTime()}`;
+  const result = await fetch(cacheBustedUrl);
   const data = await result.json();
 
   // loop through json entries
@@ -32,7 +35,8 @@ export async function load(url: string): Promise<DataType> {
       group_notes: stringToTrimmedArray(row.group_notes, true),
       search: '',
       tags: [],
-      email: row.email
+      email: row.email,
+      edit_url: row.edit_url
     };
 
     //handle url

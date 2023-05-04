@@ -5,7 +5,7 @@ import * as languages from '../languages';
 
 export type Language = keyof typeof languages;
 
-export const defaultLanguage = 'en' as Language;
+export const defaultLanguage = 'en';
 
 export type LanguageStrings =
   (typeof languages)[keyof typeof languages]['strings'];
@@ -15,38 +15,19 @@ export const i18n = createContext<{
   rtl: boolean;
   strings: LanguageStrings;
 }>({
-  language: 'en' as Language,
+  language: defaultLanguage,
   rtl: false,
   strings: languages[defaultLanguage].strings
 });
 
 export const useI18n = () => useContext(i18n);
 
-// find first langauge in language stack
-export function getLanguage() {
-  return (navigator.languages
+// find first supported language in language stack
+export function getLanguage(): Language {
+  const supportedLanguages = navigator.languages
     .map(lang => lang.toLowerCase().split('-')[0])
-    .filter(lang => languageKeys.includes(lang))[0] ??
-    'en') as keyof typeof languages;
-}
-
-const languageKeys = Object.keys(languages);
-
-const englishLanguageNames = languageKeys.map(
-  language => languages[language as keyof typeof languages].english_name
-);
-
-export const languageLookup: { [id: string]: string } = {};
-languageKeys.forEach(key => {
-  languageLookup[languages[key as keyof typeof languages].english_name] = key;
-});
-
-export function isLanguage(string: string): boolean {
-  return englishLanguageNames.includes(string);
-}
-
-export function isLanguageCode(
-  string: string | null
-): string is keyof typeof languages {
-  return !!string && languageKeys.includes(string);
+    .filter(lang => lang in languages);
+  return supportedLanguages.length
+    ? (supportedLanguages[0] as Language)
+    : defaultLanguage;
 }

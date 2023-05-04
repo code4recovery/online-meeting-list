@@ -39,7 +39,7 @@ const router = createBrowserRouter(
           searchWords,
           tags,
           timezone: moment.tz.guess(),
-          load: load(process.env.REACT_APP_JSON_URL)
+          load: load(process.env.REACT_APP_JSON_URL, language)
         });
       },
       children: [
