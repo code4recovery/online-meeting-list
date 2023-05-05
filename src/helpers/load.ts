@@ -4,11 +4,12 @@ import { videoServices } from './config';
 import { DataType } from './data';
 import { Language } from './i18n';
 import * as languageStrings from '../languages';
-import type { JSONRow, Meeting } from './types';
+import type { Group, JSONRow, Meeting } from './types';
 
 export async function load(url: string, language: Language): Promise<DataType> {
   const { strings } = languageStrings[language];
   const meetings: Meeting[] = [];
+  const groups: { [key: string]: Group } = {};
   const formats: string[] = [];
   const types: string[] = [];
   const languages: string[] = [];
@@ -32,10 +33,9 @@ export async function load(url: string, language: Language): Promise<DataType> {
       name: row.name.trim(),
       buttons: [],
       notes: stringToTrimmedArray(row.notes, true),
-      group_notes: stringToTrimmedArray(row.group_notes, true),
       search: '',
       tags: [],
-      email: row.email,
+      group_id: row.group_id,
       edit_url: row.edit_url
     };
 
@@ -94,7 +94,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
       }
     }
 
-    // handle email
+    /* handle email
     if (row.email) {
       const email = row.email.trim();
       if (email) {
@@ -110,7 +110,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
           warn(email, 'email address', i);
         }
       }
-    }
+    }*/
 
     // handle formats
 
@@ -148,13 +148,11 @@ export async function load(url: string, language: Language): Promise<DataType> {
       .filter(e => e)
       .join(' ');
 
-    // timezone
-    const timezone = row.timezone.trim();
-    let timestring = row.day
-      ? `${strings.days[row.day]} ${row.time}`
-      : undefined;
+    if (typeof row.day !== 'undefined' && typeof row.time !== 'undefined') {
+      // timezone
+      const timestring = `${strings.days[row.day]} ${row.time}`;
+      const timezone = row.timezone.trim();
 
-    if (timestring) {
       // momentize start time
       const time = moment.tz(timestring, 'dddd hh:mm', timezone);
 
@@ -162,10 +160,28 @@ export async function load(url: string, language: Language): Promise<DataType> {
         warn(timestring, 'time', i);
       } else {
         // push a clone of the meeting onto the array
-        meetings.push({ ...meeting, time });
+        meeting.time = time;
       }
-    } else {
-      meetings.push(meeting);
+    }
+
+    meetings.push(meeting);
+
+    if (row.group_id) {
+      if (row.group_id in groups) {
+        groups[row.group_id].meetings.push(meeting);
+      } else {
+        groups[row.group_id] = {
+          id: row.group_id,
+          name: row.group,
+          notes: stringToTrimmedArray(row.group_notes, true),
+          email: row.email && validateEmail(row.email) ? row.email : undefined,
+          phone: row.phone,
+          venmo: row.venmo,
+          paypal: row.paypal,
+          square: row.square,
+          meetings: [meeting]
+        };
+      }
     }
   });
 
@@ -180,7 +196,8 @@ export async function load(url: string, language: Language): Promise<DataType> {
       types,
       languages
     },
-    meetings
+    meetings,
+    groups
   };
 }
 

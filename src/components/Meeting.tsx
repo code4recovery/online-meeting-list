@@ -12,6 +12,7 @@ import Linkify from 'react-linkify';
 import { Link } from 'react-router-dom';
 
 import { Button } from './Button';
+import { Group } from './Group';
 import { Icon } from './Icon';
 import { Meeting as MeetingType, useI18n, useInput } from '../helpers';
 
@@ -22,6 +23,7 @@ export function Meeting({
   link?: string;
   meeting: MeetingType;
 }) {
+  const { name, time, buttons, notes, group_id, tags, edit_url } = meeting;
   const { rtl, strings } = useI18n();
   const { input } = useInput();
 
@@ -63,12 +65,9 @@ export function Meeting({
   );
 
   const title = input.searchWords?.length ? (
-    <Highlighter
-      searchWords={input.searchWords}
-      textToHighlight={meeting.name}
-    />
+    <Highlighter searchWords={input.searchWords} textToHighlight={name} />
   ) : (
-    meeting.name
+    name
   );
   return (
     <Box
@@ -83,7 +82,7 @@ export function Meeting({
       textAlign={rtl ? 'right' : 'left'}
       w="full"
     >
-      <Stack spacing={3} p={{ base: 3, md: 5 }}>
+      <Stack spacing={4} p={{ base: 3, md: 5 }}>
         <Box alignItems="baseline">
           <Heading
             as="h2"
@@ -103,16 +102,16 @@ export function Meeting({
             fontWeight="normal"
             ml={{ lg: 2 }}
           >
-            {!meeting.time
+            {!time
               ? strings.ongoing
-              : strings.days[meeting.time.day()] +
+              : strings.days[time.day()] +
                 ' ' +
-                meeting.time.format('LT').toLocaleLowerCase()}
+                time.format('LT').toLocaleLowerCase()}
           </Heading>
         </Box>
-        {!!meeting.buttons.length && (
+        {!!buttons.length && (
           <Box>
-            {meeting.buttons.map((button, index) => {
+            {buttons.map((button, index) => {
               const text =
                 button.icon === 'email'
                   ? strings.email
@@ -139,27 +138,19 @@ export function Meeting({
             })}
           </Box>
         )}
-        {!!meeting.notes?.length && (
-          <Stack spacing={3}>
-            {meeting.notes.map((paragraph: string, key: number) => (
+        {!!notes?.length && (
+          <Stack spacing={1}>
+            {notes.map((paragraph: string, key: number) => (
               <Text key={key} wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}
           </Stack>
         )}
-        {!!meeting.group_notes?.length && (
-          <Stack spacing={3}>
-            {meeting.group_notes.map((paragraph: string, key: number) => (
-              <Text key={key} wordBreak="break-word">
-                <Linkify>{paragraph}</Linkify>
-              </Text>
-            ))}
-          </Stack>
-        )}
-        {!!meeting.tags.length && (
+        {!!group_id && <Group meeting={meeting} />}
+        {!!tags.length && (
           <Box>
-            {meeting.tags.map((tag: string, index: number) => (
+            {tags.map((tag: string, index: number) => (
               <Tag
                 {...(input.tags.includes(tag) ? tagActive : tagDefault)}
                 borderRadius="base"
@@ -177,14 +168,14 @@ export function Meeting({
           </Box>
         )}
       </Stack>
-      {meeting.edit_url && (
+      {edit_url && (
         <ChakraButton
           {...(rtl ? { left: -3 } : { right: -3 })}
           _hover={{ bg: 'transparent', color: 'gray.500' }}
           bg="transparent"
           color="gray.400"
           leftIcon={<Icon name="pencil" size={22} />}
-          onClick={() => window.open(meeting.edit_url)}
+          onClick={() => window.open(edit_url)}
           position="absolute"
           top={0}
         />

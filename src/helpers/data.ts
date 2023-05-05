@@ -1,16 +1,18 @@
 import { createContext, useContext } from 'react';
 
-import { Meeting } from './types';
+import type { Group, Meeting } from './types';
 
 export type DataType = {
   filters: { [key: string]: string[] };
   filteredMeetings?: Meeting[];
   meetings: Meeting[];
+  groups: { [key: string]: Group };
 };
 
 export const Data = createContext<DataType>({
   filters: {},
-  meetings: []
+  meetings: [],
+  groups: {}
 });
 
 export const useData = () => useContext(Data);
