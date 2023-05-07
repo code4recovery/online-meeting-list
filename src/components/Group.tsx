@@ -1,12 +1,29 @@
-import { Box, Button, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
 import Linkify from 'react-linkify';
-import { useData, type Meeting, useI18n, formatTime } from '../helpers';
 import { Link } from 'react-router-dom';
-import { formatIcs } from '../helpers/ics';
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Badge,
+  Box,
+  Button,
+  Stack,
+  Text
+} from '@chakra-ui/react';
+
+import {
+  useData,
+  type Meeting,
+  useI18n,
+  formatIcs,
+  formatTime
+} from '../helpers';
 import { Icon } from './Icon';
 
 export function Group({ meeting }: { meeting: Meeting }) {
-  const { name: meetingName, slug, group_id } = meeting;
+  const { group_id } = meeting;
   const { groups } = useData();
   const { strings } = useI18n();
   const group = groups[group_id as keyof typeof groups];
@@ -22,16 +39,24 @@ export function Group({ meeting }: { meeting: Meeting }) {
     square,
     meetings
   } = group;
-  const otherMeetings = meetings.filter(
-    ({ slug: meetingSlug }) => meetingSlug !== slug
-  );
+  meetings.sort((a, b) => {
+    if (a.start && b.start) {
+      const weekdayA = a.start.weekday === 7 ? 0 : a.start.weekday;
+      const weekdayB = a.start.weekday === 7 ? 0 : a.start.weekday;
+      if (weekdayA !== weekdayB) {
+        return weekdayA - weekdayB;
+      }
+      return a.start.toMillis() - b.start.toMillis();
+    } else if (a.start) {
+      return 1;
+    } else if (b.start) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
   return (
-    <Stack gap={3}>
-      {meetingName !== name && (
-        <Text fontWeight="bold" textDecoration="underline" as="h3">
-          {name}
-        </Text>
-      )}
+    <Stack gap={5}>
       {!!notes?.length && (
         <Stack spacing={2}>
           {notes.map((paragraph: string, key: number) => (
@@ -103,29 +128,55 @@ export function Group({ meeting }: { meeting: Meeting }) {
           {strings.calendar}
         </Button>
       </Box>
-      {!!otherMeetings.length && (
-        <Stack gap={1}>
-          <Text as="h4" fontWeight="bold" textDecoration="underline">
-            Other Meetings
-          </Text>
-          <Grid templateColumns="repeat(2, 1fr)">
-            {otherMeetings.map(({ start, slug, name }, index) => (
-              <GridItem display="flex" gap={2} key={index}>
-                {formatTime(strings, start)}
-                <Link to={`/${slug}`}>
-                  <Text
-                    color="blue.500"
+      {meetings.length > 1 && (
+        <Box style={{ marginLeft: '-1.25rem', marginRight: '-1.25rem' }}>
+          <Accordion allowToggle>
+            <AccordionItem>
+              <h2>
+                <AccordionButton px={5}>
+                  <Box
                     as="span"
-                    textDecoration="underline"
-                    _hover={{ color: 'blue.600' }}
+                    flex="1"
+                    display="flex"
+                    gap={3}
+                    alignItems="center"
+                    textAlign="left"
                   >
-                    {name}
-                  </Text>
-                </Link>
-              </GridItem>
-            ))}
-          </Grid>
-        </Stack>
+                    <Badge variant="subtle">{meetings.length}</Badge>
+                    <Text fontWeight="bold">{name}</Text>
+                  </Box>
+                  <AccordionIcon />
+                </AccordionButton>
+              </h2>
+              <AccordionPanel pt={1} pb={4} px={5}>
+                <Stack spacing={{ base: 4, lg: 1 }}>
+                  {meetings.map(({ start, slug, name }, index) => (
+                    <Box
+                      key={index}
+                      display="flex"
+                      gap={{ base: 0, lg: 3 }}
+                      flexDirection={{ base: 'column', lg: 'row' }}
+                    >
+                      <Box>{formatTime(strings, start)}</Box>
+                      <Box>
+                        <Link to={`/${slug}`}>
+                          <Text
+                            color="blue.500"
+                            as="span"
+                            textDecoration="underline"
+                            _hover={{ color: 'blue.600' }}
+                          >
+                            {name}
+                          </Text>
+                        </Link>
+                      </Box>
+                    </Box>
+                  ))}
+                </Stack>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </Box>
       )}
     </Stack>
   );

@@ -30,8 +30,8 @@ export function Meeting({
   meeting: MeetingType;
 }) {
   const {
-    //conference_phone_notes,
-    //conference_url_notes,
+    conference_phone_notes,
+    conference_url_notes,
     conference_phone,
     conference_provider,
     conference_url,
@@ -45,42 +45,39 @@ export function Meeting({
   const { rtl, strings } = useI18n();
   const { input } = useInput();
 
-  const buttons: MeetingLink[] = [];
+  const buttons: Array<MeetingLink & { notes?: string }> = [];
   if (conference_provider) {
     buttons.push({
       icon: 'video',
       value: conference_provider,
-      onClick: () => window.open(conference_url)
+      onClick: () => window.open(conference_url),
+      notes: conference_url_notes
     });
   }
   if (conference_phone) {
     buttons.push({
       icon: 'phone',
       value: strings.telephone,
-      onClick: () => window.open(`tel:${conference_phone}`)
+      onClick: () => window.open(`tel:${conference_phone}`),
+      notes: conference_phone_notes
     });
   }
 
-  const meetingTheme = useColorModeValue(
-    {
-      bg: 'white',
-      borderColor: 'gray.300'
-    },
-    {
-      bg: 'gray.900',
-      borderColor: 'gray.800'
-    }
-  );
+  const isAdmin = document.cookie
+    .split('; ')
+    .some(row => row.startsWith('admin='));
 
   const title = input.searchWords?.length ? (
     <Highlighter searchWords={input.searchWords} textToHighlight={name} />
   ) : (
     name
   );
+
   return (
     <Box
-      {...meetingTheme}
       as="article"
+      bg={useColorModeValue('white', 'gray.900')}
+      borderColor={useColorModeValue('gray.300', 'gray.800')}
       borderWidth="1px"
       mb={{ base: 3, md: 6 }}
       overflow="hidden"
@@ -90,12 +87,13 @@ export function Meeting({
       textAlign={rtl ? 'right' : 'left'}
       w="full"
     >
-      <Stack spacing={4} p={{ base: 3, md: 5 }}>
+      <Stack spacing={5} p={{ base: 3, md: 5 }}>
         <Box
           alignItems="baseline"
           display="flex"
-          gap={{ lg: 3 }}
           flexDirection={{ base: 'column', lg: 'row' }}
+          flexWrap="wrap"
+          gap={{ base: 2, lg: 3 }}
         >
           <Heading
             as="h2"
@@ -106,12 +104,12 @@ export function Meeting({
           >
             {link ? <Link to={link}>{title}</Link> : title}
           </Heading>
-          <Heading as="h3" color="gray.600" fontSize="lg" fontWeight="normal">
+          <Heading as="h3" color={'gray.500'} fontSize="lg" fontWeight="normal">
             {formatTime(strings, start)}
           </Heading>
         </Box>
         {!!buttons.length && (
-          <Box>
+          <Stack spacing={3}>
             {buttons.map((button, index) => {
               const text =
                 button.icon === 'email'
@@ -126,18 +124,13 @@ export function Meeting({
                   ? strings.telephone_use.replace('{{value}}', button.value)
                   : strings.video_use.replace('{{value}}', button.value);
               return (
-                <Box
-                  float={rtl ? 'right' : 'left'}
-                  mr={rtl ? 0 : 2}
-                  ml={rtl ? 2 : 0}
-                  my={1}
-                  key={index}
-                >
+                <Box key={index} display="flex" alignItems="center" gap={3}>
                   <Button text={text} title={title} {...button} />
+                  <Text color={'gray.500'}>{button.notes}</Text>
                 </Box>
               );
             })}
-          </Box>
+          </Stack>
         )}
         {!!notes?.length && (
           <Stack spacing={1}>
@@ -150,7 +143,7 @@ export function Meeting({
         )}
         {!!group_id && <Group meeting={meeting} />}
         {!!tags.length && (
-          <Box pt={1}>
+          <Box>
             {tags.map((tag: string, index: number) => (
               <Tag
                 bg="transparent"
@@ -170,7 +163,7 @@ export function Meeting({
           </Box>
         )}
       </Stack>
-      {edit_url && (
+      {edit_url && isAdmin && (
         <ChakraButton
           {...(rtl ? { left: -3 } : { right: -3 })}
           _hover={{ bg: 'transparent', color: 'gray.500' }}

@@ -21,7 +21,9 @@ export type JSONRow = {
   day?: number;
   timezone?: string;
   conference_url?: string;
+  conference_url_notes?: string;
   conference_phone?: string;
+  conference_phone_notes?: string;
   notes?: string;
   types?: string[];
   group?: string;

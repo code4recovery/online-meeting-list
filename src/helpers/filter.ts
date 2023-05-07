@@ -9,8 +9,6 @@ export function filter(meetings: Meeting[], input: InputType) {
   const { searchWords, tags, language, timezone } = input;
   const { strings } = languages[language];
 
-  console.log('filterin');
-
   //get current timestamp
   const now = DateTime.now();
 

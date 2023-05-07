@@ -2,6 +2,7 @@ import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Stack } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
+import { Error } from './Error';
 import { Meeting } from './Meeting';
 import { useData } from '../helpers';
 
@@ -14,8 +15,6 @@ export function SingleMeeting() {
   const meeting = request
     ? meetings.find(({ slug }) => slug === request)
     : undefined;
-
-  if (!meeting) return null;
 
   return (
     <Stack gap={3} alignItems="start">
@@ -31,7 +30,11 @@ export function SingleMeeting() {
       >
         Back to Meetings
       </Button>
-      <Meeting meeting={meeting} />
+      {meeting ? (
+        <Meeting meeting={meeting} />
+      ) : (
+        <Error message={`Meeting “${request}” not found`} />
+      )}
     </Stack>
   );
 }

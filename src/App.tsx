@@ -14,7 +14,6 @@ export const App = () => {
 
   // set html language attributes
   useEffect(() => {
-    console.log('settin language attributes');
     document.documentElement.lang = input.language;
     document.documentElement.dir = languages[input.language].rtl
       ? 'rtl'
@@ -23,7 +22,6 @@ export const App = () => {
 
   // update query string
   useEffect(() => {
-    console.log('applyin query string');
     const url = new URL(window.location.href);
     url.searchParams.delete('tags');
     url.searchParams.delete('search');
@@ -46,6 +44,7 @@ export const App = () => {
     >
       <Input.Provider value={{ input, setInput }}>
         <Box
+          alignItems="start"
           as="main"
           display="flex"
           h="full"
@@ -65,7 +64,7 @@ export const App = () => {
                 >
                   <Grid
                     as="section"
-                    gap={{ base: 3, md: 6 }}
+                    gap={{ base: 5, md: 6 }}
                     templateColumns={{
                       md: 'auto 300px'
                     }}

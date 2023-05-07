@@ -13,8 +13,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
   const formats: string[] = [];
   const types: string[] = [];
   const languages: string[] = [];
-
-  console.log('loadin');
+  let hasOngoing = false;
 
   const cacheBustedUrl = `${url}${
     url.includes('?') ? '&' : '?'
@@ -59,6 +58,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
           if (provider) {
             meeting.conference_url = row.conference_url;
             meeting.conference_provider = provider;
+            meeting.conference_url_notes = row.conference_url_notes;
             meetingFormats.push(provider);
           }
         } catch {
@@ -74,6 +74,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
         let phone = originalPhone.replace(/\D/g, '');
         if (phone.length > 8) {
           meeting.conference_phone = phone;
+          meeting.conference_phone_notes = row.conference_phone_notes;
           meetingFormats.push(strings.telephone);
         } else {
           warn(originalPhone, 'phone number', i);
@@ -165,6 +166,9 @@ export async function load(url: string, language: Language): Promise<DataType> {
           meeting.end = start.plus({ hour: 1 });
         }
       }
+    } else {
+      meeting.tags.push(strings.ongoing);
+      hasOngoing = true;
     }
 
     meetings.push(meeting);
@@ -196,7 +200,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
 
   return {
     filters: {
-      days: strings.days,
+      days: hasOngoing ? [...strings.days, strings.ongoing] : strings.days,
       formats,
       types,
       languages

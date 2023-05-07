@@ -25,11 +25,11 @@ export function Filter() {
     }
   );
   return (
-    <Stack spacing={{ base: 3, md: 8 }}>
+    <Stack spacing={{ base: 5, md: 8 }}>
       <Search />
       <Stack
         display={{ base: open ? 'block' : 'none', md: 'block' }}
-        spacing={{ base: 3, md: 8 }}
+        spacing={{ base: 5, md: 8 }}
       >
         {Object.keys(filters)
           .filter(filter => filters[filter].length)
@@ -51,8 +51,8 @@ export function Filter() {
         </Select>
       </Stack>
       <Button
-        bg={open ? 'transparent' : 'white'}
-        borderColor="gray.300"
+        bg={useColorModeValue('white', 'gray.900')}
+        borderColor={useColorModeValue('gray.300', 'gray.800')}
         color="gray.500"
         display={{ base: 'flex', md: 'none' }}
         onClick={() => setOpen(!open)}

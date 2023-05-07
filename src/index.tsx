@@ -13,8 +13,6 @@ const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(container);
 
-console.log('out here');
-
 const router = createBrowserRouter(
   [
     {
@@ -25,8 +23,6 @@ const router = createBrowserRouter(
         if (!process.env.REACT_APP_JSON_URL) {
           throw new Error('REACT_APP_JSON_URL not specified');
         }
-
-        console.log('top loader');
 
         const url = new URL(request.url);
         const query = url.searchParams;
