@@ -3,6 +3,7 @@ export const en = {
   name: 'English',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Clear search',
     close: 'Close',
     days: [
@@ -17,6 +18,7 @@ export const en = {
     email: 'Email',
     email_use: 'Email {{value}}',
     filters: 'Filters',
+    forum: 'Forum',
     language: 'Language',
     languages: {
       AM: 'Amharic',
@@ -116,6 +118,7 @@ export const en = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Join {{value}}'
+    video_use: 'Join {{value}}',
+    website: 'Website'
   }
 };

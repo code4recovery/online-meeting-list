@@ -3,6 +3,7 @@ export const ru = {
   name: 'русский',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Очистить поиск',
     close: 'Закрывать',
     days: [
@@ -17,6 +18,7 @@ export const ru = {
     email: 'Электронное письмо',
     email_use: 'Электронная почта {{value}}',
     filters: 'Фильтры',
+    forum: 'Forum',
     language: 'Язык',
     languages: {
       AM: 'Amharic',
@@ -116,6 +118,7 @@ export const ru = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Присоединяйтесь к {{value}}'
+    video_use: 'Присоединяйтесь к {{value}}',
+    website: 'Website'
   }
 };

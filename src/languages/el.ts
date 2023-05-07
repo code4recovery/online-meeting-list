@@ -3,6 +3,7 @@ export const el = {
   name: 'Ελληνικά',
   rtl: false,
   strings: {
+    calendar: 'Ημερολόγιο',
     clear_search: 'Εκκαθάριση αναζήτησης',
     close: 'Κλείσε',
     days: [
@@ -17,6 +18,7 @@ export const el = {
     email: 'ΗΛΕΚΤΡΟΝΙΚΗ ΔΙΕΥΘΥΝΣΗ',
     email_use: 'Διεύθυνση ηλεκτρονικού ταχυδρομείου {{value}}',
     filters: 'Φίλτρα',
+    forum: 'Δικαστήριο',
     language: 'Γλώσσα',
     languages: {
       AM: 'Αμαρικά',
@@ -116,6 +118,7 @@ export const el = {
       XT: 'Επιτρέπεται η διασταύρωση',
       Y: 'Νέοι άνθρωποι'
     },
-    video_use: 'Γίνετε μέλος {{value}}'
+    video_use: 'Γίνετε μέλος {{value}}',
+    website: 'Δικτυακός τόπος'
   }
 };

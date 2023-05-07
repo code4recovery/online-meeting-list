@@ -3,6 +3,7 @@ export const sw = {
   name: 'Kiswahili',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Futa utafutaji',
     close: 'Funga',
     days: [
@@ -17,6 +18,7 @@ export const sw = {
     email: 'Barua pepe',
     email_use: 'Barua pepe {{value}}',
     filters: 'Vichujio',
+    forum: 'Forum',
     language: 'Lugha',
     languages: {
       AM: 'Amharic',
@@ -116,6 +118,7 @@ export const sw = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Jiunge na {{value}}'
+    video_use: 'Jiunge na {{value}}',
+    website: 'Website'
   }
 };

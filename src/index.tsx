@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, defer, RouterProvider } from 'react-router-dom';
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react';
-import moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 
 import { App } from './App';
 import './index.css';
@@ -39,7 +39,7 @@ const router = createBrowserRouter(
           language,
           searchWords,
           tags,
-          timezone: moment.tz.guess(),
+          timezone: DateTime.local().zoneName,
           load: load(process.env.REACT_APP_JSON_URL, language)
         });
       },

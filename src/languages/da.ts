@@ -3,6 +3,7 @@ export const da = {
   name: 'Dansk',
   rtl: false,
   strings: {
+    calendar: 'Kalender',
     clear_search: 'Ryd søgning',
     close: 'Tæt',
     days: [
@@ -17,6 +18,7 @@ export const da = {
     email: 'E-mail',
     email_use: 'E-mail {{value}}',
     filters: 'Filtre',
+    forum: 'Forum',
     language: 'Sprog',
     languages: {
       AM: 'Amharisk',
@@ -115,6 +117,7 @@ export const da = {
       XT: 'Krydssnak tilladt',
       Y: 'Unge mennesker'
     },
-    video_use: 'Deltag i {{value}}'
+    video_use: 'Deltag i {{value}}',
+    website: 'Internet side'
   }
 };

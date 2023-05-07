@@ -3,12 +3,14 @@ export const am = {
   name: 'አማርኛ',
   rtl: false,
   strings: {
+    calendar: 'የቀን መቁጠሪያ',
     clear_search: 'ፍለጋን ያጽዱ',
     close: 'ገጠመ',
     days: ['እሁድ', 'ሰኞ', 'ማክሰኞ', 'እሮብ', 'ሐሙስ', 'አርብ', 'ቅዳሜ'],
     email: 'ኢሜል',
     email_use: 'ኢሜል {{value}}',
     filters: 'ማጣሪያዎች',
+    forum: 'መድረክ',
     language: 'ቋንቋ',
     languages: {
       AM: 'አማርኛ',
@@ -107,6 +109,7 @@ export const am = {
       XT: 'ክሮስ ቶክ ተፈቅዷል',
       Y: 'ወጣቶች'
     },
-    video_use: '{{value}} ን ይቀላቀሉ'
+    video_use: '{{value}} ን ይቀላቀሉ',
+    website: 'ድህረገፅ'
   }
 };

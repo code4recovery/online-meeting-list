@@ -1,4 +1,4 @@
-import moment from 'moment-timezone';
+import { DateTime } from 'luxon';
 
 import { videoServices } from './config';
 import { DataType } from './data';
@@ -24,14 +24,13 @@ export async function load(url: string, language: Language): Promise<DataType> {
 
   // loop through json entries
   data.forEach((row: JSONRow, i: number) => {
-    //required fields
-    if (!row.name || !row.timezone) return;
+    // required fields
+    if (!row.name) return;
 
-    //start creating meeting
+    // start creating meeting
     const meeting: Meeting = {
       slug: row.slug,
       name: row.name.trim(),
-      buttons: [],
       notes: stringToTrimmedArray(row.notes, true),
       search: '',
       tags: [],
@@ -39,80 +38,65 @@ export async function load(url: string, language: Language): Promise<DataType> {
       edit_url: row.edit_url
     };
 
-    //handle url
+    // start formats array
+    const meetingFormats: string[] = [];
+
+    // handle url
     if (row.conference_url) {
       const originalUrl = row.conference_url.trim();
       if (originalUrl) {
-        let label;
-        let icon: 'link' | 'video' = 'link';
         try {
           const url = new URL(originalUrl);
           if (!['http:', 'https:'].includes(url.protocol)) {
             throw new Error();
           }
           const host = url.hostname;
-          const service = Object.keys(videoServices).filter(
+          const provider = Object.keys(videoServices).find(
             service =>
               videoServices[service].filter(domain => host.endsWith(domain))
                 .length
           );
-          if (service.length) {
-            label = service[0];
-            icon = 'video';
-          } else {
-            label = url.hostname.replace('www.', '');
+          if (provider) {
+            meeting.conference_url = row.conference_url;
+            meeting.conference_provider = provider;
+            meetingFormats.push(provider);
           }
-          meeting.buttons.push({
-            icon: icon,
-            onClick: () => {
-              window.open(originalUrl, '_blank');
-            },
-            value: label
-          });
         } catch {
           warn(originalUrl, 'URL', i);
         }
       }
     }
 
-    //handle phone
+    // handle phone
     if (row.conference_phone) {
       const originalPhone = row.conference_phone.trim();
       if (originalPhone) {
         let phone = originalPhone.replace(/\D/g, '');
         if (phone.length > 8) {
-          meeting.buttons.push({
-            icon: 'phone',
-            onClick: () => {
-              window.open(`tel:${phone}`);
-            },
-            value: phone
-          });
+          meeting.conference_phone = phone;
+          meetingFormats.push(strings.telephone);
         } else {
           warn(originalPhone, 'phone number', i);
         }
       }
     }
 
-    /* handle email
-    if (row.email) {
-      const email = row.email.trim();
-      if (email) {
-        if (validateEmail(email)) {
-          meeting.buttons.push({
-            icon: 'email',
-            onClick: () => {
-              window.open('mailto:' + email);
-            },
-            value: email
-          });
-        } else {
-          warn(email, 'email address', i);
-        }
+    const website = validateUrl(row.website) ? row.website : undefined;
+
+    // email / forum formats
+    if (!meeting.conference_provider && !meeting.conference_phone) {
+      if (row.email) {
+        meetingFormats.push(strings.email);
       }
-    }*/
+      if (website) {
+        meetingFormats.push(strings.forum);
+      }
+    }
 
     // handle formats
+    meetingFormats
+      .filter(format => !formats.includes(format))
+      .forEach(format => formats.push(format));
 
     // types
     const meetingTypes = row.types
@@ -138,8 +122,13 @@ export async function load(url: string, language: Language): Promise<DataType> {
       .filter(language => !languages.includes(language))
       .forEach(language => languages.push(language));
 
-    // append to meeting tags
-    meeting.tags = [...meeting.tags, ...meetingTypes, ...meetingLanguages];
+    // append to meeting tags (no day, that is set in filter)
+    meeting.tags = [
+      ...meeting.tags,
+      ...meetingTypes,
+      ...meetingLanguages,
+      ...meetingFormats
+    ];
 
     // add words to search index
     meeting.search = meeting.name
@@ -148,19 +137,33 @@ export async function load(url: string, language: Language): Promise<DataType> {
       .filter(e => e)
       .join(' ');
 
-    if (typeof row.day !== 'undefined' && typeof row.time !== 'undefined') {
+    if (typeof row.day !== 'undefined' && row.time && row.timezone) {
       // timezone
       const timestring = `${strings.days[row.day]} ${row.time}`;
-      const timezone = row.timezone.trim();
+      const zone = row.timezone.trim();
 
-      // momentize start time
-      const time = moment.tz(timestring, 'dddd hh:mm', timezone);
+      // luxonize start time
+      const weekday = row.day === 0 ? 7 : row.day;
+      let [hour, minute] = row.time.split(':').map(num => parseInt(num));
+      const start = DateTime.fromObject({ weekday, hour, minute }, { zone });
 
-      if (!time.isValid()) {
-        warn(timestring, 'time', i);
+      if (!start.isValid) {
+        warn(timestring, `invalid start time ${start.invalidExplanation}`, i);
       } else {
-        // push a clone of the meeting onto the array
-        meeting.time = time;
+        meeting.start = start;
+
+        if (row.end_time) {
+          let [hour, minute] = row.time.split(':').map(num => parseInt(num));
+          const end = DateTime.fromObject({ weekday, hour, minute }, { zone });
+          if (!end.isValid) {
+            warn(timestring, `invalid end time ${start.invalidExplanation}`, i);
+            meeting.end = start.plus({ hour: 1 });
+          } else {
+            meeting.end = end;
+          }
+        } else {
+          meeting.end = start.plus({ hour: 1 });
+        }
       }
     }
 
@@ -175,6 +178,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
           name: row.group,
           notes: stringToTrimmedArray(row.group_notes, true),
           email: row.email && validateEmail(row.email) ? row.email : undefined,
+          website,
           phone: row.phone,
           venmo: row.venmo,
           paypal: row.paypal,
@@ -193,6 +197,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
   return {
     filters: {
       days: strings.days,
+      formats,
       types,
       languages
     },
@@ -216,6 +221,13 @@ function validateEmail(email: string) {
   return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
     email
   );
+}
+
+function validateUrl(url?: string) {
+  if (!url) return false;
+  if (!url.startsWith('https://') && !url.startsWith('http://')) return false;
+  if (!url.includes('.') || url.length <= 10) return false;
+  return true;
 }
 
 function warn(value: string, type: string, line: number) {

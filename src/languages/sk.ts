@@ -3,6 +3,7 @@ export const sk = {
   name: 'Slovák',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Vymazať vyhľadávanie',
     close: 'Zavrieť',
     days: [
@@ -17,6 +18,7 @@ export const sk = {
     email: 'E-mail',
     email_use: 'E-mail {{value}}',
     filters: 'Filtre',
+    forum: 'Forum',
     language: 'Jazyk',
     languages: {
       AM: 'Amharic',
@@ -116,6 +118,7 @@ export const sk = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Pripojte sa k {{value}}'
+    video_use: 'Pripojte sa k {{value}}',
+    website: 'Website'
   }
 };

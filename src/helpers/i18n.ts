@@ -1,5 +1,4 @@
 import { createContext, useContext } from 'react';
-import 'moment/min/locales';
 
 import * as languages from '../languages';
 

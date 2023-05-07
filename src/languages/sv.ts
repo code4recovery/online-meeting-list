@@ -3,6 +3,7 @@ export const sv = {
   name: 'Svenska',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Rensa sökningen',
     close: 'Stänga',
     days: [
@@ -17,6 +18,7 @@ export const sv = {
     email: 'E-post',
     email_use: 'Skicka e-post till {{value}}',
     filters: 'Filter',
+    forum: 'Forum',
     language: 'Språk',
     languages: {
       AM: 'Amharic',
@@ -115,6 +117,7 @@ export const sv = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Gå med i {{value}}'
+    video_use: 'Gå med i {{value}}',
+    website: 'Website'
   }
 };

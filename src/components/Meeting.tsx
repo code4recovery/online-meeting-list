@@ -14,7 +14,13 @@ import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import { Group } from './Group';
 import { Icon } from './Icon';
-import { Meeting as MeetingType, useI18n, useInput } from '../helpers';
+import {
+  Meeting as MeetingType,
+  MeetingLink,
+  formatTime,
+  useI18n,
+  useInput
+} from '../helpers';
 
 export function Meeting({
   link,
@@ -23,35 +29,37 @@ export function Meeting({
   link?: string;
   meeting: MeetingType;
 }) {
-  const { name, time, buttons, notes, group_id, tags, edit_url } = meeting;
+  const {
+    //conference_phone_notes,
+    //conference_url_notes,
+    conference_phone,
+    conference_provider,
+    conference_url,
+    edit_url,
+    group_id,
+    name,
+    notes,
+    start,
+    tags
+  } = meeting;
   const { rtl, strings } = useI18n();
   const { input } = useInput();
 
-  const tagDefault = useColorModeValue(
-    {
-      bg: 'gray.100',
-      borderColor: 'gray.200',
-      color: 'gray.600'
-    },
-    {
-      bg: 'gray.800',
-      borderColor: 'gray.700',
-      color: 'gray.400'
-    }
-  );
-
-  const tagActive = useColorModeValue(
-    {
-      bg: 'gray.300',
-      borderColor: 'gray.400',
-      color: 'gray.700'
-    },
-    {
-      bg: 'gray.700',
-      borderColor: 'gray.600',
-      color: 'gray.300'
-    }
-  );
+  const buttons: MeetingLink[] = [];
+  if (conference_provider) {
+    buttons.push({
+      icon: 'video',
+      value: conference_provider,
+      onClick: () => window.open(conference_url)
+    });
+  }
+  if (conference_phone) {
+    buttons.push({
+      icon: 'phone',
+      value: strings.telephone,
+      onClick: () => window.open(`tel:${conference_phone}`)
+    });
+  }
 
   const meetingTheme = useColorModeValue(
     {
@@ -83,10 +91,14 @@ export function Meeting({
       w="full"
     >
       <Stack spacing={4} p={{ base: 3, md: 5 }}>
-        <Box alignItems="baseline">
+        <Box
+          alignItems="baseline"
+          display="flex"
+          gap={{ lg: 3 }}
+          flexDirection={{ base: 'column', lg: 'row' }}
+        >
           <Heading
             as="h2"
-            display={{ lg: 'inline' }}
             fontSize="2xl"
             _hover={
               link ? { cursor: 'pointer', textDecoration: 'underline' } : {}
@@ -94,19 +106,8 @@ export function Meeting({
           >
             {link ? <Link to={link}>{title}</Link> : title}
           </Heading>
-          <Heading
-            as="h3"
-            color="gray.600"
-            display={{ lg: 'inline' }}
-            fontSize="lg"
-            fontWeight="normal"
-            ml={{ lg: 2 }}
-          >
-            {!time
-              ? strings.ongoing
-              : strings.days[time.day()] +
-                ' ' +
-                time.format('LT').toLocaleLowerCase()}
+          <Heading as="h3" color="gray.600" fontSize="lg" fontWeight="normal">
+            {formatTime(strings, start)}
           </Heading>
         </Box>
         {!!buttons.length && (
@@ -149,15 +150,16 @@ export function Meeting({
         )}
         {!!group_id && <Group meeting={meeting} />}
         {!!tags.length && (
-          <Box>
+          <Box pt={1}>
             {tags.map((tag: string, index: number) => (
               <Tag
-                {...(input.tags.includes(tag) ? tagActive : tagDefault)}
+                bg="transparent"
                 borderRadius="base"
                 borderWidth="1px"
                 key={index}
                 me={2}
                 my={1}
+                opacity={input.tags.includes(tag) ? 1 : 0.5}
                 px={3}
                 py={1}
                 size="sm"

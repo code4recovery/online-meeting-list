@@ -1,18 +1,27 @@
 import { Box, Button, Grid, GridItem, Stack, Text } from '@chakra-ui/react';
 import Linkify from 'react-linkify';
-import { useData, type Meeting, useI18n } from '../helpers';
+import { useData, type Meeting, useI18n, formatTime } from '../helpers';
 import { Link } from 'react-router-dom';
+import { formatIcs } from '../helpers/ics';
+import { Icon } from './Icon';
 
-export function Group({
-  meeting: { name: meetingName, slug, group_id }
-}: {
-  meeting: Meeting;
-}) {
+export function Group({ meeting }: { meeting: Meeting }) {
+  const { name: meetingName, slug, group_id } = meeting;
   const { groups } = useData();
   const { strings } = useI18n();
   const group = groups[group_id as keyof typeof groups];
   if (!group) return <div>nothing</div>;
-  const { name, notes, email, phone, venmo, paypal, square, meetings } = group;
+  const {
+    name,
+    notes,
+    email,
+    phone,
+    website,
+    venmo,
+    paypal,
+    square,
+    meetings
+  } = group;
   const otherMeetings = meetings.filter(
     ({ slug: meetingSlug }) => meetingSlug !== slug
   );
@@ -34,17 +43,32 @@ export function Group({
       )}
       <Box display="flex" gap={2} flexWrap="wrap">
         {!!email && (
-          <Button onClick={() => (window.location.href = `mailto:${email}`)}>
-            Email
+          <Button
+            leftIcon={<Icon name="email" />}
+            onClick={() => (window.location.href = `mailto:${email}`)}
+          >
+            {strings.email}
           </Button>
         )}
         {!!phone && (
-          <Button onClick={() => (window.location.href = `tel:${phone}`)}>
-            Phone
+          <Button
+            leftIcon={<Icon name="phone" />}
+            onClick={() => (window.location.href = `tel:${phone}`)}
+          >
+            {strings.telephone}
+          </Button>
+        )}
+        {!!website && (
+          <Button
+            leftIcon={<Icon name="link" />}
+            onClick={() => (window.location.href = website)}
+          >
+            {strings.website}
           </Button>
         )}
         {!!venmo && (
           <Button
+            leftIcon={<Icon name="cash" />}
             onClick={() =>
               (window.location.href = `https://account.venmo.com/u/${venmo}`)
             }
@@ -54,6 +78,7 @@ export function Group({
         )}
         {!!paypal && (
           <Button
+            leftIcon={<Icon name="cash" />}
             onClick={() =>
               (window.location.href = `https://www.paypal.com/paypalme/${paypal}`)
             }
@@ -63,6 +88,7 @@ export function Group({
         )}
         {!!square && (
           <Button
+            leftIcon={<Icon name="cash" />}
             onClick={() =>
               (window.location.href = `https://cash.app/${square}`)
             }
@@ -70,6 +96,12 @@ export function Group({
             Cash App
           </Button>
         )}
+        <Button
+          onClick={() => formatIcs({ ...meeting, group })}
+          leftIcon={<Icon name="calendar" />}
+        >
+          {strings.calendar}
+        </Button>
       </Box>
       {!!otherMeetings.length && (
         <Stack gap={1}>
@@ -77,13 +109,9 @@ export function Group({
             Other Meetings
           </Text>
           <Grid templateColumns="repeat(2, 1fr)">
-            {otherMeetings.map(({ time, slug, name }, index) => (
+            {otherMeetings.map(({ start, slug, name }, index) => (
               <GridItem display="flex" gap={2} key={index}>
-                {!time
-                  ? strings.ongoing
-                  : strings.days[time.day()] +
-                    ' ' +
-                    time.format('LT').toLocaleLowerCase()}
+                {formatTime(strings, start)}
                 <Link to={`/${slug}`}>
                   <Text
                     color="blue.500"

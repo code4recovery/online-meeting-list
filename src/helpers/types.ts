@@ -1,4 +1,4 @@
-import { Moment } from 'moment-timezone';
+import { DateTime } from 'luxon';
 
 export type Group = {
   id: string;
@@ -6,6 +6,7 @@ export type Group = {
   notes?: string[];
   email?: string;
   phone?: string;
+  website?: string;
   venmo?: string;
   paypal?: string;
   square?: string;
@@ -16,17 +17,19 @@ export type JSONRow = {
   slug: string;
   name?: string;
   time?: string;
+  end_time?: string;
   day?: number;
   timezone?: string;
   conference_url?: string;
   conference_phone?: string;
-  email?: string;
   notes?: string;
   types?: string[];
   group?: string;
   group_id?: string;
   group_notes?: string;
+  email?: string;
   phone?: string;
+  website?: string;
   venmo?: string;
   paypal?: string;
   square?: string;
@@ -37,8 +40,13 @@ export type JSONRow = {
 export type Meeting = {
   slug: string;
   name: string;
-  time?: Moment;
-  buttons: MeetingLink[];
+  start?: DateTime;
+  end?: DateTime;
+  conference_provider?: string;
+  conference_url?: string;
+  conference_url_notes?: string;
+  conference_phone?: string;
+  conference_phone_notes?: string;
   notes?: string[];
   group_id?: string;
   tags: string[];

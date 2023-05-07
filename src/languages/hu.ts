@@ -3,6 +3,7 @@ export const hu = {
   name: 'Magyar',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Törölje a keresést',
     close: 'Bezárás',
     days: [
@@ -17,6 +18,7 @@ export const hu = {
     email: 'Email',
     email_use: 'E-mail: {{value}}',
     filters: 'Szűrők',
+    forum: 'Forum',
     language: 'Nyelv',
     languages: {
       AM: 'Amharic',
@@ -116,6 +118,7 @@ export const hu = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Csatlakozás a következőhöz: {{value}}'
+    video_use: 'Csatlakozás a következőhöz: {{value}}',
+    website: 'Website'
   }
 };

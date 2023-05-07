@@ -3,6 +3,7 @@ export const es = {
   name: 'Español',
   rtl: false,
   strings: {
+    calendar: 'Calendario',
     clear_search: 'Borrar búsqueda',
     close: 'Cerrar',
     days: [
@@ -17,6 +18,7 @@ export const es = {
     email: 'Correo electrónico',
     email_use: 'Correo electrónico {{value}}',
     filters: 'Filtros',
+    forum: 'Foro',
     language: 'Idioma',
     languages: {
       AM: 'Amárico',
@@ -115,6 +117,7 @@ export const es = {
       XT: 'Diafonía permitida',
       Y: 'Gente joven'
     },
-    video_use: 'Únete a {{value}}'
+    video_use: 'Únete a {{value}}',
+    website: 'Sitio web'
   }
 };

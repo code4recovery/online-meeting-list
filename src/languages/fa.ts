@@ -3,6 +3,7 @@ export const fa = {
   name: 'فارسی',
   rtl: true,
   strings: {
+    calendar: 'تقویم',
     clear_search: 'جستجو را پاک کنید',
     close: 'بستن',
     email: 'پست الکترونیک',
@@ -17,6 +18,7 @@ export const fa = {
     ],
     email_use: 'ایمیل {{value}}',
     filters: 'فیلترها',
+    forum: 'انجمن',
     language: 'زبان',
     languages: {
       AM: 'آمهری',
@@ -116,6 +118,7 @@ export const fa = {
       XT: 'گفتگوی متقابل مجاز است',
       Y: 'جوانان'
     },
-    video_use: 'به {{value}} بپیوندید'
+    video_use: 'به {{value}} بپیوندید',
+    website: 'سایت اینترنتی'
   }
 };

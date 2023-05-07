@@ -3,6 +3,7 @@ export const de = {
   name: 'Deutsche',
   rtl: false,
   strings: {
+    calendar: 'Kalender',
     clear_search: 'Saubere Suche',
     close: 'Schließen',
     days: [
@@ -17,6 +18,7 @@ export const de = {
     email: 'E-Mail',
     email_use: 'E-Mail {{value}}',
     filters: 'Filter',
+    forum: 'Forum',
     language: 'Sprache',
     languages: {
       AM: 'Amharisch',
@@ -117,6 +119,7 @@ export const de = {
       XT: 'Übersprechen erlaubt',
       Y: 'Junge Leute'
     },
-    video_use: '{{value}} beitreten'
+    video_use: '{{value}} beitreten',
+    website: 'Webseite'
   }
 };

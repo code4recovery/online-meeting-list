@@ -3,6 +3,7 @@ export const pt = {
   name: 'Português',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'Limpar pesquisa',
     close: 'Perto',
     days: [
@@ -17,6 +18,7 @@ export const pt = {
     email: 'E-mail',
     email_use: 'E-mail {{value}}',
     filters: 'Filtros',
+    forum: 'Forum',
     language: 'Língua',
     languages: {
       AM: 'Amharic',
@@ -115,6 +117,7 @@ export const pt = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: 'Junte-se a {{value}}'
+    video_use: 'Junte-se a {{value}}',
+    website: 'Website'
   }
 };

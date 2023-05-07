@@ -3,6 +3,7 @@ export const ko = {
   name: '한국인',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: '검색 지우기',
     close: '닫다',
     days: [
@@ -17,6 +18,7 @@ export const ko = {
     email: '이메일',
     email_use: '이메일 {{value}}',
     filters: '필터',
+    forum: 'Forum',
     language: '언어',
     languages: {
       AM: 'Amharic',
@@ -115,6 +117,7 @@ export const ko = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: '{{value}} 가입'
+    video_use: '{{value}} 가입',
+    website: 'Website'
   }
 };

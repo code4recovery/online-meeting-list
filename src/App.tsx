@@ -60,13 +60,7 @@ export const App = () => {
                 <Data.Provider
                   value={{
                     ...load,
-                    filteredMeetings: filter(
-                      load.meetings,
-                      input.searchWords,
-                      input.timezone,
-                      input.tags,
-                      languages[input.language].strings
-                    )
+                    filteredMeetings: filter(load.meetings, input)
                   }}
                 >
                   <Grid

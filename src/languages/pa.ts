@@ -3,6 +3,7 @@ export const pa = {
   name: 'ਪੰਜਾਬੀ',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: 'ਖੋਜ ਸਾਫ ਕਰੋ',
     close: 'ਬੰਦ ਕਰੋ',
     days: [
@@ -17,6 +18,7 @@ export const pa = {
     email: 'ਈ - ਮੇਲ',
     email_use: 'ਈਮੇਲ {{value}}',
     filters: 'ਫਿਲਟਰ',
+    forum: 'Forum',
     language: 'ਭਾਸ਼ਾ',
     languages: {
       AM: 'Amharic',
@@ -115,6 +117,7 @@ export const pa = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: '{{value}} ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ'
+    video_use: '{{value}} ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ',
+    website: 'Website'
   }
 };

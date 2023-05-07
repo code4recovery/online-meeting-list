@@ -1,11 +1,10 @@
 import { FormEvent, useState } from 'react';
-import moment from 'moment-timezone';
 import { Button, Select, Stack, useColorModeValue } from '@chakra-ui/react';
 
 import { Checkboxes } from './Checkboxes';
 import { Search } from './Search';
 import { Icon } from './Icon';
-import { useData, useI18n, useInput } from '../helpers';
+import { timezones, useData, useI18n, useInput } from '../helpers';
 
 export function Filter() {
   const [open, setOpen] = useState(false);
@@ -46,7 +45,7 @@ export function Filter() {
           }
           value={input.timezone}
         >
-          {moment.tz.names().map((name, index) => (
+          {timezones.map((name, index) => (
             <option key={index}>{name}</option>
           ))}
         </Select>

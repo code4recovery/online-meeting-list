@@ -3,12 +3,14 @@ export const ja = {
   name: '日本語',
   rtl: false,
   strings: {
+    calendar: 'Calendar',
     clear_search: '明確な検索',
     close: 'シャット',
     days: ['日曜日', '月曜', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
     email: 'Eメール',
     email_use: 'メール{{value}}',
     filters: 'フィルタ',
+    forum: 'Forum',
     language: '言語',
     languages: {
       AM: 'Amharic',
@@ -108,6 +110,7 @@ export const ja = {
       XT: 'Cross Talk Permitted',
       Y: 'Young People'
     },
-    video_use: '{{value}}に参加する'
+    video_use: '{{value}}に参加する',
+    website: 'Website'
   }
 };
