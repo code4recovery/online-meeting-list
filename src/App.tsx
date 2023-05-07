@@ -3,7 +3,15 @@ import { Box, Grid } from '@chakra-ui/react';
 import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
 import { Error, Filter, Loading } from './components';
-import { Data, DataType, filter, i18n, Input, InputType } from './helpers';
+import {
+  Data,
+  type DataType,
+  filter,
+  i18n,
+  Input,
+  type InputType,
+  pushEvent
+} from './helpers';
 import * as languages from './languages';
 
 export const App = () => {
@@ -20,19 +28,30 @@ export const App = () => {
       : 'ltr';
   }, [input.language]);
 
-  // update query string
+  // update query string for tag updates
   useEffect(() => {
     const url = new URL(window.location.href);
     url.searchParams.delete('tags');
-    url.searchParams.delete('search');
     input.tags.forEach(tag => {
       url.searchParams.append('tags', tag);
     });
-    if (input.searchWords.length) {
-      url.searchParams.append('search', input.searchWords.join(' '));
-    }
     window.history.pushState(null, '', url.toString());
-  }, [input.tags, input.searchWords]);
+  }, [input.tags]);
+
+  // update query string and push event for search updates
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('search');
+      if (input.searchWords.length) {
+        const value = input.searchWords.join(' ');
+        url.searchParams.append('search', value);
+        pushEvent({ event: 'search', value });
+      }
+      window.history.pushState(null, '', url.toString());
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [input.searchWords]);
 
   return (
     <i18n.Provider

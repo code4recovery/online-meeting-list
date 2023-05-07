@@ -79,7 +79,7 @@ export function Meeting({
       bg={useColorModeValue('white', 'gray.900')}
       borderColor={useColorModeValue('gray.300', 'gray.800')}
       borderWidth="1px"
-      mb={{ base: 3, md: 6 }}
+      mb={{ base: 5, md: 6 }}
       overflow="hidden"
       position="relative"
       rounded="md"

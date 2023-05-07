@@ -6,6 +6,7 @@ export function Loading() {
       alignItems="center"
       display="flex"
       flexGrow={1}
+      h="full"
       justifyContent="center"
     >
       <Spinner size="xl" />

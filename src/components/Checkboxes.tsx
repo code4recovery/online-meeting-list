@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { useData, useInput } from '../helpers';
+import { pushEvent, useData, useInput } from '../helpers';
 import { Checkbox } from './Checkbox';
 
 export function Checkboxes({ filter }: { filter: string }) {
@@ -13,7 +13,7 @@ export function Checkboxes({ filter }: { filter: string }) {
           isChecked={input.tags.includes(value)}
           name="tags"
           value={value}
-          onChange={e =>
+          onChange={e => {
             setInput({
               ...input,
               tags: e.currentTarget.checked
@@ -24,8 +24,11 @@ export function Checkboxes({ filter }: { filter: string }) {
                     value
                   ]
                 : input.tags.filter(e => e !== value)
-            })
-          }
+            });
+            if (e.currentTarget.checked) {
+              pushEvent({ event: 'filter', type: filter, value });
+            }
+          }}
         />
       ))}
     </Box>

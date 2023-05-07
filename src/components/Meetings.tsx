@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 
-import { Meeting as MeetingType, useData } from '../helpers';
+import { type Meeting as MeetingType, pushEvent, useData } from '../helpers';
 import { NoResults } from './NoResults';
 import { Meeting } from './Meeting';
 
@@ -17,7 +17,10 @@ export function Meetings() {
   ) : (
     <InfiniteScroll
       hasMore={filteredMeetings.length > limit}
-      loadMore={() => setLimit(limit + meetingsPerPage)}
+      loadMore={() => {
+        setLimit(limit + meetingsPerPage);
+        pushEvent({ event: 'scroll', value: limit });
+      }}
     >
       {filteredMeetings
         .slice(0, limit)

@@ -9,6 +9,6 @@ export function pushEvent(payload: object) {
     console.log('push to GTM', payload);
     window.dataLayer.push(payload);
   } else {
-    console.log('window.dataLayer not defined');
+    console.log('window.dataLayer not defined', payload);
   }
 }

@@ -4,7 +4,7 @@ import { Button, Select, Stack, useColorModeValue } from '@chakra-ui/react';
 import { Checkboxes } from './Checkboxes';
 import { Search } from './Search';
 import { Icon } from './Icon';
-import { timezones, useData, useI18n, useInput } from '../helpers';
+import { pushEvent, timezones, useData, useI18n, useInput } from '../helpers';
 
 export function Filter() {
   const [open, setOpen] = useState(false);
@@ -25,7 +25,7 @@ export function Filter() {
     }
   );
   return (
-    <Stack spacing={{ base: 5, md: 8 }}>
+    <Stack spacing={{ base: 4, md: 8 }}>
       <Search />
       <Stack
         display={{ base: open ? 'block' : 'none', md: 'block' }}
@@ -40,9 +40,11 @@ export function Filter() {
           {...selectTheme}
           aria-label={strings.timezone}
           icon={rtl ? <div /> : <Icon name="time" />}
-          onChange={(e: FormEvent<HTMLSelectElement>) =>
-            setInput({ ...input, timezone: e.currentTarget.value })
-          }
+          onChange={(e: FormEvent<HTMLSelectElement>) => {
+            const timezone = e.currentTarget.value;
+            setInput({ ...input, timezone });
+            pushEvent({ event: 'timezone', value: timezone });
+          }}
           value={input.timezone}
         >
           {timezones.map((name, index) => (
