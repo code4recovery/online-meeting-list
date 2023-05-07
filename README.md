@@ -48,6 +48,16 @@ add_action('init', function () {
 });
 ```
 
+## Dark mode
+
+By default, the app renders in light or dark mode depending on the user's system preferences. This setting can be overridden with `light` or `dark`:
+
+```
+REACT_APP_COLOR_MODE="light";
+```
+
+Note: local storage may need to be cleared for changes to appear.
+
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.
