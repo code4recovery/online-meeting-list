@@ -1,19 +1,29 @@
 html,
 body,
 #root {
-  /* gray.50 */
-  background-color: #F7FAFC !important;
   height: 100%;
 }
 
-#root a {
-  /* blue.500 */
-  border-bottom: 1px solid #3182CE;
-  color: #3182CE;
+body {
+  background-color: var(--chakra-colors-gray-50) !important;
 }
 
-#root a:hover {
-  /* blue.600 */
-  border-bottom: 1px solid #1E4E8C;
-  color: #1E4E8C;
+body.chakra-ui-dark {
+  background-color: var(--chakra-colors-gray-700) !important;
+}
+
+#root .chakra-text a {
+  border-bottom: 1px solid var(--chakra-colors-blue-500) !important;
+  color: var(--chakra-colors-blue-500) !important;
+}
+
+/* fix slashes rendering at the start of the line */
+html[dir='rtl'] #root .chakra-text a {
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+#root .chakra-text a:hover {
+  border-bottom: 1px solid var(--chakra-colors-blue-600) !important;
+  color: var(--chakra-colors-blue-600) !important;
 }

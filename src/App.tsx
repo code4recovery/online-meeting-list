@@ -1,183 +1,107 @@
-import { useEffect, useState } from 'react';
-import { Box, CSSReset, Grid, ChakraProvider } from '@chakra-ui/react';
-import InfiniteScroll from 'react-infinite-scroller';
+import { Suspense, useEffect, useState } from 'react';
+import { Box, Grid } from '@chakra-ui/react';
+import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
-import { Filter } from './components/Filter';
-import { Loading } from './components/Loading';
-import { Meeting } from './components/Meeting';
-import { NoResults } from './components/NoResults';
+import { Error, Filter, Loading } from './components';
 import {
-  Meeting as MeetingType,
-  State,
-  dataUrl,
+  Data,
+  type DataType,
   filter,
-  getLanguage,
   i18n,
-  isLanguageCode,
-  languages,
-  load,
-  meetingsPerPage,
-  setQuery
+  Input,
+  type InputType,
+  pushEvent
 } from './helpers';
+import * as languages from './languages';
 
 export const App = () => {
-  //check out query string
-  const query = new URLSearchParams(window.location.search);
-  const queryLang = query.get('lang');
-  const language = isLanguageCode(queryLang) ? queryLang : getLanguage();
-  const direction = languages[language].rtl ? 'rtl' : 'ltr';
-
-  const [loading, setLoading] = useState(true);
-
-  const [state, setState] = useState<State>({
-    filters: {
-      days: [],
-      times: [],
-      formats: [],
-      types: []
-    },
-    limit: meetingsPerPage,
-    loaded: false,
-    meetings: [],
-    search: '',
-    timezone: '',
-    language,
-    languages: []
-  });
-
-  const [searchWords, setSearchWords] = useState<string[]>([]);
-
-  useEffect(() => {
-    setQuery(state);
-  }, [state]);
-
-  useEffect(() => {
-    setSearchWords(
-      state.search
-        .toLowerCase()
-        .split(' ')
-        .filter(e => e)
-    );
-  }, [state.search]);
-
-  //set html attributes
-  document.documentElement.lang = language;
-  document.documentElement.dir = direction;
-
-  //function to remove a tag
-  const toggleTag = (filter: string, value: string, checked: boolean): void => {
-    //loop through and add the tag
-    state.filters[filter].forEach(tag => {
-      if (tag.tag === value) {
-        tag.checked = checked;
-      } else if (['days', 'formats', 'language'].includes(filter)) {
-        //if we're setting a tag or format, uncheck the others
-        tag.checked = false;
-      }
-    });
-    //this will cause a re-render; the actual filtering is done in filterData
-    setState({ ...state });
+  const { load, ...data } = useLoaderData() as InputType & {
+    load: Promise<DataType>;
   };
+  const [input, setInput] = useState(data);
 
-  //on first render, get data
-  if (loading) {
-    setLoading(false);
-    fetch(dataUrl)
-      .then(result => result.json())
-      .then(result =>
-        setState(
-          load(result, query, state.language, languages[state.language].strings)
-        )
-      );
-  }
+  // set html language attributes
+  useEffect(() => {
+    document.documentElement.lang = input.language;
+    document.documentElement.dir = languages[input.language].rtl
+      ? 'rtl'
+      : 'ltr';
+  }, [input.language]);
 
-  //get currently-checked tags
-  const tags: string[] = Object.keys(state.filters)
-    .map(filter =>
-      state.filters[filter]
-        .filter(value => value.checked)
-        .map(value => value.tag)
-    )
-    .flat();
+  // update query string for tag updates
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('tags');
+    input.tags.forEach(tag => {
+      url.searchParams.append('tags', tag);
+    });
+    window.history.pushState(null, '', url.toString());
+  }, [input.tags]);
 
-  const [filteredMeetings, currentDays] = filter(
-    state,
-    tags,
-    languages[state.language].strings
-  );
+  // update query string and push event for search updates
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const url = new URL(window.location.href);
+      url.searchParams.delete('search');
+      if (input.searchWords.length) {
+        const value = input.searchWords.join(' ');
+        url.searchParams.append('search', value);
+        pushEvent({ event: 'search', value });
+      }
+      window.history.pushState(null, '', url.toString());
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [input.searchWords]);
 
   return (
     <i18n.Provider
       value={{
-        language: state.language,
-        rtl: languages[state.language].rtl,
-        strings: languages[state.language].strings
+        language: input.language,
+        rtl: languages[input.language].rtl,
+        strings: languages[input.language].strings
       }}
     >
-      <ChakraProvider>
-        <CSSReset />
-        {!state.loaded ? (
-          <Loading />
-        ) : (
-          <Box
-            as="main"
-            maxW={1240}
-            minH="100%"
-            w="100%"
-            mx="auto"
-            p={{ base: 3, md: 6 }}
-          >
-            <Grid
-              as="section"
-              gap={{ base: 3, md: 6 }}
-              templateColumns={{
-                md: 'auto 300px'
-              }}
-            >
-              <Box as="section" order={{ base: 1, md: 2 }}>
-                <Filter
-                  setSearch={(search: string) => setState({ ...state, search })}
-                  setTimezone={(timezone: string) =>
-                    setState({ ...state, timezone })
-                  }
-                  state={state}
-                  currentDays={currentDays}
-                  toggleTag={toggleTag}
-                />
-              </Box>
-              <Box order={{ base: 2, md: 1 }}>
-                {!filteredMeetings.length && (
-                  <NoResults
-                    state={state}
-                    toggleTag={toggleTag}
-                    clearSearch={() => setState({ ...state, search: '' })}
-                  />
-                )}
-                {!!filteredMeetings.length && (
-                  <InfiniteScroll
-                    loadMore={() => {
-                      const limit = state.limit + meetingsPerPage;
-                      setState({ ...state, limit });
+      <Input.Provider value={{ input, setInput }}>
+        <Box
+          alignItems="start"
+          as="main"
+          display="flex"
+          h="full"
+          maxW={1240}
+          mx="auto"
+          p={{ base: 3, md: 6 }}
+          w="full"
+        >
+          <Suspense fallback={<Loading />}>
+            <Await resolve={load} errorElement={<Error />}>
+              {load => (
+                <Data.Provider
+                  value={{
+                    ...load,
+                    filteredMeetings: filter(load.meetings, input)
+                  }}
+                >
+                  <Grid
+                    as="section"
+                    gap={{ base: 4, md: 6 }}
+                    templateColumns={{
+                      md: 'auto 300px'
                     }}
-                    hasMore={filteredMeetings.length > state.limit}
+                    w="full"
                   >
-                    {filteredMeetings
-                      .slice(0, state.limit)
-                      .map((meeting: MeetingType, index: number) => (
-                        <Meeting
-                          key={index}
-                          meeting={meeting}
-                          searchWords={searchWords}
-                          tags={tags}
-                        />
-                      ))}
-                  </InfiniteScroll>
-                )}
-              </Box>
-            </Grid>
-          </Box>
-        )}
-      </ChakraProvider>
+                    <Box as="section" order={{ base: 1, md: 2 }}>
+                      <Filter />
+                    </Box>
+                    <Box order={{ base: 2, md: 1 }}>
+                      <Outlet />
+                    </Box>
+                  </Grid>
+                </Data.Provider>
+              )}
+            </Await>
+          </Suspense>
+        </Box>
+      </Input.Provider>
     </i18n.Provider>
   );
 };

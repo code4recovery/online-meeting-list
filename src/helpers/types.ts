@@ -1,33 +1,59 @@
-import { Moment } from 'moment-timezone';
+import { DateTime } from 'luxon';
 
-import { Language } from './i18n';
-
-export type DataRow = {
+export type Group = {
+  id: string;
   name?: string;
-  times?: string;
-  timezone?: string;
-  url?: string;
-  phone?: string;
-  access_code?: string;
+  notes?: string[];
   email?: string;
-  notes?: string;
-  types?: string;
-  formats?: string;
-  languages?: string;
-  meeting_id?: string;
+  phone?: string;
+  website?: string;
+  venmo?: string;
+  paypal?: string;
+  square?: string;
+  meetings: Meeting[];
 };
 
-export type GoogleSheetData = { values: string[][] };
+export type JSONRow = {
+  slug: string;
+  name?: string;
+  time?: string;
+  end_time?: string;
+  day?: number;
+  timezone?: string;
+  conference_url?: string;
+  conference_url_notes?: string;
+  conference_phone?: string;
+  conference_phone_notes?: string;
+  notes?: string;
+  types?: string[];
+  group?: string;
+  group_id?: string;
+  group_notes?: string;
+  email?: string;
+  phone?: string;
+  website?: string;
+  venmo?: string;
+  paypal?: string;
+  square?: string;
+  updated?: string;
+  edit_url?: string;
+};
 
 export type Meeting = {
+  slug: string;
   name: string;
-  time?: Moment;
-  buttons: MeetingLink[];
-  notes: string[];
+  start?: DateTime;
+  end?: DateTime;
+  conference_provider?: string;
+  conference_url?: string;
+  conference_url_notes?: string;
+  conference_phone?: string;
+  conference_phone_notes?: string;
+  notes?: string[];
+  group_id?: string;
   tags: string[];
   search: string;
-  id?: string;
-  email?: string;
+  edit_url?: string;
 };
 
 export type MeetingLink = {
@@ -35,16 +61,3 @@ export type MeetingLink = {
   onClick: () => void;
   value: string;
 };
-
-export type State = {
-  filters: { [key: string]: Tag[] };
-  limit: number;
-  loaded: boolean;
-  meetings: Meeting[];
-  search: string;
-  timezone: string;
-  language: Language;
-  languages: Language[];
-};
-
-export type Tag = { tag: string; checked: boolean };

@@ -1,24 +1,21 @@
-import { useRef, useContext } from 'react';
+import { useRef } from 'react';
 import {
   IconButton,
   Input,
   InputGroup,
   InputLeftElement,
-  InputRightElement
+  InputRightElement,
+  useColorModeValue
 } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
-import { i18n, State } from '../helpers';
+import { parseSearchWords, useInput, useI18n } from '../helpers';
 
-export type SearchProps = {
-  setSearch: (search: string) => void;
-  search: string;
-  state: State;
-};
-
-export function Search({ search, setSearch }: SearchProps) {
+export function Search() {
+  const { rtl, strings } = useI18n();
+  const { input, setInput } = useInput();
   const searchField = useRef<HTMLInputElement>(null);
-  const { rtl, strings } = useContext(i18n);
+
   const clearButton = (
     <IconButton
       aria-label={strings.clear_search}
@@ -27,36 +24,56 @@ export function Search({ search, setSearch }: SearchProps) {
       _active={{ bg: 'transparent', color: 'gray.500' }}
       _hover={{ bg: 'transparent', color: 'gray.500' }}
       onClick={() => {
-        setSearch('');
+        setInput({
+          ...input,
+          searchWords: []
+        });
         if (searchField.current) {
+          searchField.current.value = '';
           searchField.current.focus();
         }
       }}
     />
   );
+
+  const inputGroupStyle = useColorModeValue(
+    {
+      borderColor: 'gray.300',
+      color: 'gray.600'
+    },
+    {
+      borderColor: 'gray.700',
+      color: 'gray.400'
+    }
+  );
+
   return (
-    <InputGroup borderColor="gray.300" color="gray.500">
-      {(!rtl || (rtl && !!search.length)) && (
+    <InputGroup {...inputGroupStyle}>
+      {(!rtl || !!input.searchWords.length) && (
         <InputLeftElement>
-          {rtl && !!search.length && clearButton}
-          {!rtl && <Icon name="search" />}
+          {rtl ? clearButton : <Icon name="search" />}
         </InputLeftElement>
       )}
       <Input
         aria-label={strings.search}
-        bgColor="white"
+        bg={useColorModeValue('white', 'gray.900')}
+        defaultValue={input.searchWords.join(' ')}
+        onChange={e =>
+          setInput({
+            ...input,
+            searchWords: parseSearchWords(e.currentTarget.value)
+          })
+        }
+        name="search"
+        pl={rtl ? 4 : 9}
         placeholder={strings.search}
-        onChange={e => setSearch(e.target.value)}
-        value={search}
-        pl={rtl ? 4 : 10}
-        pr={rtl ? 10 : 4}
+        pr={rtl ? 9 : 4}
         ref={searchField}
         textAlign={rtl ? 'right' : 'left'}
       />
-      {(rtl || (!rtl && !!search.length)) && (
+      {(rtl || !!input.searchWords.length) && (
         <InputRightElement>
-          {!rtl && !!search.length && clearButton}
-          {rtl && <Icon name="search" />}
+          {rtl ? <Icon name="search" /> : clearButton}
         </InputRightElement>
       )}
     </InputGroup>

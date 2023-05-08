@@ -1,66 +1,116 @@
-import { useContext } from 'react';
-import { Box, Heading, Stack, Text, Tag } from '@chakra-ui/react';
+import {
+  Box,
+  Button as ChakraButton,
+  Heading,
+  Stack,
+  Text,
+  Tag,
+  useColorModeValue
+} from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
-import { ButtonPrimary } from './ButtonPrimary';
-import { Meeting as MeetingType, i18n } from '../helpers';
-import { Report } from './Report';
+import { Link } from 'react-router-dom';
 
-export type MeetingProps = {
+import { Button } from './Button';
+import { Group } from './Group';
+import { Icon } from './Icon';
+import {
+  Meeting as MeetingType,
+  MeetingLink,
+  formatTime,
+  useI18n,
+  useInput
+} from '../helpers';
+
+export function Meeting({
+  link,
+  meeting
+}: {
+  link?: string;
   meeting: MeetingType;
-  searchWords: string[];
-  tags: string[];
-};
+}) {
+  const {
+    conference_phone_notes,
+    conference_url_notes,
+    conference_phone,
+    conference_provider,
+    conference_url,
+    edit_url,
+    group_id,
+    name,
+    notes,
+    start,
+    tags
+  } = meeting;
+  const { rtl, strings } = useI18n();
+  const { input } = useInput();
 
-export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
-  const { rtl, strings } = useContext(i18n);
-  const days = [
-    strings.sunday,
-    strings.monday,
-    strings.tuesday,
-    strings.wednesday,
-    strings.thursday,
-    strings.friday,
-    strings.saturday
-  ];
+  const buttons: Array<MeetingLink & { notes?: string }> = [];
+  if (conference_provider) {
+    buttons.push({
+      icon: 'video',
+      value: conference_provider,
+      onClick: () => window.open(conference_url),
+      notes: conference_url_notes
+    });
+  }
+  if (conference_phone) {
+    buttons.push({
+      icon: 'phone',
+      value: strings.telephone,
+      onClick: () => window.open(`tel:${conference_phone}`),
+      notes: conference_phone_notes
+    });
+  }
+
+  const isAdmin = document.cookie
+    .split('; ')
+    .some(row => row.startsWith('admin='));
+
+  const title = input.searchWords?.length ? (
+    <Highlighter searchWords={input.searchWords} textToHighlight={name} />
+  ) : (
+    name
+  );
+
   return (
     <Box
       as="article"
-      bg="white"
-      border="1px"
-      borderColor="gray.300"
-      mb={{ base: 3, md: 6 }}
+      bg={useColorModeValue('white', 'gray.900')}
+      borderColor={useColorModeValue('gray.300', 'gray.800')}
+      borderWidth="1px"
+      mb={{ base: 5, md: 6 }}
       overflow="hidden"
+      position="relative"
       rounded="md"
       shadow="md"
       textAlign={rtl ? 'right' : 'left'}
+      w="full"
     >
-      <Stack spacing={3} p={{ base: 3, md: 5 }}>
-        <Box alignItems="baseline">
-          <Heading as="h2" display={{ lg: 'inline' }} fontSize="2xl">
-            <Highlighter
-              searchWords={searchWords}
-              textToHighlight={meeting.name}
-            />
-          </Heading>
+      <Stack spacing={5} p={{ base: 3, md: 5 }}>
+        <Box
+          alignItems="baseline"
+          display="flex"
+          flexDirection={{ base: 'column', lg: 'row' }}
+          flexWrap="wrap"
+          gap={{ base: 2, lg: 3 }}
+        >
           <Heading
-            as="h3"
-            color="gray.600"
-            display={{ lg: 'inline' }}
-            fontSize="lg"
-            fontWeight="normal"
-            ml={{ lg: 2 }}
+            as="h2"
+            fontSize="2xl"
+            _hover={
+              link ? { cursor: 'pointer', textDecoration: 'underline' } : {}
+            }
           >
-            {!meeting.time
-              ? strings.ongoing
-              : days[meeting.time.day()] +
-                ' ' +
-                meeting.time.format('LT').toLocaleLowerCase()}
+            {link ? <Link to={link}>{title}</Link> : title}
+          </Heading>
+          <Heading as="h3" color={'gray.500'} fontSize="lg" fontWeight="normal">
+            {formatTime(strings, start)}
           </Heading>
         </Box>
-        {!!meeting.buttons.length && (
-          <Box>
-            {meeting.buttons.map((button, index) => {
+        {!!buttons.length && (
+          <Stack spacing={3}>
+            {buttons.map((button, index) => {
               const text =
                 button.icon === 'email'
                   ? strings.email
@@ -74,40 +124,35 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
                   ? strings.telephone_use.replace('{{value}}', button.value)
                   : strings.video_use.replace('{{value}}', button.value);
               return (
-                <Box
-                  float={rtl ? 'right' : 'left'}
-                  mr={rtl ? 0 : 2}
-                  ml={rtl ? 2 : 0}
-                  my={1}
-                  key={index}
-                >
-                  <ButtonPrimary text={text} title={title} {...button} />
+                <Box key={index} display="flex" alignItems="center" gap={3}>
+                  <Button text={text} title={title} {...button} />
+                  <Text color={'gray.500'}>{button.notes}</Text>
                 </Box>
               );
             })}
-          </Box>
+          </Stack>
         )}
-        {!!meeting.notes.length && (
-          <Stack spacing={3}>
-            {meeting.notes.map((paragraph: string, key: number) => (
+        {!!notes?.length && (
+          <Stack spacing={1}>
+            {notes.map((paragraph: string, key: number) => (
               <Text key={key} wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}
           </Stack>
         )}
-        {!!meeting.tags.length && (
+        {!!group_id && <Group meeting={meeting} />}
+        {!!tags.length && (
           <Box>
-            {meeting.tags.map((tag: string, index: number) => (
+            {tags.map((tag: string, index: number) => (
               <Tag
-                bg={tags.includes(tag) ? 'gray.300' : 'gray.100'}
-                border="1px"
-                borderColor={tags.includes(tag) ? 'gray.400' : 'gray.200'}
+                bg="transparent"
                 borderRadius="base"
-                color={tags.includes(tag) ? 'gray.700' : 'gray.600'}
+                borderWidth="1px"
                 key={index}
                 me={2}
                 my={1}
+                opacity={input.tags.includes(tag) ? 1 : 0.5}
                 px={3}
                 py={1}
                 size="sm"
@@ -118,8 +163,17 @@ export function Meeting({ meeting, searchWords, tags }: MeetingProps) {
           </Box>
         )}
       </Stack>
-      {process.env.REACT_APP_EMAIL_JS_SERVICE_ID && (
-        <Report meeting={meeting} />
+      {edit_url && isAdmin && (
+        <ChakraButton
+          {...(rtl ? { left: -3 } : { right: -3 })}
+          _hover={{ bg: 'transparent', color: 'gray.500' }}
+          bg="transparent"
+          color="gray.400"
+          leftIcon={<Icon name="pencil" size={22} />}
+          onClick={() => window.open(edit_url)}
+          position="absolute"
+          top={0}
+        />
       )}
     </Box>
   );
