@@ -83,7 +83,7 @@ export const App = () => {
                 >
                   <Grid
                     as="section"
-                    gap={{ base: 5, md: 6 }}
+                    gap={{ base: 4, md: 6 }}
                     templateColumns={{
                       md: 'auto 300px'
                     }}
