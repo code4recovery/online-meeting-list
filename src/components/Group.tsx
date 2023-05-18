@@ -132,22 +132,22 @@ export function Group({ meeting }: { meeting: Meeting }) {
         <Box style={{ marginLeft: '-1.25rem', marginRight: '-1.25rem' }}>
           <Accordion allowToggle>
             <AccordionItem>
-              <h2>
-                <AccordionButton px={5}>
-                  <Box
-                    as="span"
-                    flex="1"
-                    display="flex"
-                    gap={3}
-                    alignItems="center"
-                    textAlign="left"
-                  >
-                    <Badge variant="subtle">{meetings.length}</Badge>
-                    <Text fontWeight="bold">{name}</Text>
-                  </Box>
-                  <AccordionIcon />
-                </AccordionButton>
-              </h2>
+              <AccordionButton px={5}>
+                <Box
+                  alignItems="center"
+                  as="span"
+                  display="flex"
+                  flex="1"
+                  gap={3}
+                  textAlign="left"
+                >
+                  <Badge variant="subtle">{meetings.length}</Badge>
+                  <Text fontWeight="bold" m={0}>
+                    {name}
+                  </Text>
+                </Box>
+                <AccordionIcon />
+              </AccordionButton>
               <AccordionPanel pt={1} pb={4} px={5}>
                 <Stack spacing={{ base: 4, lg: 1 }}>
                   {meetings.map(({ start, slug, name }, index) => (

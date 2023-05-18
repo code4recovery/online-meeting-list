@@ -1,5 +1,5 @@
 import { Suspense, useEffect, useState } from 'react';
-import { Box, Grid } from '@chakra-ui/react';
+import { Box, Grid, useColorModeValue } from '@chakra-ui/react';
 import { Await, Outlet, useLoaderData } from 'react-router-dom';
 
 import { Error, Filter, Loading } from './components';
@@ -65,6 +65,7 @@ export const App = () => {
         <Box
           alignItems="start"
           as="main"
+          bg={useColorModeValue('gray.50', 'gray.700')}
           display="flex"
           h="full"
           maxW={1240}

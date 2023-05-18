@@ -98,13 +98,20 @@ export function Meeting({
           <Heading
             as="h2"
             fontSize="2xl"
+            m={0}
             _hover={
               link ? { cursor: 'pointer', textDecoration: 'underline' } : {}
             }
           >
             {link ? <Link to={link}>{title}</Link> : title}
           </Heading>
-          <Heading as="h3" color={'gray.500'} fontSize="lg" fontWeight="normal">
+          <Heading
+            as="h3"
+            color={'gray.500'}
+            fontSize="lg"
+            fontWeight="normal"
+            m={0}
+          >
             {formatTime(strings, start)}
           </Heading>
         </Box>
