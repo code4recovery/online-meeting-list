@@ -8,9 +8,9 @@ import {
   AccordionPanel,
   Badge,
   Box,
-  Button,
   Stack,
-  Text
+  Text,
+  useColorModeValue
 } from '@chakra-ui/react';
 
 import {
@@ -20,12 +20,26 @@ import {
   formatIcs,
   formatTime
 } from '../helpers';
-import { Icon } from './Icon';
+
+import { Button } from './Button';
 
 export function Group({ meeting }: { meeting: Meeting }) {
   const { group_id } = meeting;
   const { groups } = useData();
   const { strings } = useI18n();
+  const accordion = useColorModeValue(
+    {
+      bg: 'gray.50',
+      color: 'gray.800',
+      borderColor: 'gray.200'
+    },
+    {
+      bg: 'gray.900',
+      color: 'white',
+      borderColor: 'gray.700'
+    }
+  );
+
   const group = groups[group_id as keyof typeof groups];
   if (!group) return <div>nothing</div>;
   const {
@@ -69,7 +83,7 @@ export function Group({ meeting }: { meeting: Meeting }) {
       <Box display="flex" gap={2} flexWrap="wrap">
         {!!email && (
           <Button
-            leftIcon={<Icon name="email" />}
+            icon="email"
             onClick={() => (window.location.href = `mailto:${email}`)}
           >
             {strings.email}
@@ -77,23 +91,20 @@ export function Group({ meeting }: { meeting: Meeting }) {
         )}
         {!!phone && (
           <Button
-            leftIcon={<Icon name="phone" />}
+            icon="phone"
             onClick={() => (window.location.href = `tel:${phone}`)}
           >
             {strings.telephone}
           </Button>
         )}
         {!!website && (
-          <Button
-            leftIcon={<Icon name="link" />}
-            onClick={() => (window.location.href = website)}
-          >
+          <Button icon="link" onClick={() => (window.location.href = website)}>
             {strings.website}
           </Button>
         )}
         {!!venmo && (
           <Button
-            leftIcon={<Icon name="cash" />}
+            icon="cash"
             onClick={() =>
               (window.location.href = `https://account.venmo.com/u/${venmo}`)
             }
@@ -103,7 +114,7 @@ export function Group({ meeting }: { meeting: Meeting }) {
         )}
         {!!paypal && (
           <Button
-            leftIcon={<Icon name="cash" />}
+            icon="cash"
             onClick={() =>
               (window.location.href = `https://www.paypal.com/paypalme/${paypal}`)
             }
@@ -113,7 +124,7 @@ export function Group({ meeting }: { meeting: Meeting }) {
         )}
         {!!square && (
           <Button
-            leftIcon={<Icon name="cash" />}
+            icon="cash"
             onClick={() =>
               (window.location.href = `https://cash.app/${square}`)
             }
@@ -122,8 +133,8 @@ export function Group({ meeting }: { meeting: Meeting }) {
           </Button>
         )}
         <Button
+          icon="calendar"
           onClick={() => formatIcs({ ...meeting, group })}
-          leftIcon={<Icon name="calendar" />}
         >
           {strings.calendar}
         </Button>
@@ -131,49 +142,60 @@ export function Group({ meeting }: { meeting: Meeting }) {
       {meetings.length > 1 && (
         <Box style={{ marginLeft: '-1.25rem', marginRight: '-1.25rem' }}>
           <Accordion allowToggle>
-            <AccordionItem>
-              <AccordionButton px={5}>
-                <Box
-                  alignItems="center"
-                  as="span"
-                  display="flex"
-                  flex="1"
-                  gap={3}
-                  textAlign="left"
-                >
-                  <Badge variant="subtle">{meetings.length}</Badge>
-                  <Text fontWeight="bold" m={0}>
-                    {name}
-                  </Text>
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-              <AccordionPanel pt={1} pb={4} px={5}>
-                <Stack spacing={{ base: 4, lg: 1 }}>
-                  {meetings.map(({ start, slug, name }, index) => (
+            <AccordionItem
+              borderBottomColor={accordion.borderColor}
+              borderBottomWidth={1}
+              borderStyle="solid"
+              borderTopColor={accordion.borderColor}
+              borderTopWidth={1}
+            >
+              {({ isExpanded }) => (
+                <Box bg={isExpanded ? accordion.bg : undefined}>
+                  <AccordionButton px={5} _hover={{ bg: accordion.bg }}>
                     <Box
-                      key={index}
+                      alignItems="center"
+                      as="span"
+                      color={accordion.color}
                       display="flex"
-                      gap={{ base: 0, lg: 3 }}
-                      flexDirection={{ base: 'column', lg: 'row' }}
+                      flex="1"
+                      gap={3}
+                      textAlign="left"
                     >
-                      <Box>{formatTime(strings, start)}</Box>
-                      <Box>
-                        <Link to={`/${slug}`}>
-                          <Text
-                            color="blue.500"
-                            as="span"
-                            textDecoration="underline"
-                            _hover={{ color: 'blue.600' }}
-                          >
-                            {name}
-                          </Text>
-                        </Link>
-                      </Box>
+                      <Badge variant="subtle">{meetings.length}</Badge>
+                      <Text fontWeight="bold" m={0}>
+                        {name}
+                      </Text>
                     </Box>
-                  ))}
-                </Stack>
-              </AccordionPanel>
+                    <AccordionIcon />
+                  </AccordionButton>
+                  <AccordionPanel pt={1} pb={4} px={5}>
+                    <Stack spacing={{ base: 4, lg: 1 }}>
+                      {meetings.map(({ start, slug, name }, index) => (
+                        <Box
+                          key={index}
+                          display="flex"
+                          gap={{ base: 0, lg: 3 }}
+                          flexDirection={{ base: 'column', lg: 'row' }}
+                        >
+                          <Box>{formatTime(strings, start)}</Box>
+                          <Box>
+                            <Link to={`/${slug}`}>
+                              <Text
+                                color="blue.500"
+                                as="span"
+                                textDecoration="underline"
+                                _hover={{ color: 'blue.600' }}
+                              >
+                                {name}
+                              </Text>
+                            </Link>
+                          </Box>
+                        </Box>
+                      ))}
+                    </Stack>
+                  </AccordionPanel>
+                </Box>
+              )}
             </AccordionItem>
           </Accordion>
         </Box>

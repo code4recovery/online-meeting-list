@@ -15,9 +15,11 @@ export function NoResults() {
           <Button
             icon="small-close"
             onClick={() => setInput({ ...input, searchWords: [] })}
-            text={strings.clear_search}
+            primary
             title={strings.clear_search}
-          />
+          >
+            {strings.clear_search}
+          </Button>
         )}
         {input.tags.map(value => (
           <Button
@@ -29,9 +31,10 @@ export function NoResults() {
                 tags: input.tags.filter(tag => tag !== value)
               })
             }
-            text={value}
-            title={value}
-          />
+            primary
+          >
+            {value}
+          </Button>
         ))}
       </Stack>
     </Alert>

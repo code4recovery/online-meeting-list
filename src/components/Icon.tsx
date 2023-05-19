@@ -6,6 +6,7 @@ import {
   ChevronUpIcon,
   ClockIcon,
   ExclamationIcon,
+  FilterIcon,
   LinkIcon,
   MailIcon,
   PencilAltIcon,
@@ -28,6 +29,7 @@ export function Icon({
     | 'chevron-up'
     | 'email'
     | 'error'
+    | 'filter'
     | 'language'
     | 'link'
     | 'pencil'
@@ -46,6 +48,7 @@ export function Icon({
   if (name === 'chevron-up') return <ChevronUpIcon {...props} />;
   if (name === 'email') return <MailIcon {...props} />;
   if (name === 'error') return <ExclamationIcon {...props} />;
+  if (name === 'filter') return <FilterIcon {...props} />;
   if (name === 'language') return <TranslateIcon {...props} />;
   if (name === 'link') return <LinkIcon {...props} />;
   if (name === 'pencil') return <PencilAltIcon {...props} />;

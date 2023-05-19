@@ -1,35 +1,41 @@
-import { Box, Button as ChakraButton } from '@chakra-ui/react';
+import { Button as ChakraButton, useColorModeValue } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
+import React from 'react';
+import { useI18n } from '../helpers';
 
 export function Button({
-  disabled,
+  children,
   icon,
-  onClick,
-  text,
-  title
+  primary,
+  ...rest
 }: {
-  disabled?: boolean;
-  icon?: 'link' | 'email' | 'phone' | 'small-close' | 'video';
-  onClick: () => void;
-  text: string;
-  title?: string;
-}) {
+  icon?: React.ComponentProps<typeof Icon>['name'];
+  primary?: boolean;
+} & React.ComponentProps<typeof ChakraButton>) {
+  const { rtl } = useI18n();
+
+  const color = useColorModeValue('gray.800 !important', 'white !important');
+
   return (
     <ChakraButton
-      bg="blue.600"
-      color="white"
-      disabled={disabled}
-      onClick={onClick}
-      title={title}
-      _hover={{ bg: 'blue.800' }}
+      {...rest}
+      {...(primary
+        ? {
+            _hover: { bg: 'blue.800' },
+            bg: 'blue.600',
+            color: 'white !important'
+          }
+        : {
+            color,
+            _active: { bg: color },
+            _focus: { bg: color }
+          })}
+      textTransform="none"
+      leftIcon={icon && !rtl ? <Icon name={icon} /> : undefined}
+      rightIcon={icon && rtl ? <Icon name={icon} /> : undefined}
     >
-      {icon && (
-        <Box me={1}>
-          <Icon name={icon} />
-        </Box>
-      )}
-      {text}
+      {children}
     </ChakraButton>
   );
 }

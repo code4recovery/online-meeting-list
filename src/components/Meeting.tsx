@@ -76,9 +76,9 @@ export function Meeting({
   return (
     <Box
       as="article"
-      bg={useColorModeValue('white', 'gray.900')}
+      bg={useColorModeValue('white', 'gray.800')}
       borderColor={useColorModeValue('gray.300', 'gray.800')}
-      borderWidth="1px"
+      borderWidth={1}
       mb={{ base: 5, md: 6 }}
       overflow="hidden"
       position="relative"
@@ -94,6 +94,7 @@ export function Meeting({
           flexDirection={{ base: 'column', lg: 'row' }}
           flexWrap="wrap"
           gap={{ base: 2, lg: 3 }}
+          mr={isAdmin ? 7 : 0}
         >
           <Heading
             as="h2"
@@ -132,7 +133,9 @@ export function Meeting({
                   : strings.video_use.replace('{{value}}', button.value);
               return (
                 <Box key={index} display="flex" alignItems="center" gap={3}>
-                  <Button text={text} title={title} {...button} />
+                  <Button title={title} primary {...button}>
+                    {text}
+                  </Button>
                   <Text color={'gray.500'}>{button.notes}</Text>
                 </Box>
               );

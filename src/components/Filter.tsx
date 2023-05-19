@@ -1,6 +1,7 @@
 import { FormEvent, useState } from 'react';
-import { Button, Select, Stack, useColorModeValue } from '@chakra-ui/react';
+import { Select, Stack, useColorModeValue } from '@chakra-ui/react';
 
+import { Button } from './Button';
 import { Checkboxes } from './Checkboxes';
 import { Search } from './Search';
 import { Icon } from './Icon';
@@ -53,14 +54,11 @@ export function Filter() {
         </Select>
       </Stack>
       <Button
-        bg={useColorModeValue('white', 'gray.900')}
-        borderColor={useColorModeValue('gray.300', 'gray.800')}
-        color="gray.500"
         display={{ base: 'flex', md: 'none' }}
+        icon={open ? 'small-close' : 'filter'}
         onClick={() => setOpen(!open)}
         rightIcon={<Icon name={open ? 'chevron-up' : 'chevron-down'} />}
-        variant="outline"
-        w="100%"
+        w="full"
       >
         {open ? strings.close : strings.filters}
       </Button>
