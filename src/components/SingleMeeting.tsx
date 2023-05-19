@@ -1,7 +1,7 @@
 import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
-import { Button, Stack } from '@chakra-ui/react';
+import { Stack } from '@chakra-ui/react';
 
-import { Icon } from './Icon';
+import { Button } from './Button';
 import { Error } from './Error';
 import { Meeting } from './Meeting';
 import { useData } from '../helpers';
@@ -19,7 +19,7 @@ export function SingleMeeting() {
   return (
     <Stack gap={3} alignItems="start">
       <Button
-        leftIcon={<Icon name="arrow-left" />}
+        icon="arrow-left"
         onClick={() => {
           if (key === 'default') {
             navigate('/');
