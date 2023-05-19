@@ -2,45 +2,42 @@ This is a meeting finder designed to list online recovery meetings around the wo
 
 ## Managing Data
 
-:warning: As of version `1.0.0`, data must be provided in [Meeting Guide-formatted JSON](https://github.com/code4recovery/spec/). This can be genrated in the following ways:
+:warning: As of version `1.0.0`, data must be provided in [Meeting Guide-formatted JSON](https://github.com/code4recovery/spec/). Here are some options:
 
 - [Central](https://github.com/code4recovery/central/) :point_left: this is what OIAA is using
 - [12 Step Meeting List](https://wordpress.org/plugins/12-step-meeting-list/) WordPress plugin
-- [Sheets](https://sheets.code4recovery.org/) (please note the legacy OIAA Google Sheets format is no longer supported)
-- Custom database
-
-## Installation
-
-In your env file, specify this variable:
-
-```
-REACT_APP_JSON_URL="https://your-website.org/meetings.json"
-```
+- [Sheets](https://sheets.code4recovery.org/) (please note the old OIAA Google Sheets format is no longer supported)
+- Custom solution
 
 ## Install and run locally
 
 1. Clone this repository.
-1. In the project directory, run `npm i && npm run dev` to start the app in development mode.
+1. In the project directory, add a file called `.env` and add this line with your data feed URL:
+
+   ```
+   REACT_APP_JSON_URL="https://your-website.org/meetings.json"
+   ```
+
+1. Open your terminal and run `npm i && npm run dev` to start the app in development mode.
 
 ## Deploy to your Website
 
-:warning: If you want to use this in a subfolder, add this line to your .env file:
+:warning: If you want to deploy to a subfolder, add this line to your .env file:
 
 ```
 REACT_APP_BASE_URL="/meetings"
 ```
 
-1. In the project directory, run `npm i && npm run build`.
+1. In your terminal run `npm i && npm run build`.
 1. Copy the `/build/static` folder to your website.
 1. Add the following HTML to your web page (replace `chunk` below with the correct file name):
 
 ```
-<script defer="defer" src="/static/js/main.chunk.js"></script>
-<link href="/static/css/main.chunk.css" rel="stylesheet" />
+<script defer src="/static/js/main.chunk.js"></script>
 <div id="root"></div>
 ```
 
-Your webserver should point inside pages to your main page. If you are using WordPress, create a page at `/meetings` and then add the following to your theme's `functions.php`, then re-save Settings > Permalinks:
+Your webserver needs to point inside pages to your main page. If you are using WordPress, create a page at `/meetings` and then add the following to your theme's `functions.php`, then re-save Settings > Permalinks:
 
 ```
 add_action('init', function () {
@@ -50,7 +47,7 @@ add_action('init', function () {
 
 ## Dark mode
 
-By default, the app renders in light or dark mode depending on the user's system preferences. This setting can be overridden with `light` or `dark`:
+By default, the app renders in light or dark mode depending on the user's browser preferences. This setting can be overridden with `light` or `dark`:
 
 ```
 REACT_APP_COLOR_MODE="light";
