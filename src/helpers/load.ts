@@ -37,6 +37,39 @@ export async function load(url: string, language: Language): Promise<DataType> {
       edit_url: row.edit_url
     };
 
+    if (typeof row.day !== 'undefined' && row.time && row.timezone) {
+      // timezone
+      const timestring = `${strings.days[row.day]} ${row.time}`;
+      const zone = row.timezone.trim();
+
+      // luxonize start time
+      const weekday = row.day === 0 ? 7 : row.day;
+      let [hour, minute] = row.time.split(':').map(num => parseInt(num));
+      const start = DateTime.fromObject({ weekday, hour, minute }, { zone });
+
+      if (!start.isValid) {
+        warn(timestring, `invalid start time ${start.invalidExplanation}`, i);
+      } else {
+        meeting.start = start;
+
+        if (row.end_time) {
+          let [hour, minute] = row.time.split(':').map(num => parseInt(num));
+          const end = DateTime.fromObject({ weekday, hour, minute }, { zone });
+          if (!end.isValid) {
+            warn(timestring, `invalid end time ${start.invalidExplanation}`, i);
+            meeting.end = start.plus({ hour: 1 });
+          } else {
+            meeting.end = end;
+          }
+        } else {
+          meeting.end = start.plus({ hour: 1 });
+        }
+      }
+    } else {
+      meeting.tags.push(strings.ongoing);
+      hasOngoing = true;
+    }
+
     // start formats array
     const meetingFormats: string[] = [];
 
@@ -85,7 +118,11 @@ export async function load(url: string, language: Language): Promise<DataType> {
     const website = validateUrl(row.website) ? row.website : undefined;
 
     // email / forum formats
-    if (!meeting.conference_provider && !meeting.conference_phone) {
+    if (
+      !meeting.conference_provider &&
+      !meeting.conference_phone &&
+      !meeting.start
+    ) {
       if (row.email) {
         meetingFormats.push(strings.email);
       }
@@ -137,39 +174,6 @@ export async function load(url: string, language: Language): Promise<DataType> {
       .split(' ')
       .filter(e => e)
       .join(' ');
-
-    if (typeof row.day !== 'undefined' && row.time && row.timezone) {
-      // timezone
-      const timestring = `${strings.days[row.day]} ${row.time}`;
-      const zone = row.timezone.trim();
-
-      // luxonize start time
-      const weekday = row.day === 0 ? 7 : row.day;
-      let [hour, minute] = row.time.split(':').map(num => parseInt(num));
-      const start = DateTime.fromObject({ weekday, hour, minute }, { zone });
-
-      if (!start.isValid) {
-        warn(timestring, `invalid start time ${start.invalidExplanation}`, i);
-      } else {
-        meeting.start = start;
-
-        if (row.end_time) {
-          let [hour, minute] = row.time.split(':').map(num => parseInt(num));
-          const end = DateTime.fromObject({ weekday, hour, minute }, { zone });
-          if (!end.isValid) {
-            warn(timestring, `invalid end time ${start.invalidExplanation}`, i);
-            meeting.end = start.plus({ hour: 1 });
-          } else {
-            meeting.end = end;
-          }
-        } else {
-          meeting.end = start.plus({ hour: 1 });
-        }
-      }
-    } else {
-      meeting.tags.push(strings.ongoing);
-      hasOngoing = true;
-    }
 
     meetings.push(meeting);
 
