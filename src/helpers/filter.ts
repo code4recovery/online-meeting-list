@@ -1,5 +1,3 @@
-import { DateTime } from 'luxon';
-
 import * as languages from '../languages';
 import type { Meeting } from './types';
 import { InputType } from './input';
@@ -9,27 +7,26 @@ export function filter(meetings: Meeting[], input: InputType) {
   const { searchWords, tags, language, timezone } = input;
   const { strings } = languages[language];
 
-  //get current timestamp
-  const now = DateTime.now();
-
   //loop through meetings for time operations
   meetings.map(meeting => {
-    if (meeting.start) {
+    if (meeting.start && meeting.end) {
       //convert timezone
       meeting.start = meeting.start.setZone(timezone);
 
       //make all meetings upcoming
-      let diff = meeting.start.diff(now, 'minutes').minutes;
+      let diff = meeting.start.diffNow('minutes').minutes;
 
       //with timezone weirdness, date could be more than a week ago
       if (diff < -10080) {
         meeting.start = meeting.start.plus({ week: 1 });
-        diff = meeting.start.diff(now, 'minutes').minutes;
+        meeting.end = meeting.end.plus({ week: 1 });
+        diff = meeting.start.diffNow('minutes').minutes;
       }
 
       //show meetings that started up to 10 minutes ago
       if (diff < -10) {
         meeting.start = meeting.start.plus({ week: 1 });
+        meeting.end = meeting.end.plus({ week: 1 });
       }
 
       //remove all days from meeting
