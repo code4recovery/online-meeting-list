@@ -12,6 +12,7 @@ export function filter(meetings: Meeting[], input: InputType) {
     if (meeting.start && meeting.end) {
       //convert timezone
       meeting.start = meeting.start.setZone(timezone);
+      meeting.end = meeting.end.setZone(timezone);
 
       //make all meetings upcoming
       let diff = meeting.start.diffNow('minutes').minutes;

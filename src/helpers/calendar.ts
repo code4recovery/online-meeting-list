@@ -7,11 +7,11 @@ export function formatGoogleCalendar(meeting: Meeting & { group: Group }) {
   const params = {
     action: 'TEMPLATE',
     dates: [meeting.start, meeting.end]
-      .map(time => time.toFormat('yyyyLLddTHHmmss'))
+      .map(time => time.toFormat("yyyyLLdd'T'HHmmss"))
       .join('/'),
     text: meeting.name,
     trp: 'false',
-    ctz: meeting.start.zoneName ?? '',
+    ctz: meeting.start.zoneName ?? '', // todo pass original event tz
     sprop: `website:${window.location.origin}`
   };
 
@@ -29,7 +29,7 @@ export function formatIcs(meeting: Meeting & { group: Group }) {
 
   if (!meeting.start || !meeting.end) return;
 
-  //start building event
+  // todo pass original event tz
   const event = [
     `SUMMARY:${meeting.name}`,
     `DTSTAMP:${meeting.start.setZone('UTC').toFormat(fmt)}Z`,
@@ -37,7 +37,6 @@ export function formatIcs(meeting: Meeting & { group: Group }) {
     `DTEND;TZID=${meeting.end.zoneName}:${meeting.end.toFormat(fmt)}`
   ];
 
-  //start building description
   const description = formatDescription(meeting);
 
   if (description.length) {
@@ -105,24 +104,24 @@ function formatOutlookQueryString(meeting: Meeting & { group: Group }) {
   return new URLSearchParams({
     path: '/calendar/action/compose',
     rrv: 'addevent',
-    startdt: '2023-06-27T18:00:00',
-    enddt: '2023-06-27T19:30:00',
+    startdt: meeting.start?.toFormat("yyyy-LL-dd'T'HH:mm:ss") ?? '', // todo pass original event tz
+    enddt: meeting.end?.toFormat("yyyy-LL-dd'T'HH:mm:ss") ?? '', // todo pass original event tz
     subject: meeting.name,
-    body: formatDescription(meeting).join(' ')
+    body: formatDescription(meeting).join('<br>')
   });
 }
 
 // build description field
 function formatDescription(meeting: Meeting & { group: Group }) {
-  //start building description
+  // start building description
   const description = [];
 
-  //add notes
+  // add notes
   if (meeting.notes) {
     description.push(meeting.notes);
   }
 
-  //add online info
+  // add online info
   if (meeting.conference_provider) {
     if (meeting.conference_url_notes) {
       description.push(meeting.conference_url_notes);

@@ -142,7 +142,7 @@ export function Group({ meeting }: { meeting: Meeting }) {
           </Button>
         )}
         {meeting.start && meeting.end && (
-          <Menu>
+          <Menu autoSelect={false}>
             {({ isOpen }) => (
               <>
                 <MenuButton
@@ -153,32 +153,34 @@ export function Group({ meeting }: { meeting: Meeting }) {
                 >
                   {strings.calendar}
                 </MenuButton>
-                <MenuList>
-                  <MenuItem onClick={() => formatIcs({ ...meeting, group })}>
-                    iCalendar
-                  </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href={formatGoogleCalendar({ ...meeting, group })}
-                    target="_blank"
-                  >
-                    Google Calendar
-                  </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href={formatOutlook365({ ...meeting, group })}
-                    target="_blank"
-                  >
-                    Microsoft 365
-                  </MenuItem>
-                  <MenuItem
-                    as="a"
-                    href={formatOutlookLive({ ...meeting, group })}
-                    target="_blank"
-                  >
-                    Microsoft Live
-                  </MenuItem>
-                </MenuList>
+                {isOpen && (
+                  <MenuList>
+                    <MenuItem onClick={() => formatIcs({ ...meeting, group })}>
+                      iCalendar
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatGoogleCalendar({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Google Calendar
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatOutlook365({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Microsoft 365
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatOutlookLive({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Microsoft Live
+                    </MenuItem>
+                  </MenuList>
+                )}
               </>
             )}
           </Menu>
