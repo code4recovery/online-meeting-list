@@ -47,7 +47,7 @@ const router = createBrowserRouter(
         {
           path: '/:id',
           element: <SingleMeeting />,
-          loader: ({ params }) => params.id
+          loader: ({ params }) => params.id ?? ''
         }
       ]
     }
