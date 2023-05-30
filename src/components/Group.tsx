@@ -8,20 +8,29 @@ import {
   AccordionPanel,
   Badge,
   Box,
+  Button as ChakraButton,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Stack,
   Text,
   useColorModeValue
 } from '@chakra-ui/react';
 
 import {
-  useData,
-  type Meeting,
-  useI18n,
+  formatGoogleCalendar,
   formatIcs,
-  formatTime
+  formatOutlook365,
+  formatOutlookLive,
+  formatTime,
+  type Meeting,
+  useData,
+  useI18n
 } from '../helpers';
 
 import { Button } from './Button';
+import { Icon } from './Icon';
 
 export function Group({ meeting }: { meeting: Meeting }) {
   const { group_id } = meeting;
@@ -132,12 +141,50 @@ export function Group({ meeting }: { meeting: Meeting }) {
             Cash App
           </Button>
         )}
-        <Button
-          icon="calendar"
-          onClick={() => formatIcs({ ...meeting, group })}
-        >
-          {strings.calendar}
-        </Button>
+        {meeting.start && meeting.end && (
+          <Menu autoSelect={false}>
+            {({ isOpen }) => (
+              <>
+                <MenuButton
+                  as={ChakraButton}
+                  isActive={isOpen}
+                  leftIcon={<Icon name="calendar" />}
+                  rightIcon={<Icon name="chevron-down" />}
+                >
+                  {strings.calendar}
+                </MenuButton>
+                {isOpen && (
+                  <MenuList>
+                    <MenuItem onClick={() => formatIcs({ ...meeting, group })}>
+                      iCalendar
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatGoogleCalendar({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Google Calendar
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatOutlook365({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Microsoft 365
+                    </MenuItem>
+                    <MenuItem
+                      as="a"
+                      href={formatOutlookLive({ ...meeting, group })}
+                      target="_blank"
+                    >
+                      Microsoft Live
+                    </MenuItem>
+                  </MenuList>
+                )}
+              </>
+            )}
+          </Menu>
+        )}
       </Box>
       {meetings.length > 1 && (
         <Box style={{ marginLeft: '-1.25rem', marginRight: '-1.25rem' }}>
@@ -172,19 +219,20 @@ export function Group({ meeting }: { meeting: Meeting }) {
                     <Stack spacing={{ base: 4, lg: 1 }}>
                       {meetings.map(({ start, slug, name }, index) => (
                         <Box
-                          key={index}
                           display="flex"
-                          gap={{ base: 0, lg: 3 }}
                           flexDirection={{ base: 'column', lg: 'row' }}
+                          gap={{ base: 0, lg: 3 }}
+                          key={index}
                         >
                           <Box>{formatTime(strings, start)}</Box>
                           <Box>
                             <Link to={`/${slug}`}>
                               <Text
-                                color="blue.500"
-                                as="span"
-                                textDecoration="underline"
                                 _hover={{ color: 'blue.600' }}
+                                as="span"
+                                color="blue.500"
+                                overflow="hidden"
+                                textDecoration="underline"
                               >
                                 {name}
                               </Text>

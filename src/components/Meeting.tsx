@@ -80,7 +80,6 @@ export function Meeting({
       borderColor={useColorModeValue('gray.300', 'gray.800')}
       borderWidth={1}
       mb={{ base: 5, md: 6 }}
-      overflow="hidden"
       position="relative"
       rounded="md"
       shadow="md"
@@ -133,10 +132,10 @@ export function Meeting({
                   : strings.video_use.replace('{{value}}', button.value);
               return (
                 <Box key={index} display="flex" alignItems="center" gap={3}>
-                  <Button title={title} primary {...button}>
+                  <Button {...button} primary title={title}>
                     {text}
                   </Button>
-                  <Text color={'gray.500'}>{button.notes}</Text>
+                  <Text color="gray.500">{button.notes}</Text>
                 </Box>
               );
             })}
@@ -145,7 +144,7 @@ export function Meeting({
         {!!notes?.length && (
           <Stack spacing={1}>
             {notes.map((paragraph: string, key: number) => (
-              <Text key={key} wordBreak="break-word">
+              <Text key={key} overflow="hidden" wordBreak="break-word">
                 <Linkify>{paragraph}</Linkify>
               </Text>
             ))}
