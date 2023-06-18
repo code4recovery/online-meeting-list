@@ -1,4 +1,4 @@
-import { Button as ChakraButton, useColorModeValue } from '@chakra-ui/react';
+import { Button as ChakraButton } from '@chakra-ui/react';
 
 import { Icon } from './Icon';
 import React from 'react';
