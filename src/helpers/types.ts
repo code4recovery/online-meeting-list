@@ -54,6 +54,7 @@ export type Meeting = {
   tags: string[];
   search: string;
   edit_url?: string;
+  rand: number;
 };
 
 export type MeetingLink = {

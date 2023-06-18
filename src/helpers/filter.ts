@@ -66,14 +66,18 @@ export function filter(meetings: Meeting[], input: InputType) {
 
   //sort meetings (by time then name)
   meetings.sort((a: Meeting, b: Meeting) => {
-    if (a.start && b.start && a.start !== b.start) {
-      return a.start.toMillis() - b.start.toMillis();
+    const aStart = a.start?.toMillis();
+    const bStart = b.start?.toMillis();
+    if (aStart && bStart && aStart !== bStart) {
+      return aStart - bStart;
     } else if (a.start && !b.start) {
       return -1;
     } else if (b.start && !a.start) {
       return 1;
     }
-    return a.name.localeCompare(b.name);
+    return process.env.REACT_APP_SORT_BY === 'random'
+      ? a.rand - b.rand
+      : a.name.localeCompare(b.name);
   });
 
   //return

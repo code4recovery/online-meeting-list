@@ -45,6 +45,14 @@ add_action('init', function () {
 });
 ```
 
+## Sorting
+
+By default, meetings are sorted by time then name. You can override and make it time then random by adding this to your `.env` file:
+
+```
+REACT_APP_SORT_BY="random"
+```
+
 ## Dark mode
 
 By default, the app renders in light or dark mode depending on the user's browser preferences. This setting can be overridden with `light` or `dark`:
