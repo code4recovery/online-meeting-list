@@ -93,7 +93,9 @@ export function Group({ meeting }: { meeting: Meeting }) {
         {!!email && (
           <Button
             icon="email"
-            onClick={() => (window.location.href = `mailto:${email}`)}
+            onClick={() => {
+              window.open(`mailto:${email}`);
+            }}
           >
             {strings.email}
           </Button>
@@ -101,22 +103,29 @@ export function Group({ meeting }: { meeting: Meeting }) {
         {!!phone && (
           <Button
             icon="phone"
-            onClick={() => (window.location.href = `tel:${phone}`)}
+            onClick={() => {
+              window.open(`tel:${phone}`);
+            }}
           >
             {strings.telephone}
           </Button>
         )}
         {!!website && (
-          <Button icon="link" onClick={() => (window.location.href = website)}>
+          <Button
+            icon="link"
+            onClick={() => {
+              window.open(website);
+            }}
+          >
             {strings.website}
           </Button>
         )}
         {!!venmo && (
           <Button
             icon="cash"
-            onClick={() =>
-              (window.location.href = `https://account.venmo.com/u/${venmo}`)
-            }
+            onClick={() => {
+              window.open(`https://account.venmo.com/u/${venmo}`);
+            }}
           >
             Venmo
           </Button>
@@ -124,9 +133,9 @@ export function Group({ meeting }: { meeting: Meeting }) {
         {!!paypal && (
           <Button
             icon="cash"
-            onClick={() =>
-              (window.location.href = `https://www.paypal.com/paypalme/${paypal}`)
-            }
+            onClick={() => {
+              window.open(`https://www.paypal.com/paypalme/${paypal}`);
+            }}
           >
             PayPal
           </Button>
@@ -134,9 +143,9 @@ export function Group({ meeting }: { meeting: Meeting }) {
         {!!square && (
           <Button
             icon="cash"
-            onClick={() =>
-              (window.location.href = `https://cash.app/${square}`)
-            }
+            onClick={() => {
+              window.open(`https://cash.app/${square}`);
+            }}
           >
             Cash App
           </Button>
