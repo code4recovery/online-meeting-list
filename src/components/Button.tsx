@@ -15,22 +15,18 @@ export function Button({
 } & React.ComponentProps<typeof ChakraButton>) {
   const { rtl } = useI18n();
 
-  const color = useColorModeValue('gray.800 !important', 'white !important');
-
   return (
     <ChakraButton
       {...rest}
       {...(primary
         ? {
-            _hover: { bg: 'blue.800' },
+            _active: { bg: 'blue.700', color: 'white' },
+            _hover: { bg: 'blue.700', color: 'white' },
             bg: 'blue.600',
-            color: 'white !important'
+            color: 'white'
           }
-        : {
-            color,
-            _active: { bg: color },
-            _focus: { bg: color }
-          })}
+        : {})}
+      borderRadius="md"
       textTransform="none"
       leftIcon={icon && !rtl ? <Icon name={icon} /> : undefined}
       rightIcon={icon && rtl ? <Icon name={icon} /> : undefined}
