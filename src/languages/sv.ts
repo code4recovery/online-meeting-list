@@ -44,6 +44,7 @@ export const sv = {
       S: 'Spanska', // ES
       SK: 'Slovakiska',
       SV: 'Svenska',
+      TL: 'Tagalog',
       UK: 'Ukrainska'
     },
     no_results: 'Inga resultat matchar de valda filtren:',

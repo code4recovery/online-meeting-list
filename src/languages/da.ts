@@ -44,6 +44,7 @@ export const da = {
       S: 'Spansk', // ES
       SK: 'Slovakisk',
       SV: 'Svensk',
+      TL: 'Tagalog',
       UK: 'Ukrainsk'
     },
     no_results: 'Ingen resultater matcher de valgte filtre:',

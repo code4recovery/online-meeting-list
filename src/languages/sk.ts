@@ -44,6 +44,7 @@ export const sk = {
       S: 'Španielčina', // ES
       SK: 'Slovenský',
       SV: 'Švédčina',
+      TL: 'Tagalog',
       UK: 'Ukrajinský'
     },
     no_results: 'Vybraným filtrom nezodpovedajú žiadne výsledky:',

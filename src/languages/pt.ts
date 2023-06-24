@@ -44,6 +44,7 @@ export const pt = {
       S: 'Espanhol', // ES
       SK: 'Eslovaco',
       SV: 'Sueco',
+      TL: 'Tagalo',
       UK: 'Ucraniano'
     },
     no_results: 'Nenhum resultado corresponde aos filtros selecionados:',

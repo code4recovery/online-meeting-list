@@ -44,6 +44,7 @@ export const fr = {
       S: 'Espagnol', // ES
       SK: 'Slovaque',
       SV: 'Suédois',
+      TL: 'Tagalog',
       UK: 'Ukrainien'
     },
     no_results: 'Aucun résultat ne correspond aux filtres sélectionnés:',

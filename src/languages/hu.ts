@@ -44,6 +44,7 @@ export const hu = {
       S: 'Spanyol', // ES
       SK: 'Szlovák',
       SV: 'Svéd',
+      TL: 'Tagalog',
       UK: 'Ukrán'
     },
     no_results: 'Nincs találat a kiválasztott szűrőknek:',

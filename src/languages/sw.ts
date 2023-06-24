@@ -44,6 +44,7 @@ export const sw = {
       S: 'Kihispania', // ES
       SK: 'Kislovakia',
       SV: 'Kiswidi',
+      TL: 'Kitagalogi',
       UK: 'Kiukreni'
     },
     no_results: 'Hakuna matokeo yanayolingana na vichujio vilivyochaguliwa:',

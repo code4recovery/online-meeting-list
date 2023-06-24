@@ -44,6 +44,7 @@ export const de = {
       S: 'Spanisch', // ES
       SK: 'Slowakisch',
       SV: 'Schwedisch',
+      TL: 'Tagalog',
       UK: 'Ukrainisch'
     },
     no_results:
