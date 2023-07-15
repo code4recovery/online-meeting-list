@@ -1,4 +1,3 @@
-import Linkify from 'react-linkify';
 import { Link } from 'react-router-dom';
 import {
   Accordion,
@@ -24,17 +23,22 @@ import {
   formatOutlook365,
   formatOutlookLive,
   formatTime,
-  type Meeting,
-  useData,
-  useI18n
+  type Meeting as MeetingType,
+  useI18n,
+  type Group as GroupType
 } from '../helpers';
 
 import { Button } from './Button';
 import { Icon } from './Icon';
 
-export function Group({ meeting }: { meeting: Meeting }) {
-  const { group_id } = meeting;
-  const { groups } = useData();
+export function Group({
+  group,
+  meeting
+}: {
+  group: GroupType;
+  meeting: MeetingType;
+}) {
+  const { start, end } = meeting;
   const { strings } = useI18n();
   const accordion = useColorModeValue(
     {
@@ -49,19 +53,9 @@ export function Group({ meeting }: { meeting: Meeting }) {
     }
   );
 
-  const group = groups[group_id as keyof typeof groups];
-  if (!group) return <div>nothing</div>;
-  const {
-    name,
-    notes,
-    email,
-    phone,
-    website,
-    venmo,
-    paypal,
-    square,
-    meetings
-  } = group;
+  const { name, email, phone, website, venmo, paypal, square, meetings } =
+    group;
+
   meetings.sort((a, b) => {
     if (a.start && b.start) {
       const weekdayA = a.start.weekday === 7 ? 0 : a.start.weekday;
@@ -80,15 +74,6 @@ export function Group({ meeting }: { meeting: Meeting }) {
   });
   return (
     <Stack gap={5}>
-      {!!notes?.length && (
-        <Stack spacing={2}>
-          {notes.map((paragraph: string, key: number) => (
-            <Text key={key} wordBreak="break-word">
-              <Linkify>{paragraph}</Linkify>
-            </Text>
-          ))}
-        </Stack>
-      )}
       <Box display="flex" gap={2} flexWrap="wrap">
         {!!email && (
           <Button
@@ -150,7 +135,7 @@ export function Group({ meeting }: { meeting: Meeting }) {
             Cash App
           </Button>
         )}
-        {meeting.start && meeting.end && (
+        {start && end && (
           <Menu autoSelect={false}>
             {({ isOpen }) => (
               <>

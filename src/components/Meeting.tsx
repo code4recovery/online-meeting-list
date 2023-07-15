@@ -18,6 +18,7 @@ import {
   Meeting as MeetingType,
   MeetingLink,
   formatTime,
+  useData,
   useI18n,
   useInput
 } from '../helpers';
@@ -38,12 +39,14 @@ export function Meeting({
     edit_url,
     group_id,
     name,
-    notes,
     start,
     tags
   } = meeting;
   const { rtl, strings } = useI18n();
   const { input } = useInput();
+  const { groups } = useData();
+  const group = groups[group_id as keyof typeof groups];
+  const notes = [...(group?.notes ?? []), ...(meeting.notes ?? [])];
 
   const buttons: Array<MeetingLink & { notes?: string }> = [];
   if (conference_provider) {
@@ -141,7 +144,7 @@ export function Meeting({
             })}
           </Stack>
         )}
-        {!!notes?.length && (
+        {!!notes.length && (
           <Stack spacing={1}>
             {notes.map((paragraph: string, key: number) => (
               <Text key={key} overflow="hidden" wordBreak="break-word">
@@ -150,7 +153,7 @@ export function Meeting({
             ))}
           </Stack>
         )}
-        {!!group_id && <Group meeting={meeting} />}
+        {group && <Group group={group} meeting={meeting} />}
         {!!tags.length && (
           <Box>
             {tags.map((tag: string, index: number) => (
