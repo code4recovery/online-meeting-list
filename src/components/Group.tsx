@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Accordion,
@@ -8,10 +9,13 @@ import {
   Badge,
   Box,
   Button as ChakraButton,
+  Grid,
+  GridItem,
   Menu,
   MenuButton,
   MenuItem,
   MenuList,
+  Spacer,
   Stack,
   Text,
   useColorModeValue
@@ -209,17 +213,25 @@ export function Group({
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
-                  <AccordionPanel pt={1} pb={4} px={5}>
-                    <Stack spacing={{ base: 4, lg: 1 }}>
+                  <AccordionPanel pt={1} pb={4}>
+                    <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} pb={5}>
                       {meetings.map(({ start, slug, name }, index) => (
-                        <Box
-                          display="flex"
-                          flexDirection={{ base: 'column', lg: 'row' }}
-                          gap={{ base: 0, lg: 3 }}
-                          key={index}
-                        >
-                          <Box>{formatTime(strings, start)}</Box>
-                          <Box>
+                        <Fragment key={index}>
+                          <GridItem
+                            borderBottom="1px"
+                            borderColor="gray.700"
+                            px={3}
+                            py={2}
+                          >
+                            {formatTime(strings, start)}
+                          </GridItem>
+                          <GridItem
+                            borderBottom="1px"
+                            borderColor="gray.700"
+                            colSpan={2}
+                            px={3}
+                            py={2}
+                          >
                             <Link to={`/${slug}`}>
                               <Text
                                 _hover={{ color: 'blue.600' }}
@@ -231,10 +243,23 @@ export function Group({
                                 {name}
                               </Text>
                             </Link>
-                          </Box>
-                        </Box>
+                          </GridItem>
+                        </Fragment>
                       ))}
-                    </Stack>
+                    </Grid>
+                    {meetings[0].edit_url && (
+                      <Box display="flex">
+                        <Spacer />
+                        <Button
+                          icon="pencil"
+                          onClick={() => {
+                            window.open(meetings[0].edit_url);
+                          }}
+                        >
+                          Edit group info
+                        </Button>
+                      </Box>
+                    )}
                   </AccordionPanel>
                 </Box>
               )}
