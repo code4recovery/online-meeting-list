@@ -15,6 +15,7 @@ export const hu = {
       'Péntek',
       'Szombat'
     ],
+    edit: 'Szerkesztési kérelem',
     email: 'Email',
     email_use: 'E-mail: {{value}}',
     filters: 'Szűrők',

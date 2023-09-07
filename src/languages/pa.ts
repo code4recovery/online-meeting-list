@@ -15,6 +15,7 @@ export const pa = {
       'ਸ਼ੁੱਕਰਵਾਰ',
       'ਸ਼ਨੀਵਾਰ'
     ],
+    edit: 'ਸੋਧ ਦੀ ਬੇਨਤੀ ਕਰੋ',
     email: 'ਈ - ਮੇਲ',
     email_use: 'ਈਮੇਲ {{value}}',
     filters: 'ਫਿਲਟਰ',

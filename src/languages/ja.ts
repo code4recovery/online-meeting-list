@@ -7,6 +7,7 @@ export const ja = {
     clear_search: '明確な検索',
     close: 'シャット',
     days: ['日曜日', '月曜', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日'],
+    edit: '編集リクエスト',
     email: 'Eメール',
     email_use: 'メール{{value}}',
     filters: 'フィルタ',

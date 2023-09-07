@@ -15,6 +15,7 @@ export const sw = {
       'Ijumaa',
       'Jumamosi'
     ],
+    edit: 'Ombi la kuhariri',
     email: 'Barua pepe',
     email_use: 'Barua pepe {{value}}',
     filters: 'Vichujio',

@@ -15,6 +15,7 @@ export const da = {
       'Fredag',
       'Lørdag'
     ],
+    edit: 'Anmod om redigering',
     email: 'E-mail',
     email_use: 'E-mail {{value}}',
     filters: 'Filtre',

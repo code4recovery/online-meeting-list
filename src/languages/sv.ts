@@ -15,6 +15,7 @@ export const sv = {
       'Fredag',
       'Lördag'
     ],
+    edit: 'Begäran om redigering',
     email: 'E-post',
     email_use: 'Skicka e-post till {{value}}',
     filters: 'Filter',

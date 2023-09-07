@@ -15,6 +15,7 @@ export const sk = {
       'Piatok',
       'Sobota'
     ],
+    edit: 'Požiadavka na úpravu',
     email: 'E-mail',
     email_use: 'E-mail {{value}}',
     filters: 'Filtre',

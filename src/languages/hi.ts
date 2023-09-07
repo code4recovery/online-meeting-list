@@ -15,6 +15,7 @@ export const hi = {
       'शुक्रवार',
       'शनिवार'
     ],
+    edit: 'संपादन का अनुरोध करें',
     email: 'ईमेल',
     email_use: 'ईमेल {{value}}',
     filters: 'फिल्टर',

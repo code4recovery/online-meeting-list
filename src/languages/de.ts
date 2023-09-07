@@ -15,6 +15,7 @@ export const de = {
       'Freitag',
       'Samstag'
     ],
+    edit: 'Bearbeitung anfordern',
     email: 'E-Mail',
     email_use: 'E-Mail {{value}}',
     filters: 'Filter',

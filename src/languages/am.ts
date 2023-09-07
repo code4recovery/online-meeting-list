@@ -7,6 +7,7 @@ export const am = {
     clear_search: 'ፍለጋን ያጽዱ',
     close: 'ገጠመ',
     days: ['እሁድ', 'ሰኞ', 'ማክሰኞ', 'እሮብ', 'ሐሙስ', 'አርብ', 'ቅዳሜ'],
+    edit: 'አርትዕ ጠይቅ',
     email: 'ኢሜል',
     email_use: 'ኢሜል {{value}}',
     filters: 'ማጣሪያዎች',

@@ -15,7 +15,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Spacer,
   Stack,
   Text,
   useColorModeValue
@@ -183,6 +182,16 @@ export function Group({
             )}
           </Menu>
         )}
+        {meetings[0].edit_url && (
+          <Button
+            icon="pencil"
+            onClick={() => {
+              window.open(meetings[0].edit_url);
+            }}
+          >
+            {strings.edit}
+          </Button>
+        )}
       </Box>
       {meetings.length > 1 && (
         <Box style={{ marginLeft: '-1.25rem', marginRight: '-1.25rem' }}>
@@ -247,19 +256,6 @@ export function Group({
                         </Fragment>
                       ))}
                     </Grid>
-                    {meetings[0].edit_url && (
-                      <Box display="flex">
-                        <Spacer />
-                        <Button
-                          icon="pencil"
-                          onClick={() => {
-                            window.open(meetings[0].edit_url);
-                          }}
-                        >
-                          Edit group info
-                        </Button>
-                      </Box>
-                    )}
                   </AccordionPanel>
                 </Box>
               )}

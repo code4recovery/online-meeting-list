@@ -15,6 +15,7 @@ export const pl = {
       'piątek',
       'sobota'
     ],
+    edit: 'Zażądaj edycji',
     email: 'E-mail',
     email_use: 'Email {{value}}',
     filters: 'Filtry',

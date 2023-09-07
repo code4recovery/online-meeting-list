@@ -15,6 +15,7 @@ export const ko = {
       '금요일',
       '토요일'
     ],
+    edit: '편집 요청',
     email: '이메일',
     email_use: '이메일 {{value}}',
     filters: '필터',

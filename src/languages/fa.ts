@@ -16,6 +16,7 @@ export const fa = {
       'جمعه',
       'شنبه'
     ],
+    edit: 'درخواست ویرایش',
     email_use: 'ایمیل {{value}}',
     filters: 'فیلترها',
     forum: 'انجمن',
