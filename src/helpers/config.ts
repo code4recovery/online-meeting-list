@@ -1,15 +1,18 @@
 // any link is supported, but these conference URLs identified by service name
 export const videoServices: { [key: string]: string[] } = {
   BlueJeans: ['bluejeans.com'],
+  DialPad: ['meetings.dialpad.com'],
+  Discord: ['discord.gg'],
   'Free Conference': ['freeconference.com'],
   FreeConferenceCall: ['freeconferencecall.com'],
   'Google Meet': ['meet.google.com'],
-  GoToMeeting: ['gotomeet.me', 'gotomeeting.com'],
+  GoTo: ['goto.com', 'gotomeet.me', 'gotomeeting.com'],
+  Jitsi: ['meet.jit.si'],
   Skype: ['skype.com'],
   'Second Life': ['maps.secondlife.com'],
   WebEx: ['webex.com'],
   Zoho: ['zoho.com'],
-  Zoom: ['zoom.com', 'zoom.us']
+  Zoom: ['zoom.us']
 };
 
 export const timezones = [
