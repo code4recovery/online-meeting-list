@@ -29,7 +29,7 @@ export function Filter() {
     <Stack spacing={{ base: 4, md: 8 }}>
       <Search />
       <Stack
-        display={{ base: open ? 'block' : 'none', md: 'block' }}
+        display={{ base: open ? 'flex' : 'none', md: 'flex' }}
         spacing={{ base: 5, md: 8 }}
       >
         {Object.keys(filters)
