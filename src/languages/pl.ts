@@ -62,6 +62,12 @@ export const pl = {
     search: 'Szukaj',
     telephone: 'Telefon',
     telephone_use: 'Zadzwoń {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Strefa czasowa',
     types: {
       '11': 'Medytacja 11. kroku',

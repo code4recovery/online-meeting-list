@@ -62,6 +62,12 @@ export const pt = {
     search: 'Procurar',
     telephone: 'Telefone',
     telephone_use: 'Ligue para {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Fuso horário',
     types: {
       '11': 'Meditação do 11º Passo',

@@ -64,6 +64,12 @@ export const de = {
     search: 'Suche',
     telephone: 'Telefon',
     telephone_use: 'Rufen Sie {{value}} auf',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Zeitzone',
     types: {
       '11': '11. Schritt-Meditation',

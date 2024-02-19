@@ -64,6 +64,12 @@ export const el = {
     telephone: 'Τηλέφωνο',
     telephone_use: 'Κλήση {{value}}',
     timezone: 'Ζώνη ώρας',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     types: {
       '11': '11ο Βήμα Διαλογισμός',
       '12x12': '12 Βήματα & 12 Παραδόσεις',

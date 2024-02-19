@@ -63,6 +63,12 @@ export const hu = {
     search: 'Keresés',
     telephone: 'Telefon',
     telephone_use: 'Hívjon {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Időzóna',
     types: {
       '11': '11. lépés meditáció',

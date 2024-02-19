@@ -63,6 +63,12 @@ export const da = {
     telephone: 'Telefon',
     telephone_use: 'Ring til {{value}}',
     timezone: 'Tidszone',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     types: {
       '11': '11. Trin Meditation',
       '12x12': '12 trin & 12 traditioner',

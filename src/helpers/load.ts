@@ -206,6 +206,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
   return {
     filters: {
       days: hasOngoing ? [...strings.days, strings.ongoing] : strings.days,
+      times: Object.values(strings.times),
       formats,
       types,
       languages

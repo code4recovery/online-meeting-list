@@ -55,6 +55,12 @@ export const ja = {
     search: '探す',
     telephone: '電話',
     telephone_use: '{{value}}を呼び出す',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'タイムゾーン',
     types: {
       '11': '第11ステップ瞑想',

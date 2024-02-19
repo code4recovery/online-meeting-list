@@ -30,13 +30,34 @@ export function filter(meetings: Meeting[], input: InputType) {
         meeting.end = meeting.end.plus({ week: 1 });
       }
 
-      //remove all days from meeting
-      meeting.tags = meeting.tags.filter(tag => !strings.days.includes(tag));
+      const times = Object.values(strings.times);
+
+      //remove all days & times from meeting
+      meeting.tags = meeting.tags.filter(
+        tag => !strings.days.includes(tag) && !times.includes(tag)
+      );
 
       //add meeting day to tags
       const meetingDay =
         strings.days[meeting.start.weekday === 7 ? 0 : meeting.start.weekday];
       meeting.tags.push(meetingDay);
+
+      //remove all days from meeting
+      meeting.tags = meeting.tags.filter(tag => !strings.days.includes(tag));
+
+      //add meeting time to tags
+      if (meeting.start.hour >= 4 && meeting.start.hour <= 11) {
+        meeting.tags.push(strings.times.morning); // morning (4am–11:59pm)
+      }
+      if (meeting.start.hour >= 11 && meeting.start.hour <= 16) {
+        meeting.tags.push(strings.times.midday); // midday (11am–4:59pm)
+      }
+      if (meeting.start.hour >= 16 && meeting.start.hour <= 20) {
+        meeting.tags.push(strings.times.evening); // evening (4pm–8:59pm)
+      }
+      if (meeting.start.hour >= 20 || meeting.start.hour <= 4) {
+        meeting.tags.push(strings.times.night); // night (8pm–4:59am)
+      }
 
       //sort tags
       meeting.tags.sort();

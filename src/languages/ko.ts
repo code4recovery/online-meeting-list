@@ -62,6 +62,12 @@ export const ko = {
     search: '검색',
     telephone: '전화',
     telephone_use: '{{value}} 호출',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: '시간대',
     types: {
       '11': '11단계 명상',

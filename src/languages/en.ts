@@ -63,6 +63,12 @@ export const en = {
     search: 'Search',
     telephone: 'Phone',
     telephone_use: 'Call {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Timezone',
     types: {
       '11': '11th Step Meditation',

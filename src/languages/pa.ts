@@ -62,6 +62,12 @@ export const pa = {
     search: 'ਖੋਜ',
     telephone: 'ਫੋਨ',
     telephone_use: 'ਕਾਲ ਕਰੋ {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'ਸਮਾਂ ਖੇਤਰ',
     types: {
       '11': '11ਵਾਂ ਸਟੈਪ ਮੈਡੀਟੇਸ਼ਨ',

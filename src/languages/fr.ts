@@ -63,6 +63,12 @@ export const fr = {
     search: 'Rechercher',
     telephone: 'Téléphoner',
     telephone_use: 'Appeler {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Fuseau horaire',
     types: {
       '11': 'Méditation de la 11e étape',

@@ -63,6 +63,12 @@ export const sk = {
     search: 'Vyhľadávanie',
     telephone: 'Telefón',
     telephone_use: 'Volať {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Časové pásmo',
     types: {
       '11': 'Meditácia 11. kroku',

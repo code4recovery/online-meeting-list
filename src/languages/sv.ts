@@ -62,6 +62,12 @@ export const sv = {
     search: 'Sök',
     telephone: 'Telefon',
     telephone_use: 'Ring {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Tidszon',
     types: {
       '11': '11:e stegs meditation',

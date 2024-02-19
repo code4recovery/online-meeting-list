@@ -62,6 +62,12 @@ export const es = {
     search: 'Buscar',
     telephone: 'Teléfono',
     telephone_use: 'Llame a {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Zona horaria',
     types: {
       '11': 'Meditación del Paso 11',

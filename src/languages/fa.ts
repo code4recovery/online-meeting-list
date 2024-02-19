@@ -63,6 +63,12 @@ export const fa = {
     search: 'جستجو کردن',
     telephone: 'تلفن',
     telephone_use: 'تماس با {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'منطقه زمانی',
     types: {
       '11': 'مدیتیشن مرحله یازدهم',

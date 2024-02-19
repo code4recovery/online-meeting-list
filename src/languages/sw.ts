@@ -63,6 +63,12 @@ export const sw = {
     search: 'Tafuta',
     telephone: 'Simu',
     telephone_use: 'Piga simu kwa {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Saa za eneo',
     types: {
       '11': 'Tafakari ya Hatua ya 11',

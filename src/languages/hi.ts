@@ -63,6 +63,12 @@ export const hi = {
     search: 'खोज',
     telephone: 'फ़ोन',
     telephone_use: 'कॉल {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'समय क्षेत्र',
     types: {
       '11': 'ग्यारहवां चरण ध्यान',

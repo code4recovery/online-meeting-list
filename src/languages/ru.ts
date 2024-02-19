@@ -63,6 +63,12 @@ export const ru = {
     search: 'Поиск',
     telephone: 'Телефон',
     telephone_use: 'Позвоните по телефону {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Часовой пояс',
     types: {
       '11': 'Медитация 11-го шага',

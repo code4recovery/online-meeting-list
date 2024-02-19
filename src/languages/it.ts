@@ -62,6 +62,12 @@ export const it = {
     search: 'Ricerca',
     telephone: 'Telefono',
     telephone_use: 'Chiama {{value}}',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'Fuso orario',
     types: {
       '11': 'Meditazione dell’11° passo',

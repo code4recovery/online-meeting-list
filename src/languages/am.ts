@@ -54,6 +54,12 @@ export const am = {
     search: 'ፈልግ',
     telephone: 'ስልክ',
     telephone_use: 'ወደ {{እሴት}} ይደውሉ',
+    times: {
+      morning: 'Morning',
+      midday: 'Midday',
+      evening: 'Evening',
+      night: 'Night'
+    },
     timezone: 'የጊዜ ክልል',
     types: {
       '11': '11 ኛ ደረጃ ማሰላሰል',
