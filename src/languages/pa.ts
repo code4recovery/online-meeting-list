@@ -63,10 +63,10 @@ export const pa = {
     telephone: 'ਫੋਨ',
     telephone_use: 'ਕਾਲ ਕਰੋ {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'ਸਵੇਰ',
+      midday: 'ਦੁਪਹਿਰ',
+      evening: 'ਸ਼ਾਮ',
+      night: 'ਰਾਤ'
     },
     timezone: 'ਸਮਾਂ ਖੇਤਰ',
     types: {

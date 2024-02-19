@@ -63,10 +63,10 @@ export const ko = {
     telephone: '전화',
     telephone_use: '{{value}} 호출',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: '아침',
+      midday: '정오',
+      evening: '저녁',
+      night: '밤'
     },
     timezone: '시간대',
     types: {

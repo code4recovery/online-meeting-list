@@ -63,10 +63,10 @@ export const sv = {
     telephone: 'Telefon',
     telephone_use: 'Ring {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Morgon',
+      midday: 'Middag',
+      evening: 'Kväll',
+      night: 'Natt'
     },
     timezone: 'Tidszon',
     types: {

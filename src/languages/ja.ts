@@ -56,10 +56,10 @@ export const ja = {
     telephone: '電話',
     telephone_use: '{{value}}を呼び出す',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: '朝',
+      midday: '真昼',
+      evening: '夕方',
+      night: '夜'
     },
     timezone: 'タイムゾーン',
     types: {

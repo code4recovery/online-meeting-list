@@ -64,10 +64,10 @@ export const ru = {
     telephone: 'Телефон',
     telephone_use: 'Позвоните по телефону {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Утро',
+      midday: 'Полдень',
+      evening: 'Вечер',
+      night: 'Ночь'
     },
     timezone: 'Часовой пояс',
     types: {

@@ -64,10 +64,10 @@ export const fr = {
     telephone: 'Téléphoner',
     telephone_use: 'Appeler {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Matin',
+      midday: 'Midi',
+      evening: 'Soir',
+      night: 'Nuit'
     },
     timezone: 'Fuseau horaire',
     types: {

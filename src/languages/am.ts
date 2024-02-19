@@ -55,10 +55,10 @@ export const am = {
     telephone: 'ስልክ',
     telephone_use: 'ወደ {{እሴት}} ይደውሉ',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'ጥዋት',
+      midday: 'ምሳሌ',
+      evening: 'ማታ',
+      night: 'ሌሊት'
     },
     timezone: 'የጊዜ ክልል',
     types: {

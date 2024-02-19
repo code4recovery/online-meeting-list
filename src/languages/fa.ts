@@ -64,10 +64,10 @@ export const fa = {
     telephone: 'تلفن',
     telephone_use: 'تماس با {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'صبح',
+      midday: 'ظهر',
+      evening: 'عصر',
+      night: 'شب'
     },
     timezone: 'منطقه زمانی',
     types: {

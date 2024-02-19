@@ -64,10 +64,10 @@ export const hu = {
     telephone: 'Telefon',
     telephone_use: 'Hívjon {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Reggel',
+      midday: 'Dél',
+      evening: 'Este',
+      night: 'Éjjel'
     },
     timezone: 'Időzóna',
     types: {

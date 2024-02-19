@@ -64,10 +64,10 @@ export const sw = {
     telephone: 'Simu',
     telephone_use: 'Piga simu kwa {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Asubuhi',
+      midday: 'Mchana',
+      evening: 'Jioni',
+      night: 'Usiku'
     },
     timezone: 'Saa za eneo',
     types: {

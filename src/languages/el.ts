@@ -65,10 +65,10 @@ export const el = {
     telephone_use: 'Κλήση {{value}}',
     timezone: 'Ζώνη ώρας',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Πρωί',
+      midday: 'Μεσημέρι',
+      evening: 'Απόγευμα',
+      night: 'Νύχτα'
     },
     types: {
       '11': '11ο Βήμα Διαλογισμός',

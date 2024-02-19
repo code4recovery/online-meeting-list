@@ -63,10 +63,10 @@ export const pl = {
     telephone: 'Telefon',
     telephone_use: 'Zadzwoń {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Poranek',
+      midday: 'Południe',
+      evening: 'Wieczór',
+      night: 'Noc'
     },
     timezone: 'Strefa czasowa',
     types: {

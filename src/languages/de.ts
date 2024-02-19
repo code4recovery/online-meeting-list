@@ -65,10 +65,10 @@ export const de = {
     telephone: 'Telefon',
     telephone_use: 'Rufen Sie {{value}} auf',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Morgen',
+      midday: 'Mittag',
+      evening: 'Abend',
+      night: 'Nacht'
     },
     timezone: 'Zeitzone',
     types: {

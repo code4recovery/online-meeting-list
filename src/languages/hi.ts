@@ -64,10 +64,10 @@ export const hi = {
     telephone: 'फ़ोन',
     telephone_use: 'कॉल {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'सुबह',
+      midday: 'दोपहर',
+      evening: 'शाम',
+      night: 'रात'
     },
     timezone: 'समय क्षेत्र',
     types: {

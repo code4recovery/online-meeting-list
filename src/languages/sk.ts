@@ -64,10 +64,10 @@ export const sk = {
     telephone: 'Telefón',
     telephone_use: 'Volať {{value}}',
     times: {
-      morning: 'Morning',
-      midday: 'Midday',
-      evening: 'Evening',
-      night: 'Night'
+      morning: 'Ráno',
+      midday: 'Poludnie',
+      evening: 'Večer',
+      night: 'Noc'
     },
     timezone: 'Časové pásmo',
     types: {
