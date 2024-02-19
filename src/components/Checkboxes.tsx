@@ -19,7 +19,9 @@ export function Checkboxes({ filter }: { filter: string }) {
               tags: e.currentTarget.checked
                 ? [
                     ...input.tags.filter(
-                      tag => filter !== 'days' || !filters[filter].includes(tag)
+                      tag =>
+                        !['days', 'times'].includes(filter) ||
+                        !filters[filter].includes(tag)
                     ),
                     value
                   ]
