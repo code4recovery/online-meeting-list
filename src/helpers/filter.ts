@@ -42,9 +42,6 @@ export function filter(meetings: Meeting[], input: InputType) {
         strings.days[meeting.start.weekday === 7 ? 0 : meeting.start.weekday];
       meeting.tags.push(meetingDay);
 
-      //remove all days from meeting
-      meeting.tags = meeting.tags.filter(tag => !strings.days.includes(tag));
-
       //add meeting time to tags
       if (meeting.start.hour >= 4 && meeting.start.hour <= 11) {
         meeting.tags.push(strings.times.morning); // morning (4am–11:59pm)
