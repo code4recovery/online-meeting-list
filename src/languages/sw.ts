@@ -38,6 +38,8 @@ export const sw = {
       KOR: 'Kikorea', // KO
       LT: 'Kilithuania',
       ML: 'Kimalayalam',
+      MT: 'Kimalta',
+      NE: 'Kinepali',
       POL: 'Kipolishi', // PL
       POR: 'Kireno', // PT
       PUN: 'Kipunjabi', // PA

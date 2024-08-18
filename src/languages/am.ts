@@ -30,6 +30,8 @@ export const am = {
       KOR: 'ኮሪያኛ', // KO
       LT: 'ሊቱኒያን',
       ML: 'ማላያላም',
+      MT: 'ማልትስ',
+      NE: 'ኔፓሊኛ',
       POL: 'ፖሊሽ', // PL
       POR: 'ፖርቹጋልኛ', // PT
       PUN: 'ፑንጃቢ', // PA

@@ -38,6 +38,8 @@ export const ko = {
       KOR: '한국어', // KO
       LT: '리투아니아어',
       ML: '말라얄람어',
+      MT: '몰티즈',
+      NE: '네팔어',
       POL: '폴란드어', // PL
       POR: '포르투갈어', // PT
       PUN: '펀자브어', // PA
