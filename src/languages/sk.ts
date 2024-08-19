@@ -38,6 +38,8 @@ export const sk = {
       KOR: 'Kórejčina', // KO
       LT: 'Litovčina',
       ML: 'Malayalam',
+      MT: 'Maltčina',
+      NE: 'Nepálčina',
       POL: 'Poľština', // PL
       POR: 'Portugalčina', // PT
       PUN: 'Punjabi', // PA

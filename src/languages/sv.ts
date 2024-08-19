@@ -38,6 +38,8 @@ export const sv = {
       KOR: 'Koreanska', // KO
       LT: 'Litauiska',
       ML: 'Malayalam',
+      MT: 'Maltesiska',
+      NE: 'Nepalesiska',
       POL: 'Polska', // PL
       POR: 'Portugisiska', // PT
       PUN: 'Punjabi', // PA

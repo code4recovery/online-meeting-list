@@ -38,6 +38,8 @@ export const fr = {
       KOR: 'Coréen', // KO
       LT: 'Lituanien',
       ML: 'Malayalam',
+      MT: 'Maltais',
+      NE: 'Népalais',
       POL: 'Polonais', // PL
       POR: 'Portugais', // PT
       PUN: 'Punjabi', // PA
