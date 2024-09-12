@@ -15,6 +15,7 @@ export const ja = {
     language: '言語',
     languages: {
       AM: 'アムハラ語',
+      BG: 'ブルガリア語',
       DA: 'デンマーク語',
       DE: 'ドイツ語',
       EL: 'ギリシャ語',

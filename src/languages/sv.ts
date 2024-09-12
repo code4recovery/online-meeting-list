@@ -23,6 +23,7 @@ export const sv = {
     language: 'Språk',
     languages: {
       AM: 'Amhariska',
+      BG: 'Bulgariska',
       DA: 'Danska',
       DE: 'Tyska',
       EL: 'Grekiska',

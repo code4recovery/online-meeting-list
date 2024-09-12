@@ -23,6 +23,7 @@ export const sw = {
     language: 'Lugha',
     languages: {
       AM: 'Amharic',
+      BG: 'Kibulgaria',
       DA: 'Kideni',
       DE: 'Kijerumani',
       EL: 'Kigiriki',

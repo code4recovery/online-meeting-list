@@ -23,6 +23,7 @@ export const pt = {
     language: 'Língua',
     languages: {
       AM: 'Amárico',
+      BG: 'Búlgaro',
       DA: 'Dinamarquês',
       DE: 'Alemão',
       EL: 'Grego',

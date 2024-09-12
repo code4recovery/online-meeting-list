@@ -23,6 +23,7 @@ export const ne = {
     language: 'भाषा',
     languages: {
       AM: 'अम्हारिक्',
+      BG: 'बल्गेरियन',
       DA: 'डेनिस',
       DE: 'जर्मन',
       EL: 'यूनानी',

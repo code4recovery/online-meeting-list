@@ -23,6 +23,7 @@ export const de = {
     language: 'Sprache',
     languages: {
       AM: 'Amharisch',
+      BG: 'Bulgarisch',
       DA: 'Dänisch',
       DE: 'Deutsch',
       EL: 'Griechisch',

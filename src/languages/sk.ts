@@ -23,6 +23,7 @@ export const sk = {
     language: 'Jazyk',
     languages: {
       AM: 'Amharčina',
+      BG: 'Bulharčina',
       DA: 'Dánčina',
       DE: 'Nemčina',
       EL: 'Gréčtina',

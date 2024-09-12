@@ -15,6 +15,7 @@ export const am = {
     language: 'ቋንቋ',
     languages: {
       AM: 'አማርኛ',
+      BG: 'ቡልጋርያኛ',
       DA: 'ዳኒሽ',
       DE: 'ጀርመንኛ',
       EL: 'ግሪክኛ',

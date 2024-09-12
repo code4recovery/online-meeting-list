@@ -23,6 +23,7 @@ export const fa = {
     language: 'زبان',
     languages: {
       AM: 'آمهری',
+      BG: 'بلغاری',
       DA: 'دانمارکی',
       DE: 'آلمانی',
       EL: 'یونانی',

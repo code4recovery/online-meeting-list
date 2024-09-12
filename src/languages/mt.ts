@@ -23,6 +23,7 @@ export const mt = {
     language: 'Lingwa',
     languages: {
       AM: 'Amhariku',
+      BG: 'Bulgaru',
       DA: 'Daniż',
       DE: 'Ġermaniż',
       EL: 'Grieg',

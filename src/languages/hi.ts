@@ -23,6 +23,7 @@ export const hi = {
     language: 'भाषा: हिन्दी',
     languages: {
       AM: 'अम्हारिक्',
+      BG: 'बल्गेरियाई',
       DA: 'दानिश',
       DE: 'जर्मन',
       EL: 'यूनानी',

@@ -23,6 +23,7 @@ export const it = {
     language: 'Linguaggio',
     languages: {
       AM: 'Amarico',
+      BG: 'Bulgaro',
       DA: 'Danese',
       DE: 'Tedesco',
       EL: 'Greco',

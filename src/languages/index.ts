@@ -1,4 +1,5 @@
 export * from './am';
+export * from './bg';
 export * from './da';
 export * from './de';
 export * from './el';
@@ -11,6 +12,8 @@ export * from './hu';
 export * from './it';
 export * from './ja';
 export * from './ko';
+export * from './mt';
+export * from './ne';
 export * from './pa';
 export * from './pl';
 export * from './pt';

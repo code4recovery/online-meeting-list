@@ -23,6 +23,7 @@ export const el = {
     language: 'Γλώσσα',
     languages: {
       AM: 'Αμαρικά',
+      BG: 'Βουλγαρικά',
       DA: 'δανικός',
       DE: 'Γερμανός',
       EL: 'Ελληνικά',

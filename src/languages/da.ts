@@ -23,6 +23,7 @@ export const da = {
     language: 'Sprog',
     languages: {
       AM: 'Amharisk',
+      BG: 'Bulgarsk',
       DA: 'Dansk',
       DE: 'Tysk',
       EL: 'Græsk',

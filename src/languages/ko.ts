@@ -23,6 +23,7 @@ export const ko = {
     language: '언어',
     languages: {
       AM: '암하라어',
+      BG: '불가리아 사람',
       DA: '덴마크어',
       DE: '독일어',
       EL: '그리스어',

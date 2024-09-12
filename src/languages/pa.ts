@@ -23,6 +23,7 @@ export const pa = {
     language: 'ਭਾਸ਼ਾ',
     languages: {
       AM: 'ਅਮਹਾਰਿਕ',
+      BG: 'ਬੁਲਗੇਰੀਅਨ',
       DA: 'ਡੈਨਿਸ਼',
       DE: 'ਜਰਮਨ',
       EL: 'ਯੂਨਾਨੀ',

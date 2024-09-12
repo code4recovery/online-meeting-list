@@ -23,6 +23,7 @@ export const fr = {
     language: 'Langue',
     languages: {
       AM: 'Amharique',
+      BG: 'Bulgare',
       DA: 'Danois',
       DE: 'Allemand',
       EL: 'Grec',

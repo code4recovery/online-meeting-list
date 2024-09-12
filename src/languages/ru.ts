@@ -23,6 +23,7 @@ export const ru = {
     language: 'Язык',
     languages: {
       AM: 'амхарский',
+      BG: 'болгарский',
       DA: 'Датский',
       DE: 'немецкий',
       EL: 'греческий',

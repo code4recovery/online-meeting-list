@@ -23,6 +23,7 @@ export const hu = {
     language: 'Nyelv',
     languages: {
       AM: 'Amhara',
+      BG: 'Bolgár',
       DA: 'Dán',
       DE: 'Német',
       EL: 'Görög',
