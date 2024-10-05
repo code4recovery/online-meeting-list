@@ -1,3 +1,17 @@
+import { getTypesForLanguage } from '@code4recovery/spec';
+
+import { languageCodes } from '../helpers';
+
+const types = getTypesForLanguage('sk');
+
+const languageTypes = Object.fromEntries(
+  Object.entries(types).filter(([key]) => languageCodes.includes(key))
+);
+
+const nonLanguageTypes = Object.fromEntries(
+  Object.entries(types).filter(([key]) => !languageCodes.includes(key))
+);
+
 export const sk = {
   english_name: 'Slovak',
   name: 'Slovák',
@@ -22,34 +36,10 @@ export const sk = {
     forum: 'Fórum',
     language: 'Jazyk',
     languages: {
-      AM: 'Amharčina',
+      ...languageTypes,
       BG: 'Bulharčina',
-      DA: 'Dánčina',
-      DE: 'Nemčina',
-      EL: 'Gréčtina',
-      EN: 'Angličtina',
-      FA: 'Perzština',
-      FR: 'Francúzština',
-      HE: 'Hebrejčina',
-      HI: 'Hindčina',
-      HR: 'Chorvátsky',
-      HU: 'Maďarčina',
-      ITA: 'Taliansky', // IT
-      JA: 'Japonský',
-      KOR: 'Kórejčina', // KO
-      LT: 'Litovčina',
-      ML: 'Malayalam',
       MT: 'Maltčina',
-      NE: 'Nepálčina',
-      POL: 'Poľština', // PL
-      POR: 'Portugalčina', // PT
-      PUN: 'Punjabi', // PA
-      RUS: 'Russian', // RU
-      S: 'Španielčina', // ES
-      SK: 'Slovenský',
-      SV: 'Švédčina',
-      TL: 'Tagalog',
-      UK: 'Ukrajinský'
+      NE: 'Nepálčina'
     },
     no_results: 'Vybraným filtrom nezodpovedajú žiadne výsledky:',
     ongoing: 'Prebieha',
@@ -74,60 +64,13 @@ export const sk = {
     },
     timezone: 'Časové pásmo',
     types: {
-      '11': 'Meditácia 11. kroku',
-      '12x12': '12 krokov a 12 tradícií',
-      'AL-AN': 'Concurrent with Al-Anon',
+      ...nonLanguageTypes,
       'BV-I': 'Nevidiaci / zrakovo postihnutí',
       'D-HOH': 'Nepočujúci / nedoslýchaví',
       'LO-I': 'Samotári/izolacionisti',
-      A: 'Svetský',
-      ABSI: 'Ako to vidí Bill',
-      AL: 'Súbežne s Alateen',
-      ASL: 'Americký posunkový jazyk',
-      B: 'Veľká kniha',
-      BA: 'Opatrovanie detí k dispozícii',
-      BE: 'Nováčik',
-      BI: 'Bisexuál',
-      BRK: 'Raňajky',
-      C: 'Zatvorené',
-      CAN: 'Sviečka',
-      CF: 'Vhodné pre deti',
-      D: 'Diskusia',
-      DB: 'Digitálny košík',
-      DD: 'Duálna diagnóza',
-      DR: 'Denné úvahy',
-      FF: 'Bez vône',
-      G: 'Gay',
-      GR: 'Vinná réva',
-      H: 'Narodeniny',
-      L: 'Lesba',
       LGBTQ: 'LGBTQIAA+',
-      LIT: 'Literatúra',
-      LS: 'Žiť triezvo',
-      M: 'Muži',
-      MED: 'Meditácia',
-      N: 'Native American',
-      NDG: 'Domorodé',
-      O: 'Otvoriť',
-      OUT: 'Vonkajší',
-      P: 'Profesionáli',
-      POA: 'Doklad o účasti',
-      POC: 'Farební ľudia',
       QSL: 'Quebec posunkový jazyk',
-      RSL: 'Ruský posunkový jazyk',
-      SEN: 'Seniori',
-      SM: 'Fajčenie povolené',
-      SP: 'Rečník',
-      SPD: 'Rečník/Diskusia',
-      ST: 'Kroková štúdia',
-      T: 'Transgender',
-      TC: 'Lokalita dočasne zatvorená',
-      TR: 'Štúdia o tradícii',
-      W: 'Ženy',
-      X: 'Prístup pre invalidný vozík',
-      XB: 'Bezbariérová kúpeľňa',
-      XT: 'Cross Talk povolený',
-      Y: 'Mladí ľudia'
+      RSL: 'Ruský posunkový jazyk'
     },
     video_use: 'Pripojte sa k {{value}}',
     website: 'Webová stránka'

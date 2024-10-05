@@ -1,3 +1,17 @@
+import { getTypesForLanguage } from '@code4recovery/spec';
+
+import { languageCodes } from '../helpers';
+
+const types = getTypesForLanguage('sv');
+
+const languageTypes = Object.fromEntries(
+  Object.entries(types).filter(([key]) => languageCodes.includes(key))
+);
+
+const nonLanguageTypes = Object.fromEntries(
+  Object.entries(types).filter(([key]) => !languageCodes.includes(key))
+);
+
 export const sv = {
   english_name: 'Swedish',
   name: 'Svenska',
@@ -22,34 +36,10 @@ export const sv = {
     forum: 'Forum',
     language: 'Språk',
     languages: {
-      AM: 'Amhariska',
+      ...languageTypes,
       BG: 'Bulgariska',
-      DA: 'Danska',
-      DE: 'Tyska',
-      EL: 'Grekiska',
-      EN: 'Engelska',
-      FA: 'Persiska',
-      FR: 'Franska',
-      HE: 'Hebreiska',
-      HI: 'Hindi',
-      HR: 'Kroatiska',
-      HU: 'Ungerska',
-      ITA: 'Italienska', // IT
-      JA: 'Japanska',
-      KOR: 'Koreanska', // KO
-      LT: 'Litauiska',
-      ML: 'Malayalam',
       MT: 'Maltesiska',
-      NE: 'Nepalesiska',
-      POL: 'Polska', // PL
-      POR: 'Portugisiska', // PT
-      PUN: 'Punjabi', // PA
-      RUS: 'Ryska', // RU
-      S: 'Spanska', // ES
-      SK: 'Slovakiska',
-      SV: 'Svenska',
-      TL: 'Tagalog',
-      UK: 'Ukrainska'
+      NE: 'Nepalesiska'
     },
     no_results: 'Inga resultat matchar de valda filtren:',
     ongoing: 'Pågående',
@@ -73,60 +63,13 @@ export const sv = {
     },
     timezone: 'Tidszon',
     types: {
-      '11': '11:e stegs meditation',
-      '12x12': '12 steg & 12 traditioner',
-      'AL-AN': 'Samtidigt med Al-Anon',
+      ...nonLanguageTypes,
       'BV-I': 'Blind / Synskadad',
       'D-HOH': 'Döv/Hörselskadad',
       'LO-I': 'Loners / isolationister',
-      A: 'Sekulär',
-      ABSI: 'Som Bill ser det',
-      AL: 'Samtidigt med Alateen',
-      ASL: 'Amerikanskt teckenspråk',
-      B: 'Stor bok',
-      BA: 'Barnvakt tillgänglig',
-      BE: 'Nykomling',
-      BI: 'Bisexuell',
-      BRK: 'Frukost',
-      C: 'Stängt',
-      CAN: 'Levande ljus',
-      CF: 'Barnvänlig',
-      D: 'Diskussion',
-      DB: 'Digital korg',
-      DD: 'Dubbel diagnos',
-      DR: 'Dagliga reflektioner',
-      FF: 'Doftfri',
-      G: 'Gay',
-      GR: 'Vinranka',
-      H: 'Födelsedag',
-      L: 'Lesbisk',
       LGBTQ: 'HBTQIAA+',
-      LIT: 'Litteratur',
-      LS: 'Leva nyktert',
-      M: 'Män',
-      MED: 'Meditation',
-      N: 'Indianer',
-      NDG: 'Inhemska',
-      O: 'Öppna',
-      OUT: 'Utomhus',
-      P: 'Professionella',
-      POA: 'Bevis på närvaro',
-      POC: 'Icke-vita',
       QSL: 'Quebec teckenspråk',
-      RSL: 'Ryskt teckenspråk',
-      SEN: 'Seniorer',
-      SM: 'Rökning tillåten',
-      SP: 'Högtalare',
-      SPD: 'Talare/diskussion',
-      ST: 'Stegstudie',
-      T: 'Transpersoner',
-      TC: 'Plats tillfälligt stängd',
-      TR: 'Traditionsstudie',
-      W: 'Kvinnor',
-      X: 'Rullstolstillgänglighet',
-      XB: 'Rullstolsanpassat badrum',
-      XT: 'Cross Talk Permitted',
-      Y: 'Unga människor'
+      RSL: 'Ryskt teckenspråk'
     },
     video_use: 'Gå med i {{value}}',
     website: 'Hemsida'

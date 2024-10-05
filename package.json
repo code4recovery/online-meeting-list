@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
+    "@code4recovery/spec": "^1.1.4",
     "@emotion/react": "^11.11.0",
     "@emotion/styled": "^11.11.0",
     "@heroicons/react": "^2.0.18",
