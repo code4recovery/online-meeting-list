@@ -16,6 +16,41 @@ export const videoServices: { [key: string]: string[] } = {
   Zoom: ['zoom.us']
 };
 
+// temporary until the spec exports categories
+export const languageCodes = [
+  'AM',
+  'BG',
+  'DA',
+  'DE',
+  'EL',
+  'EN',
+  'FA',
+  'FR',
+  'HE',
+  'HI',
+  'HR',
+  'HU',
+  'ITA',
+  'JA',
+  'KOR',
+  'LT',
+  'ML',
+  'MT',
+  'NE',
+  'NO',
+  'POL',
+  'POR',
+  'PUN',
+  'RUS',
+  'S',
+  'SK',
+  'SV',
+  'TH',
+  'TL',
+  'TUR',
+  'UK'
+];
+
 export const timezones = [
   'Africa/Abidjan',
   'Africa/Accra',
