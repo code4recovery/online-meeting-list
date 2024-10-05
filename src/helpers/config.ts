@@ -8,6 +8,7 @@ export const videoServices: { [key: string]: string[] } = {
   'Google Meet': ['meet.google.com'],
   GoTo: ['goto.com', 'gotomeet.me', 'gotomeeting.com'],
   Jitsi: ['meet.jit.si'],
+  'Microsoft Teams': ['teams.live.com', 'teams.microsoft.com'],
   Skype: ['skype.com'],
   'Second Life': ['maps.secondlife.com'],
   WebEx: ['webex.com'],
