@@ -47,7 +47,7 @@ export function Group({
     {
       bg: 'gray.50',
       color: 'gray.800',
-      borderColor: 'gray.200'
+      borderColor: 'gray.300'
     },
     {
       bg: 'gray.900',
@@ -182,7 +182,7 @@ export function Group({
             )}
           </Menu>
         )}
-        {meetings[0].edit_url && (
+        {false && (
           <Button
             icon="pencil"
             onClick={() => {
@@ -223,23 +223,29 @@ export function Group({
                     <AccordionIcon />
                   </AccordionButton>
                   <AccordionPanel pt={1} pb={4}>
-                    <Grid templateColumns={{ md: 'repeat(3, 1fr)' }} pb={5}>
+                    <Grid
+                      templateColumns={{ lg: 'repeat(3, 1fr)' }}
+                      m={-5}
+                      pt={5}
+                    >
                       {meetings.map(({ start, slug, name }, index) => (
                         <Fragment key={index}>
                           <GridItem
-                            borderBottom="1px"
-                            borderColor="gray.700"
-                            px={3}
-                            py={2}
+                            borderBottomWidth={{ lg: 1 }}
+                            borderColor={accordion.borderColor}
+                            pb={{ lg: 3 }}
+                            pt={3}
+                            px={6}
                           >
                             {formatTime(strings, start)}
                           </GridItem>
                           <GridItem
-                            borderBottom="1px"
-                            borderColor="gray.700"
+                            borderBottomWidth={1}
+                            borderColor={accordion.borderColor}
                             colSpan={2}
-                            px={3}
-                            py={2}
+                            pb={3}
+                            pt={{ lg: 3 }}
+                            px={6}
                           >
                             <Link to={`/${slug}`}>
                               <Text

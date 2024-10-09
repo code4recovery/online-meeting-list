@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import { Box, Grid } from '@chakra-ui/react';
 import {
   Await,
@@ -58,6 +58,8 @@ export const App = () => {
     return () => clearTimeout(timer);
   }, [input.searchWords]);
 
+  const isAdmin = useMemo(() => localStorage.getItem('admin') === 'true', []);
+
   return (
     <i18n.Provider
       value={{
@@ -66,7 +68,7 @@ export const App = () => {
         strings: languages[input.language].strings
       }}
     >
-      <Input.Provider value={{ input, setInput }}>
+      <Input.Provider value={{ input, isAdmin, setInput }}>
         <Box
           alignItems="start"
           as="main"

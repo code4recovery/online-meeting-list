@@ -63,6 +63,14 @@ REACT_APP_COLOR_MODE="light";
 
 Note: local storage may need to be cleared for changes to appear.
 
+## Enable admin links in the UI
+
+If you are an administrator, it can be handy to have links to edit your meeting entries. If your data has `edit_url` specified, you can enable these links by opening your browser console and entering
+
+```
+localStorage.setItem('admin', true)
+```
+
 ## Contributing
 
 1. Create an issue that describes the problem you are solving. Screenshots are helpful.

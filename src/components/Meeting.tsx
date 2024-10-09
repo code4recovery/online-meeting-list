@@ -43,7 +43,7 @@ export function Meeting({
     tags
   } = meeting;
   const { rtl, strings } = useI18n();
-  const { input } = useInput();
+  const { input, isAdmin } = useInput();
   const { groups } = useData();
   const group = groups[group_id as keyof typeof groups];
   const notes = [...(group?.notes ?? []), ...(meeting.notes ?? [])];
@@ -65,11 +65,6 @@ export function Meeting({
       notes: conference_phone_notes
     });
   }
-
-  const isAdmin = document.cookie
-    .split(';')
-    .map(c => c.trim())
-    .includes('admin=true');
 
   const title = input.searchWords?.length ? (
     <Highlighter searchWords={input.searchWords} textToHighlight={name} />
@@ -135,7 +130,13 @@ export function Meeting({
                   ? strings.telephone_use.replace('{{value}}', button.value)
                   : strings.video_use.replace('{{value}}', button.value);
               return (
-                <Box key={index} display="flex" alignItems="center" gap={3}>
+                <Box
+                  alignItems="center"
+                  display="flex"
+                  flexWrap="wrap"
+                  gap={3}
+                  key={index}
+                >
                   <Button {...button} primary title={title}>
                     {text}
                   </Button>

@@ -11,6 +11,7 @@ export type InputType = {
 
 export const Input = createContext<{
   input: InputType;
+  isAdmin: boolean;
   setInput: (input: InputType) => void;
 }>({
   input: {
@@ -19,6 +20,7 @@ export const Input = createContext<{
     tags: [],
     timezone: ''
   },
+  isAdmin: false,
   setInput: () => {}
 });
 
