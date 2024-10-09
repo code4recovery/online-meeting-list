@@ -67,8 +67,9 @@ export function Meeting({
   }
 
   const isAdmin = document.cookie
-    .split('; ')
-    .some(row => row.startsWith('admin='));
+    .split(';')
+    .map(c => c.trim())
+    .includes('admin=true');
 
   const title = input.searchWords?.length ? (
     <Highlighter searchWords={input.searchWords} textToHighlight={name} />
