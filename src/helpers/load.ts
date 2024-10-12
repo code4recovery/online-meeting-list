@@ -105,7 +105,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
     if (row.conference_phone) {
       const originalPhone = row.conference_phone.trim();
       if (originalPhone) {
-        let phone = originalPhone.replace(/\D/g, '');
+        let phone = originalPhone.replace(/[^\d,+#]/g, '');
         if (phone.length > 8) {
           meeting.conference_phone = phone;
           meeting.conference_phone_notes = row.conference_phone_notes;
