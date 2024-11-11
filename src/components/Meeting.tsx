@@ -49,12 +49,13 @@ export function Meeting({
   const notes = [...(group?.notes ?? []), ...(meeting.notes ?? [])];
 
   const buttons: Array<MeetingLink & { notes?: string }> = [];
-  if (conference_provider) {
+  if (conference_provider && conference_url) {
     buttons.push({
       icon: 'video',
       value: conference_provider,
       onClick: () => window.open(conference_url),
-      notes: conference_url_notes
+      notes: conference_url_notes,
+      title: strings.video_use.replace('{{value}}', conference_url)
     });
   }
   if (conference_phone) {
@@ -62,7 +63,8 @@ export function Meeting({
       icon: 'phone',
       value: strings.telephone,
       onClick: () => window.open(`tel:${conference_phone}`),
-      notes: conference_phone_notes
+      notes: conference_phone_notes,
+      title: strings.telephone_use.replace('{{value}}', conference_phone)
     });
   }
 
@@ -123,12 +125,6 @@ export function Meeting({
                   : button.icon === 'phone'
                   ? strings.telephone
                   : button.value;
-              const title =
-                button.icon === 'email'
-                  ? strings.email_use.replace('{{value}}', button.value)
-                  : button.icon === 'phone'
-                  ? strings.telephone_use.replace('{{value}}', button.value)
-                  : strings.video_use.replace('{{value}}', button.value);
               return (
                 <Box
                   alignItems="center"
@@ -137,7 +133,7 @@ export function Meeting({
                   gap={3}
                   key={index}
                 >
-                  <Button {...button} primary title={title}>
+                  <Button {...button} primary>
                     {text}
                   </Button>
                   <Text color="gray.500">{button.notes}</Text>
