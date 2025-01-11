@@ -7,6 +7,6 @@ export const theme = extendTheme({
   config: {
     initialColorMode,
     // useSystemColorMode: initialColorMode === 'system'
-    useSystemColorMode: true
+    useSystemColorMode: false
   }
 });
