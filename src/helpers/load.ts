@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+import { WeekdayNumbers } from 'luxon';
 
 import { videoServices } from './config';
 import { DataType } from './data';
@@ -44,7 +45,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
       const zone = row.timezone.trim();
 
       // luxonize start time
-      const weekday = row.day === 0 ? 7 : row.day;
+      const weekday = (row.day === 0 ? 7 : row.day) as WeekdayNumbers;
       let [hour, minute] = row.time.split(':').map(num => parseInt(num));
       const start = DateTime.fromObject({ weekday, hour, minute }, { zone });
 
