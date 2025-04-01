@@ -22,7 +22,7 @@ import {
   useI18n,
   useInput,
   sanitizeQuotes
-} from '../helpers';
+  } from '../helpers';
 
 export function Meeting({
   link,
@@ -70,7 +70,7 @@ export function Meeting({
   }
 
   const title = input.searchWords?.length ? (
-    <Highlighter searchWords={input.searchWords} textToHighlight={name} sanatize={sanitizeQuotes}/>
+    <Highlighter searchWords={input.searchWords} textToHighlight={name} sanitize={sanitizeQuotes}/>
   ) : (
     name
   );
