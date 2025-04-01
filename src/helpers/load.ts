@@ -170,15 +170,8 @@ export async function load(url: string, language: Language): Promise<DataType> {
       ...meetingFormats
     ];
 
-    // helper to replace curly quotes with straight ones
-    function removeCurlyQuotes(str: string): string {
-      return str
-        .replace(/[‘’‛‚]/g, "'") // curly single quotes
-        .replace(/[“”„‟]/g, '"'); // curly double quotes
-    }
-
     // add words to search index
-    meeting.search = removeCurlyQuotes(meeting.name)
+    meeting.search = sanitizeQuotes(meeting.name)
       .toLowerCase()
       .split(' ')
       .filter(e => e)
@@ -250,4 +243,11 @@ function validateUrl(url?: string) {
 
 function warn(value: string, type: string, line: number) {
   console.warn(`Row ${line + 2}: “${value}” is not a valid ${type}.`);
+}
+
+// helper to replace curly quotes with straight ones
+export function sanitizeQuotes(str: string): string {
+  return str
+    .replace(/[‘’‛‚]/g, "'") // curly single quotes
+    .replace(/[“”„‟]/g, '"'); // curly double quotes
 }

@@ -20,7 +20,8 @@ import {
   formatTime,
   useData,
   useI18n,
-  useInput
+  useInput,
+  sanitizeQuotes
 } from '../helpers';
 
 export function Meeting({
@@ -69,7 +70,7 @@ export function Meeting({
   }
 
   const title = input.searchWords?.length ? (
-    <Highlighter searchWords={input.searchWords} textToHighlight={name} />
+    <Highlighter searchWords={input.searchWords} textToHighlight={name} sanatize={sanitizeQuotes}/>
   ) : (
     name
   );

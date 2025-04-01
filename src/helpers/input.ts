@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
 
 import { defaultLanguage, Language } from './i18n';
+import { sanitizeQuotes } from './stringUtils';
 
 export type InputType = {
   language: Language;
@@ -28,7 +29,7 @@ export const useInput = () => useContext(Input);
 
 export function parseSearchWords(search?: string) {
   if (!search) return [];
-  return search
+  return sanitizeQuotes(search)
     .toLocaleLowerCase()
     .split(' ')
     .map(term => term.trim())
