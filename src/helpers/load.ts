@@ -170,8 +170,15 @@ export async function load(url: string, language: Language): Promise<DataType> {
       ...meetingFormats
     ];
 
+    // helper to replace curly quotes with straight ones
+    function removeCurlyQuotes(str: string): string {
+      return str
+        .replace(/[‘’‛‚]/g, "'") // curly single quotes
+        .replace(/[“”„‟]/g, '"'); // curly double quotes
+    }
+
     // add words to search index
-    meeting.search = meeting.name
+    meeting.search = removeCurlyQuotes(meeting.name)
       .toLowerCase()
       .split(' ')
       .filter(e => e)
