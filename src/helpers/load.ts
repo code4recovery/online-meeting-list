@@ -244,10 +244,3 @@ function validateUrl(url?: string) {
 function warn(value: string, type: string, line: number) {
   console.warn(`Row ${line + 2}: “${value}” is not a valid ${type}.`);
 }
-
-// helper to replace curly quotes with straight ones
-export function sanitizeQuotes(str: string): string {
-  return str
-    .replace(/[‘’‛‚]/g, "'") // curly single quotes
-    .replace(/[“”„‟]/g, '"'); // curly double quotes
-}
