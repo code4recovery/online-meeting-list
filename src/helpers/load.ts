@@ -6,6 +6,7 @@ import { DataType } from './data';
 import { Language } from './i18n';
 import * as languageStrings from '../languages';
 import type { Group, JSONRow, Meeting } from './types';
+import { sanitizeQuotes } from './stringUtils';
 
 export async function load(url: string, language: Language): Promise<DataType> {
   const { strings } = languageStrings[language];
@@ -171,7 +172,7 @@ export async function load(url: string, language: Language): Promise<DataType> {
     ];
 
     // add words to search index
-    meeting.search = meeting.name
+    meeting.search = sanitizeQuotes(meeting.name)
       .toLowerCase()
       .split(' ')
       .filter(e => e)

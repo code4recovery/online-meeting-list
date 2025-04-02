@@ -9,3 +9,4 @@ export * from './input';
 export * from './load';
 export * from './theme';
 export * from './types';
+export * from './stringUtils';
