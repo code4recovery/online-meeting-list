@@ -1,5 +1,3 @@
-import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import {
   Accordion,
   AccordionButton,
@@ -19,6 +17,8 @@ import {
   Text,
   useColorModeValue
 } from '@chakra-ui/react';
+import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   formatGoogleCalendar,
@@ -26,9 +26,9 @@ import {
   formatOutlook365,
   formatOutlookLive,
   formatTime,
-  type Meeting as MeetingType,
   useI18n,
-  type Group as GroupType
+  type Group as GroupType,
+  type Meeting as MeetingType
 } from '../helpers';
 
 import { Button } from './Button';
@@ -79,62 +79,35 @@ export function Group({
     <Stack gap={5}>
       <Box display="flex" gap={2} flexWrap="wrap">
         {!!email && (
-          <Button
-            icon="email"
-            onClick={() => {
-              window.open(`mailto:${email}`);
-            }}
-          >
+          <Button icon="email" href={`mailto:${email}`}>
             {strings.email}
           </Button>
         )}
         {!!phone && (
-          <Button
-            icon="phone"
-            onClick={() => {
-              window.open(`tel:${phone}`);
-            }}
-          >
+          <Button icon="phone" href={`tel:${phone}`}>
             {strings.telephone}
           </Button>
         )}
         {!!website && (
-          <Button
-            icon="link"
-            onClick={() => {
-              window.open(website);
-            }}
-          >
+          <Button icon="link" href={website}>
             {strings.website}
           </Button>
         )}
         {!!venmo && (
-          <Button
-            icon="cash"
-            onClick={() => {
-              window.open(`https://account.venmo.com/u/${venmo}`);
-            }}
-          >
+          <Button icon="cash" href={`https://account.venmo.com/u/${venmo}`}>
             Venmo
           </Button>
         )}
         {!!paypal && (
           <Button
             icon="cash"
-            onClick={() => {
-              window.open(`https://www.paypal.com/paypalme/${paypal}`);
-            }}
+            href={`https://www.paypal.com/paypalme/${paypal}`}
           >
             PayPal
           </Button>
         )}
         {!!square && (
-          <Button
-            icon="cash"
-            onClick={() => {
-              window.open(`https://cash.app/${square}`);
-            }}
-          >
+          <Button icon="cash" href={`https://cash.app/${square}`}>
             Cash App
           </Button>
         )}
