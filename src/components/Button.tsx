@@ -1,8 +1,8 @@
 import { Button as ChakraButton } from '@chakra-ui/react';
 
-import { Icon } from './Icon';
 import React from 'react';
 import { useI18n } from '../helpers';
+import { Icon } from './Icon';
 
 export function Button({
   children,
@@ -12,7 +12,7 @@ export function Button({
 }: {
   icon?: React.ComponentProps<typeof Icon>['name'];
   primary?: boolean;
-} & React.ComponentProps<typeof ChakraButton>) {
+} & { href?: string } & React.ComponentProps<typeof ChakraButton>) {
   const { rtl } = useI18n();
 
   return (
@@ -26,6 +26,7 @@ export function Button({
             color: 'white'
           }
         : {})}
+      as={rest.href ? 'a' : 'button'}
       borderRadius="md"
       textTransform="none"
       leftIcon={icon && !rtl ? <Icon name={icon} /> : undefined}
