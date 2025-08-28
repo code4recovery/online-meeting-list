@@ -17,6 +17,7 @@ export const sk = {
   name: 'Slovák',
   rtl: false,
   strings: {
+    back_to_meetings: 'Späť na stretnutia',
     calendar: 'Kalendár',
     clear_search: 'Vymazať vyhľadávanie',
     close: 'Zavrieť',

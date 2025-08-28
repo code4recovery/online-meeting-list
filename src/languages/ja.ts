@@ -17,6 +17,7 @@ export const ja = {
   name: '日本語',
   rtl: false,
   strings: {
+    back_to_meetings: '会議に戻る',
     calendar: 'カレンダー',
     clear_search: '明確な検索',
     close: 'シャット',

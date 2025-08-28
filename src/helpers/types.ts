@@ -59,7 +59,7 @@ export type Meeting = {
 
 export type MeetingLink = {
   icon: 'link' | 'email' | 'phone' | 'video';
-  onClick: () => void;
+  href: string;
   value: string;
   title: string;
 };

@@ -1,16 +1,17 @@
-import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 import { Stack } from '@chakra-ui/react';
+import { useLoaderData, useLocation, useNavigate } from 'react-router-dom';
 
+import { useData, useI18n } from '../helpers';
 import { Button } from './Button';
 import { Error } from './Error';
 import { Meeting } from './Meeting';
-import { useData } from '../helpers';
 
 export function SingleMeeting() {
   const navigate = useNavigate();
   const { key } = useLocation();
   const request = useLoaderData();
   const { meetings } = useData();
+  const { strings } = useI18n();
 
   const meeting = request
     ? meetings.find(({ slug }) => slug === request)
@@ -28,7 +29,7 @@ export function SingleMeeting() {
           }
         }}
       >
-        Back to Meetings
+        {strings.back_to_meetings}
       </Button>
       {meeting ? (
         <Meeting meeting={meeting} />

@@ -17,6 +17,7 @@ export const sv = {
   name: 'Svenska',
   rtl: false,
   strings: {
+    back_to_meetings: 'Tillbaka till möten',
     calendar: 'Kalender',
     clear_search: 'Rensa sökningen',
     close: 'Stänga',

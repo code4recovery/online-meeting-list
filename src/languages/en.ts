@@ -17,6 +17,7 @@ export const en = {
   name: 'English',
   rtl: false,
   strings: {
+    back_to_meetings: 'Back to meetings',
     calendar: 'Calendar',
     clear_search: 'Clear search',
     close: 'Close',
