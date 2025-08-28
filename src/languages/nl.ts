@@ -17,6 +17,7 @@ export const nl = {
   name: 'Nederlands',
   rtl: false,
   strings: {
+    back_to_meetings: 'Terug naar vergaderingen',
     calendar: 'Kalender',
     clear_search: 'Zoekopdracht wissen',
     close: 'Sluiten',
@@ -66,7 +67,7 @@ export const nl = {
     types: {
       ...nonLanguageTypes,
       'BV-I': 'Blind/Visueel gehandicapten',
-      'BV-D': 'Doven en slechthorenden',
+      'LO-I': 'Doven en slechthorenden',
       'D-HOH': 'Slechthorenden/Doven',
       LGBTQ: 'LGBTQIAA+',
       QSL: 'Quebec gebarentaal',

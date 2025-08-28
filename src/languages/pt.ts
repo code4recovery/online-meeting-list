@@ -17,6 +17,7 @@ export const pt = {
   name: 'Português',
   rtl: false,
   strings: {
+    back_to_meetings: 'Regresso às reuniões',
     calendar: 'Calendário',
     clear_search: 'Limpar pesquisa',
     close: 'Perto',

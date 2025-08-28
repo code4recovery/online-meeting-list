@@ -3,26 +3,26 @@ import {
   Button as ChakraButton,
   Heading,
   Stack,
-  Text,
   Tag,
+  Text,
   useColorModeValue
 } from '@chakra-ui/react';
 import Highlighter from 'react-highlight-words';
 import Linkify from 'react-linkify';
 import { Link } from 'react-router-dom';
 
+import {
+  MeetingLink,
+  Meeting as MeetingType,
+  formatTime,
+  sanitizeQuotes,
+  useData,
+  useI18n,
+  useInput
+} from '../helpers';
 import { Button } from './Button';
 import { Group } from './Group';
 import { Icon } from './Icon';
-import {
-  Meeting as MeetingType,
-  MeetingLink,
-  formatTime,
-  useData,
-  useI18n,
-  useInput,
-  sanitizeQuotes
-  } from '../helpers';
 
 export function Meeting({
   link,
@@ -54,7 +54,7 @@ export function Meeting({
     buttons.push({
       icon: 'video',
       value: conference_provider,
-      onClick: () => window.open(conference_url),
+      href: conference_url,
       notes: conference_url_notes,
       title: strings.video_use.replace('{{value}}', conference_url)
     });
@@ -63,14 +63,18 @@ export function Meeting({
     buttons.push({
       icon: 'phone',
       value: strings.telephone,
-      onClick: () => window.open(`tel:${conference_phone}`),
+      href: `tel:${conference_phone}`,
       notes: conference_phone_notes,
       title: strings.telephone_use.replace('{{value}}', conference_phone)
     });
   }
 
   const title = input.searchWords?.length ? (
-    <Highlighter searchWords={input.searchWords} textToHighlight={name} sanitize={sanitizeQuotes}/>
+    <Highlighter
+      searchWords={input.searchWords}
+      textToHighlight={name}
+      sanitize={sanitizeQuotes}
+    />
   ) : (
     name
   );

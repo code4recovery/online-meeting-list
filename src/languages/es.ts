@@ -17,6 +17,7 @@ export const es = {
   name: 'Español',
   rtl: false,
   strings: {
+    back_to_meetings: 'Regreso a las reuniones',
     calendar: 'Calendario',
     clear_search: 'Borrar búsqueda',
     close: 'Cerrar',

@@ -61,7 +61,7 @@ export function formatIcs(meeting: Meeting & { group: Group }) {
   if (iOS()) {
     // create data url for ios
     const uri = `data:text/calendar;charset=utf8,${blob}`;
-    window.location = encodeURI(uri) as unknown as Location;
+    window.location.href = encodeURI(uri);
   } else {
     // create temporary link to download
     const url = window.URL.createObjectURL(new Blob([blob]));
