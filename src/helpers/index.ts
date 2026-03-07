@@ -1,4 +1,5 @@
 export * from './analytics';
+export * from './baseUrl';
 export * from './calendar';
 export * from './config';
 export * from './data';

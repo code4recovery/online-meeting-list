@@ -6,12 +6,13 @@ import { DateTime } from 'luxon';
 
 import { App } from './App';
 import './index.css';
-import { getLanguage, load, parseSearchWords, theme } from './helpers';
+import { getLanguage, getRouterBasename, load, parseSearchWords, theme } from './helpers';
 import { Error as ErrorBoundary, Meetings, SingleMeeting } from './components';
 
 const container = document.getElementById('root');
 if (!container) throw new Error('Failed to find the root element');
 const root = ReactDOM.createRoot(container);
+const basename = getRouterBasename(container);
 
 const router = createBrowserRouter(
   [
@@ -52,7 +53,7 @@ const router = createBrowserRouter(
       ]
     }
   ],
-  { basename: process.env.REACT_APP_BASE_URL }
+  { basename }
 );
 
 root.render(
