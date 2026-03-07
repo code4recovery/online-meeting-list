@@ -18,7 +18,7 @@ This is a meeting finder designed to list online recovery meetings around the wo
    REACT_APP_JSON_URL="https://your-website.org/meetings.json"
    ```
 
-1. Open your terminal and run `npm i && npm run dev` to start the app in development mode.
+1. Open your terminal and run `npm i && npm start` to start the app in development mode.
 
 ## Deploy to your Website
 
@@ -28,12 +28,22 @@ This is a meeting finder designed to list online recovery meetings around the wo
 REACT_APP_BASE_URL="/meetings"
 ```
 
-1. In your terminal run `npm i && npm run build`.
-1. Copy the `/build/static` folder to your website.
-1. Add the following HTML to your web page (replace `chunk` below with the correct file name):
+You can also set the router basename at runtime on the root element (this overrides `REACT_APP_BASE_URL`):
 
 ```
-<script defer src="/static/js/main.chunk.js"></script>
+<div id="root" data-base-url="/fr/repertoire-des-reunions"></div>
+<script defer src="/static/js/online-meeting-list.js"></script>
+```
+
+Use this when embedding the app on localized or per-page URLs (for example WPML paths).
+
+
+1. In your terminal run `npm i && npm run build`.
+1. Copy the `/build/static` folder to your website.
+1. Add the following HTML to your web page:
+
+```
+<script defer src="/static/js/online-meeting-list.js"></script>
 <div id="root"></div>
 ```
 
